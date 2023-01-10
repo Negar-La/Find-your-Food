@@ -6,7 +6,7 @@ import Login from "./Login";
 import Logout from "./Logout";
 import Profile from "./Profile";
 import Footer from "./Footer";
-import PostAdd from "./PostAdd";
+import PostNewAd from "./PostNewAd";
 
 const App = () => {
   return (
@@ -18,7 +18,7 @@ const App = () => {
               <Route path="/login" element={<Login/>} />
               <Route path="/logout" element={<Logout/>} />
               <Route path="/profile" element={<Profile/>} />
-              <Route path="/new" element={<PostAdd/>} />
+              <Route path="/new" element={<PostNewAd/>} />
             </Routes>
             <Footer/>
     </BrowserRouter>

@@ -3,16 +3,17 @@ import Logout from "./Logout";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import Profile from "./Profile";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
 
   const { user, isAuthenticated, isLoading } = useAuth0();
-
+  const navigate = useNavigate();
 
   return (
     <Wrapper>
         <Nav to="/">Find Your Food 😋</Nav>
+     
         {!isAuthenticated && 
           <Login/>
         }
@@ -24,6 +25,17 @@ const Navbar = () => {
         </>
 
         }
+        <button onClick={()=>{
+          if (isAuthenticated) {
+             navigate("/new")
+          } else {
+            window.alert("Please log in first!")
+          }
+        }}> Post New ad </button>
+  
+
+        
+        
       
     
     </Wrapper>

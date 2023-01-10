@@ -48,6 +48,8 @@ const FootWrap = styled.div`
   background-color: gray;
   color: white;
   min-height: 120px;
+  position: fixed;
+  bottom: 0px;
 `;
 
 const Copyright = styled.div`
