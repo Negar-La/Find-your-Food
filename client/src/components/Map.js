@@ -1,0 +1,85 @@
+import { useJsApiLoader,
+    GoogleMap,
+    Marker,
+    } from "@react-google-maps/api";
+  import styled from "styled-components";
+  
+  
+  const Map = ({onCloseFunc, center}) => {
+    console.log(center) //[45.477215, -73.662711]
+//convert array to object with custom keys:
+const [lat, lng] = center;
+const object = { lat, lng};
+    console.log(object);
+
+    //used to make sure the google map is loaded
+    const { isLoaded } = useJsApiLoader({
+      googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+      libraries: ["places"],
+    });
+
+    // If you remove Strict Mode from your app, the markers should appear!!
+  
+      if (!isLoaded) {
+          return <h1>...Loading</h1>
+      }
+    return (
+      <Wrapper>
+        <Content>
+          <GoogleMap center= {object} zoom={15} mapContainerStyle={{border: '1px solid var(--darkblue)', width: '100%', height: '100%'}}> 
+                <Marker position={object} />
+          </GoogleMap>   
+            <Button onClick={onCloseFunc}>close</Button>
+        </Content>
+      </Wrapper>
+      
+       
+       
+      
+    )
+  }
+  
+  
+  const Wrapper = styled.div`
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+  `;
+  const Content = styled.div`
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 70%;
+    width: 80%;
+    padding: 20px;
+  `;
+  
+  const Button = styled.button`
+    background: var(--yellow);
+    border: none;
+    border-radius: 4px;
+    color: var(--darkblue);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px 16px 8px;
+    text-transform: uppercase;
+    margin: 8px;
+    width: 120px;
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  `;
+  
+  export default Map

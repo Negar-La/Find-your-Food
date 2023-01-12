@@ -1,6 +1,7 @@
 "use strict";
 const { MongoClient} = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
+const {getLocFromPlCode} = require("./GeoCoder")
 
 require("dotenv").config();
 const { MONGO_URI } = process.env;
@@ -12,10 +13,13 @@ const options = {
 
 const addPost = async (req, res) =>{
     const client = new MongoClient(MONGO_URI, options);
+    const {lat, lng}= await getLocFromPlCode(req.body.postalCode)
    
     console.log( req.body)  
     const post = {
         ...req.body, 
+        lat: lat,
+        lng: lng,
         id: uuidv4()
     }
    

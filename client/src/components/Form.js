@@ -78,10 +78,29 @@ const Form = () => {
             <input type="text" id='ingredients' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
-        <FlexTwo>
-            <label htmlFor='address'>Address:</label>
-            <input type="text" id='address' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
-        </FlexTwo>
+        <Divider>
+                  <Title>Location</Title>
+                  <Liner />
+                  <SelectOptions>
+                    <P>Province</P>
+                    <select name="province" required>
+                        <option value="">-Select-</option>
+                        <option value="quebec">Quebec</option>
+                    </select>
+                  </SelectOptions>
+                  <SelectOptions>
+                    <P>City</P>
+                    <select name="city" required>
+                        <option value="">-Select-</option>
+                        <option value="montreal">Montreal</option>
+                    </select>
+                  </SelectOptions>
+                    
+                     <br/>  
+                        <input type="number"  placeholder="Street number" name="stNum" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>
+                        <input type="text"  placeholder="Street name" name="stName" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>        
+                        <input type="text" pattern= "[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" placeholder="Postal code" name="postalCode" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/>
+        </Divider>
         <br></br>
         <FlexTwo>
             <label htmlFor='about'>About this meal:</label>
@@ -100,12 +119,12 @@ const Form = () => {
 const StyledForm = styled.form`
   margin-left: auto;
   margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 80px;
   font-size: 18px;
   border: 3px solid black;
-  width: 400px;
+  width: 600px;
   padding: 20px;
-  padding-top: 40px;
-  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   label {
@@ -147,8 +166,7 @@ const Radio = styled.div`
     align-items: center;
     input {
         width: 50px;
-    }
-`
+    }`
 
 const FlexTwo = styled.div`
   display: flex;
@@ -160,6 +178,40 @@ const FlexUpload = styled.div`
   justify-content: space-between;
   margin: 20px 0px;
 `
+const Liner = styled.div`
+    height: 1px;
+    background: #ccc;
+    margin-bottom: 15px;
+`;
 
+const Divider = styled.div`
+    box-shadow: 2px 1px 70px 1px rgba(184,178,184,1);
+    padding: 10px 20px;
+    min-width: 300px;
+`;
+
+const P=styled.p`
+    font-weight: bold;
+    padding-right: 10px;
+    color: var(--primary-color);
+    font-size: 17px;
+    margin: 10px 0px;
+`;
+
+const SelectOptions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 160px;
+  select {
+    height: 30px;
+    border-radius: 13px;
+  }
+`
+
+const Title=styled.span`
+    font-weight: bold;
+    font-size: 19px;
+`;
 
 export default Form
