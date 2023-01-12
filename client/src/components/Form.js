@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import UploadWidget from "./UploadWidget";
 
 const Form = () => {
 
     const [formData, setFormData] = useState({});
+    const navigate = useNavigate();
+
+    const [pictureUrl, setPictureUrl] = useState("");
 
     const handleChange = (key, value) => {
         setFormData({
@@ -23,11 +28,12 @@ const Form = () => {
             "Accept": "application/json",
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify({...formData, picture:pictureUrl})
         })
         .then(res=>res.json()).then((data)=>{
             console.log(data);
             console.log("formData", formData)
+            navigate('/');
         })
         .catch ((error)=>{
           console.log(error)
@@ -39,11 +45,11 @@ const Form = () => {
             <FlexType>
                     <p>Food Type</p>
                         <Radio>
-                            <input type="radio" value="Appetizer" id="Appetizer" name="foodType" required onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
+                            <input type="radio" value="Appetizer" id="Appetizer" name="foodType" required onChange={(e)=>handleChange(e.target.name, e.target.value)} />
                             <label htmlFor="Appetizer">Appetizer</label><br/>
                         </Radio>
                         <Radio>
-                            <input type="radio" value="main" id="main" name="foodType" onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
+                            <input type="radio" value="Main course" id="main" name="foodType" onChange={(e)=>handleChange(e.target.name, e.target.value)}/>
                             <label htmlFor="main">main course</label><br/>
                         </Radio>
                         <Radio>
@@ -54,28 +60,37 @@ const Form = () => {
 
         <FlexTwo>
             <label htmlFor='name'>Title:</label>
-            <input type="text" id='name' onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <input type="text" id='name' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <FlexTwo>
             <label htmlFor='person'>By:</label>
-            <input type="text" id='person' onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <input type="text" id='person' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+        </FlexTwo>
+        <br></br>
+        <FlexTwo>
+            <label htmlFor='price'>Price:</label>
+            <input type="text" id='price' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <FlexTwo>
             <label htmlFor='ingredients'>Ingredients:</label>
-            <input type="text" id='ingredients' onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <input type="text" id='ingredients' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <FlexTwo>
             <label htmlFor='address'>Address:</label>
-            <input type="text" id='address' onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <input type="text" id='address' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <FlexTwo>
             <label htmlFor='about'>About this meal:</label>
             <input type="text" id='about' onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
+        <FlexUpload>
+          <label>Add photo:</label>
+          <UploadWidget setPictureUrl={setPictureUrl} pictureUrl={pictureUrl}/>
+        </FlexUpload>
         <button type='submit'>Post</button>
         </StyledForm>
   )
@@ -113,6 +128,7 @@ const StyledForm = styled.form`
   }
 
     button:hover {
+      cursor: pointer;
       background-color: yellow;
     }
     button:active {
@@ -132,26 +148,18 @@ const Radio = styled.div`
     input {
         width: 50px;
     }
-
 `
 
 const FlexTwo = styled.div`
   display: flex;
   justify-content: space-between;
-  select {
-    text-align: center;
-    height: 29px;
-    width: 258px;
-    font-weight: bold;
-
-    select > option{
-      text-align: center;
-    height: 29px;
-    width: 258px;
-    font-weight: bold;
-    }
-  }
-  
 `
+
+const FlexUpload = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0px;
+`
+
 
 export default Form

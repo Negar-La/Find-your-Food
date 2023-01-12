@@ -54,10 +54,33 @@ const addPost = async (req, res) =>{
     }
   };
 
+  const getSinglePost = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    const id = req.params.id;
+  
+    try{
+        await client.connect();
+        const db = client.db("find_your_food");
+        
+        let singlePost = await db.collection("posts").findOne({id: id});
+      
+        if (singlePost) {
+          return res.status(200).json({status:200, data : singlePost, message:"The requested post data"})
+        } else {
+          return res.status(404).json({status:404, message:"No post was found based on this id"})
+        }
+    } catch(err){
+        console.log(err.stack);
+    }
+    finally {
+        client.close();
+    }
+  };
 
 
 
 
 
 
-module.exports = { addPost, getPosts};
+
+module.exports = { addPost, getPosts, getSinglePost};

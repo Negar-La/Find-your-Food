@@ -7,10 +7,13 @@ import Logout from "./Logout";
 import Profile from "./Profile";
 import Footer from "./Footer";
 import PostNewAd from "./PostNewAd";
+import PostDetails from "./PostDetails";
+import styled from "styled-components";
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <Wrapper>
+        <BrowserRouter>
       <GlobalStyles />
         <Navbar/>
             <Routes>
@@ -19,10 +22,18 @@ const App = () => {
               <Route path="/logout" element={<Logout/>} />
               <Route path="/profile" element={<Profile/>} />
               <Route path="/new" element={<PostNewAd/>} />
+              <Route path="/posts/:postId" element={<PostDetails/>} />
             </Routes>
             <Footer/>
     </BrowserRouter>
+    </Wrapper>
+
   );
 }
+
+const Wrapper = styled.div`
+   box-sizing:border-box;
+    padding:0 0 85px;
+`
 
 export default App;

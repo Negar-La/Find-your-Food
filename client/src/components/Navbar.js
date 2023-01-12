@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <Wrapper>
-        <Nav to="/">Find Your Food 😋</Nav>
+        <Nav to="/"> Find Your Food 😋</Nav>
      
         {!isAuthenticated && 
           <Login/>
