@@ -9,18 +9,23 @@ import Footer from "./Footer";
 import PostNewAd from "./PostNewAd";
 import PostDetails from "./PostDetails";
 import styled from "styled-components";
+import usePersistedState from "./usePersistedState";
 
 const App = () => {
+
+  const [isToggled, setIsToggled] = usePersistedState({})
+  // in order to delete an item from favorite list both in homepage and profile page and remove the red heart.
+
   return (
     <Wrapper>
         <BrowserRouter>
       <GlobalStyles />
         <Navbar/>
             <Routes>
-              <Route path="/" element={<HomePage/>} />
+              <Route path="/" element={<HomePage isToggled={isToggled} setIsToggled={setIsToggled} />} />
               <Route path="/login" element={<Login/>} />
               <Route path="/logout" element={<Logout/>} />
-              <Route path="/profile" element={<Profile/>} />
+              <Route path="/profile" element={<Profile isToggled={isToggled} setIsToggled={setIsToggled} />} />
               <Route path="/new" element={<PostNewAd/>} />
               <Route path="/posts/:postId" element={<PostDetails/>} />
             </Routes>
