@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import {AiOutlineHeart} from "react-icons/ai";
 import {FcLike} from "react-icons/fc";
-import usePersistedState from "./usePersistedState";
+import moment from 'moment';
 
 
 const HomePage = ({isToggled, setIsToggled}) => {
@@ -47,6 +47,7 @@ console.log(isToggled); //isToggled is an object including all post.id(s) which 
         .then((data) => {
           console.log(data)
           setFavoritePost([...favoritePost, data.data])
+          // localStorage.setItem("setIsToggled", !isToggled[post.id])
           setIsToggled(isToggled =>({
             ...isToggled, [post.id]: !isToggled[post.id]
           }))
@@ -74,6 +75,7 @@ console.log(isToggled); //isToggled is an object including all post.id(s) which 
           .then((data) => {
             if (data.status === 200) {          
              console.log(data)   
+            //  localStorage.setItem("setIsToggled", !isToggled[post.id])
              setIsToggled(isToggled =>({
               ...isToggled, [post.id]: !isToggled[post.id]
             }))
@@ -108,8 +110,14 @@ console.log(isToggled); //isToggled is an object including all post.id(s) which 
                     } else {
                       handlefavorite(e, post);
                     }
-                      }}> {isToggled[post.id]? <FcLike/> : <AiOutlineHeart /> }
+                      }}> {!isAuthenticated ? <AiOutlineHeart />
+                      :
+                      isToggled[post.id]  ? <FcLike/> : <AiOutlineHeart /> }
                   </FavoriteBtn>
+                  {post.posted ?     <span>Posted {moment(post.posted).fromNow()}</span>
+                  : ""
+                  }
+              
             </ItemContainer>       
             </>
           
@@ -185,15 +193,6 @@ const FavoriteBtn = styled.div`
   background-color: inherit;
   width: 15px;
   cursor: pointer;
-  transition: background-color 0.3s,
-              opacity 0.3s;
-  &:hover {
-    background-color: var(--yellow);
-  }
-  &:active {
-    opacity: 0.3;
-  }
-  
 `
 
 export default HomePage

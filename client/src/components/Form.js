@@ -9,6 +9,8 @@ const Form = () => {
     const navigate = useNavigate();
 
     const [pictureUrl, setPictureUrl] = useState("");
+    const time = new Date();
+    console.log(time);
 
     const handleChange = (key, value) => {
         setFormData({
@@ -28,7 +30,7 @@ const Form = () => {
             "Accept": "application/json",
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({...formData, picture:pictureUrl})
+          body: JSON.stringify({...formData, picture:pictureUrl, posted: time})
         })
         .then(res=>res.json()).then((data)=>{
             console.log(data);

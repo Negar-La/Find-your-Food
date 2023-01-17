@@ -10,6 +10,7 @@ import PostNewAd from "./PostNewAd";
 import PostDetails from "./PostDetails";
 import styled from "styled-components";
 import usePersistedState from "./usePersistedState";
+import { useState } from "react";
 
 const App = () => {
 
@@ -24,7 +25,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<HomePage isToggled={isToggled} setIsToggled={setIsToggled} />} />
               <Route path="/login" element={<Login/>} />
-              <Route path="/logout" element={<Logout/>} />
+              <Route path="/logout" element={<Logout />} />
               <Route path="/profile" element={<Profile isToggled={isToggled} setIsToggled={setIsToggled} />} />
               <Route path="/new" element={<PostNewAd/>} />
               <Route path="/posts/:postId" element={<PostDetails/>} />

@@ -24,7 +24,6 @@ const UploadWidget = ({ setPictureUrl, pictureUrl }) => {
             if (result.event === "success") {
             setUpdloaded(true);
             setPictureUrl(result.info.url);
-            pictureUrl.push(result.info.url);
             // console.log(result.info.url);
             // console.log(pictureUrl);
             }
