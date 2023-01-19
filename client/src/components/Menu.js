@@ -48,7 +48,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 50px;
+  top: 45px;
   right: 0px;
   border-radius: 5px;
   visibility: ${(props) => (props.open ? "visible" : "hidden")};

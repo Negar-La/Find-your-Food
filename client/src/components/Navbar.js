@@ -42,6 +42,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 10px 25px;
+  padding: 10px;
 `
 
 const Nav = styled(NavLink)`
@@ -52,17 +53,18 @@ text-decoration: none;
 const Text = styled.p`
 color: black;
 font-size: 20px;
-margin-right: 80px;
+margin-right: 100px;
 `
 
 const Div = styled.div`
 `
 const HamburgerButton = styled.button`
   position: absolute;
-  right: 2rem;
-  top: 0.3rem;
+  right: 3rem;
+  top: 0.8rem;
   font-size: 2.1rem;
   border: none;
+  background-color: inherit;
   transition: all 0.2s ease-in-out;
   &:hover {
     cursor: pointer;

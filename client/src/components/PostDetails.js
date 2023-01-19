@@ -22,7 +22,7 @@ const PostDetails = () => {
           .then((data) => {
             if (data.status === 200) {
               setPost(data.data);
-              console.log(data.data);
+              // console.log(data.data);
             }    
         })  
             .catch((error) => {
@@ -70,25 +70,29 @@ const PostDetails = () => {
               <Text><Tag>Food Type:</Tag> {post.foodType}</Text>
               <Text><Tag>Food Name:</Tag> {post.name}</Text>
               <Text><Tag>By:</Tag> {post.person}</Text>
-              <Text><Tag>Price:</Tag> {post.price}</Text>
+              <Text><Tag>Price:</Tag> {post.price} $</Text>
               <Text><Tag>Ingredients: </Tag>{post.ingredients}</Text>
               <Text><Tag>About this item:</Tag> {post.about ? post.about : "Nothing mentioned"}</Text>
               <Text><Tag>Address:</Tag>  {post.stNum} {post.stName} - {post.postalCode}</Text>
+              <Text><Tag>Phone:</Tag>  {post.phone} </Text>
               <FlexDiv>
                 <MapButton onClick={()=> setShowMap(true)}>View on Map <BsFillPinMapFill style={{marginLeft: '5px', color: 'blue'}} /></MapButton>
                               {showMap && <Map onCloseFunc={()=>setShowMap(false)} center={[parseFloat(post.lat), parseFloat(post.lng)]} />}
                               
               </FlexDiv>
-              <MapButton    onClick={(e) => {
-                    if (!isAuthenticated)
-                    {
-                      window.alert("Please log in first!")
-                    } else {
-                      handlefavorite(e, post);
-                    }
-                      }}> 
-                     Add to Favorite <FcLike style={{marginLeft: '5px'}}/> 
+              <FlexDiv>
+                <MapButton    onClick={(e) => {
+                      if (!isAuthenticated)
+                      {
+                        window.alert("Please log in first!")
+                      } else {
+                        handlefavorite(e, post);
+                      }
+                        }}> 
+                      Add to Favorite <FcLike style={{marginLeft: '5px'}}/> 
                   </MapButton>
+              </FlexDiv>
+             
             </Info>
             <ImageContainer> {post.picture ? <Img src={post.picture}/> : (<NoImage>No Image provided</NoImage>) } </ImageContainer>
   
@@ -100,8 +104,12 @@ const PostDetails = () => {
 }
 
 const Flex = styled.div`
+border: 1px solid red;
   display: flex;
-  margin: 20px 50px 100px 50px;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 50px 100px 50px;
+  flex-wrap: wrap;
   @media (max-width: 600px) {
     flex-direction: column;
     align-items: center;
@@ -111,10 +119,8 @@ const Flex = styled.div`
 
 const Info = styled.div` 
 border: 1px solid green;
-min-width: 350px;
-max-width: 800px;
-padding: 10px;
-height: 400px;
+padding: 20px;
+margin-bottom: 30px;
 `
 
 const Text = styled.p`
@@ -130,21 +136,22 @@ font-weight: bold;
 const ImageContainer = styled.div`
 display: flex;
 border: 1px solid red;
-margin-left: 30px;
+margin-left: 50px;
 @media (max-width: 600px) {
   margin-left: 0px;
   }
 `
 
 const Img = styled.img`
-height: 400px;
-  border-radius: 10px;
+  height: 400px;
+  border-radius: 20px;
 `
 const NoImage = styled.p`
 font-size: 18px;
 `
 const FlexDiv = styled.div`
    display: flex;
+   justify-content: center;
 `
 const MapButton = styled.button`
   border: none;
