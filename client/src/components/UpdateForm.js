@@ -1,90 +1,95 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import UploadWidget from "./UploadWidget";
-import { useAuth0 } from "@auth0/auth0-react";
 
-const Form = () => {
-
-    const [formData, setFormData] = useState({});
-    const navigate = useNavigate();
-    const { user, isAuthenticated, isLoading } = useAuth0();
+const UpdateForm = () => {
 
     const [pictureUrl, setPictureUrl] = useState("");
-    const time = new Date();
-    // console.log(time);
+    const {postId} = useParams();
+    console.log(postId);
+    const [updatePost, setUpdatePost] = useState(null);
+    const navigate = useNavigate();
 
-    const handleChange = (key, value) => {
-        setFormData({
-            ...formData, [key]: value
+    useEffect(() => {
+        fetch(`/api/get-post/${postId}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.status === 200) {
+                setUpdatePost(data.data);
+              console.log(data.data);
+            }    
+        })  
+            .catch((error) => {
+                return error;
+              });
+      }, []);
+
+      const handleChange = (key, value) => {
+        setUpdatePost({
+            ...updatePost, [key]: value
         })
-        // console.log(key);
-        // console.log(value);
-    }
-    // console.log(formData);
+      }
 
-    const handleSubmit = (e) => {
+      const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('hi')
-        fetch("/api/post-add", {
-          method: "POST",
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({...formData, user: user.nickname, email: user.email, picture:pictureUrl, posted: time})
+        fetch(`/api/update-post/${postId}`, {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(updatePost)
         })
-        .then(res=>res.json()).then((data)=>{
-            console.log(data);
-            console.log("formData", formData)
-            navigate('/');
+        .then(res => res.json())
+        .then((data) => {
+            console.log(data.data);
+            window.location.reload();
         })
-        .catch ((error)=>{
-          console.log(error)
+        .catch((error) => {
+            window.alert(error);
         })
+        navigate('/myPosts')
     }
 
   return (
-        <StyledForm onSubmit={handleSubmit}>
-            <FlexType>
+    <StyledForm onSubmit={handleSubmit}>
+        {updatePost &&
+        <>
+ <FlexType>
                     <p>Food Type</p>
                         <Radio>
-                            <input type="radio" id="Appetizer" name="foodType" required onChange={(e)=>handleChange(e.target.name, e.target.id)} />
+                            <input type="radio" checked={updatePost.foodType === "Appetizer" ? true : false} id="Appetizer" name="foodType" required onChange={(e)=>handleChange(e.target.name, e.target.id)} />
                             <label htmlFor="Appetizer">Appetizer</label><br/>
                         </Radio>
                         <Radio>
-                            <input type="radio" id="Main course" name="foodType" onChange={(e)=>handleChange(e.target.name, e.target.id)}/>
+                            <input type="radio" checked={updatePost.foodType === "Main course" ? true : false} id="Main course" name="foodType" onChange={(e)=>handleChange(e.target.name, e.target.id)}/>
                             <label htmlFor="Main course">Main course</label><br/>
                         </Radio>
                         <Radio>
-                            <input type="radio" id="Dessert" name="foodType" onChange={(e)=>handleChange(e.target.name, e.target.id)}/>
+                            <input type="radio" checked={updatePost.foodType === "Dessert" ? true : false} id="Dessert" name="foodType" onChange={(e)=>handleChange(e.target.name, e.target.id)}/>
                             <label htmlFor="Dessert">Dessert</label><br/>
                         </Radio>       
             </FlexType>
 
         <FlexTwo>
             <label htmlFor='name'>Title:</label>
-            <input type="text" id='name' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
-        </FlexTwo>
-        <br></br>
-        <FlexTwo>
-            <label htmlFor='price'>Price:</label>
-            <input type="text" id='price' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
-        </FlexTwo>
-        <br></br>
-        <FlexTwo>
-            <label htmlFor='ingredients'>Ingredients:</label>
-            <input type="text" id='ingredients' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <input type="text" id='name' value={updatePost.name} required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <FlexTwo>
             <label htmlFor='person'>By:</label>
-            <input type="text" id='person' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <input type="text" id='person' value={updatePost.person}  required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <FlexTwo>
-            <label htmlFor='phone'>Telephone:</label>
-            <input type="number" id='phone' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <label htmlFor='price'>Price:</label>
+            <input type="text" id='price' value={updatePost.price}  required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+        </FlexTwo>
+        <br></br>
+        <FlexTwo>
+            <label htmlFor='ingredients'>Ingredients:</label>
+            <input type="text" id='ingredients' value={updatePost.ingredients}  required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <Divider>
@@ -101,29 +106,31 @@ const Form = () => {
                     <P>City</P>
                     <select name="city" required>
                         <option value="">-Select-</option>
-                        <option value="montreal">Montreal</option>
+                        <option value="montreal" >Montreal</option>
                     </select>
                   </SelectOptions>
                     
                      <br/>  
-                        <input type="number"  placeholder="Street number" name="stNum" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>
-                        <input type="text"  placeholder="Street name" name="stName" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>        
-                        <input type="text" pattern= "[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" placeholder="Postal code" name="postalCode" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/>
+                        <input type="number"  placeholder="Street number" name="stNum" value={updatePost.stNum}  required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>
+                        <input type="text"  placeholder="Street name" name="stName" value={updatePost.stName} required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>        
+                        <input type="text" pattern= "[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" placeholder="Postal code" name="postalCode" value={updatePost.postalCode} required onChange={(e)=> handleChange(e.target.name, e.target.value)}/>
         </Divider>
         <br></br>
         <FlexTwo>
             <label htmlFor='about'>About this meal:</label>
-             <textarea required rows="5" cols="33" id="about" placeholder="Enter all details about this food" onChange={(e)=> handleChange(e.target.id, e.target.value)}></textarea>
+            <input type="text" id='about' value={updatePost.about} onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <FlexUpload>
           <label>Add photo:</label>
           <UploadWidget setPictureUrl={setPictureUrl} pictureUrl={pictureUrl}/>
         </FlexUpload>
         <button type='submit'>Post</button>
+        </>
+ 
+        }
         </StyledForm>
   )
 }
-
 
 const StyledForm = styled.form`
   margin-left: auto;
@@ -223,4 +230,4 @@ const Title=styled.span`
     font-size: 19px;
 `;
 
-export default Form
+export default UpdateForm

@@ -1,14 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Map from "./Map";
 import {BsFillPinMapFill} from "react-icons/bs";
+import {FcLike} from "react-icons/fc";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const PostDetails = () => {
 
     const { postId } = useParams();
     const [post, setPost] = useState(null)
+    const {user, isAuthenticated} = useAuth0();
+    const [favoritePost, setFavoritePost] = useState([])
 
+    const navigate = useNavigate();
     const [showMap,setShowMap]=useState(false)
 
     useEffect(() => {
@@ -24,6 +29,38 @@ const PostDetails = () => {
                 return error;
               });
       }, [postId]);
+
+      //https://stackoverflow.com/questions/70922600/when-i-click-one-button-its-open-all-buttons-simultaneously
+    const handlefavorite = (e, post) =>{
+      e.preventDefault();
+      fetch(`/api/add-favorite`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...post,
+        user: user.name, 
+        userPicture: user.picture,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        setFavoritePost([...favoritePost, data.data])
+        if(data.message === 'This post is already in your favorite list'){
+          window.alert("This item is already in your favorite list!")
+        }
+        navigate('/profile');
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+   
+
+  }
+
   return (
         <>
         {!post ? <h1>Loading...</h1>
@@ -38,10 +75,20 @@ const PostDetails = () => {
               <Text><Tag>About this item:</Tag> {post.about ? post.about : "Nothing mentioned"}</Text>
               <Text><Tag>Address:</Tag>  {post.stNum} {post.stName} - {post.postalCode}</Text>
               <FlexDiv>
-                <MapButton onClick={()=> setShowMap(true)}>View on Map <BsFillPinMapFill style={{marginLeft: '5px'}} /></MapButton>
+                <MapButton onClick={()=> setShowMap(true)}>View on Map <BsFillPinMapFill style={{marginLeft: '5px', color: 'blue'}} /></MapButton>
                               {showMap && <Map onCloseFunc={()=>setShowMap(false)} center={[parseFloat(post.lat), parseFloat(post.lng)]} />}
                               
               </FlexDiv>
+              <MapButton    onClick={(e) => {
+                    if (!isAuthenticated)
+                    {
+                      window.alert("Please log in first!")
+                    } else {
+                      handlefavorite(e, post);
+                    }
+                      }}> 
+                     Add to Favorite <FcLike style={{marginLeft: '5px'}}/> 
+                  </MapButton>
             </Info>
             <ImageContainer> {post.picture ? <Img src={post.picture}/> : (<NoImage>No Image provided</NoImage>) } </ImageContainer>
   
@@ -119,5 +166,12 @@ const MapButton = styled.button`
     opacity: 0.3;
   }
 `;
+
+const FavoriteBtn = styled.div`
+  border: 1px solid pink;
+  background-color: inherit;
+  width: 15px;
+  cursor: pointer;
+`
 
 export default PostDetails

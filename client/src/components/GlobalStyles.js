@@ -46,7 +46,7 @@ export default createGlobalStyle`
         padding: 0;
         border: 0;
         font-size: 100%;
-        font-family: roboto, sans-serif;
+        font-family: arial, sans-serif;
         vertical-align: baseline;
         box-sizing: border-box;
     }

@@ -1,14 +1,20 @@
 import Login from "./Login";
-import Logout from "./Logout";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useContext } from "react";
+import { MenuContext } from "./MenuContext";
 
 const Navbar = () => {
 
   const { user, isAuthenticated, isLoading } = useAuth0();
-  const navigate = useNavigate();
+  const { openMenu, setOpenMenu } = useContext(MenuContext);
+
+  const handleClick = ()=>{
+      // console.log('hi');
+      setOpenMenu(!openMenu)
+  }
 
   return (
     <Wrapper>
@@ -18,26 +24,15 @@ const Navbar = () => {
           <Login/>
         }
         {isAuthenticated &&    
-        <>
-            <p>Hello {user.name}</p>
-            <Logout/>
-            <Nav to="/profile">Profile</Nav>
-        </>
-
+        <Div>
+            <Text>Hello {user.nickname}</Text>
+            <HamburgerButton onClick={handleClick}>
+                 <GiHamburgerMenu style={{color: 'black'}} />
+            </HamburgerButton>
+       
+        </Div>
         }
-        <button onClick={()=>{
-          if (isAuthenticated) {
-             navigate("/new")
-          } else {
-            window.alert("Please log in first!")
-          }
-        }}> Post New ad </button>
-  
 
-        
-        
-      
-    
     </Wrapper>
 
   )
@@ -45,11 +40,36 @@ const Navbar = () => {
 
 const Wrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  margin: 10px 25px;
 `
 
 const Nav = styled(NavLink)`
+font-size: 20px;
+text-decoration: none;
 
 `
+const Text = styled.p`
+color: black;
+font-size: 20px;
+margin-right: 80px;
+`
 
+const Div = styled.div`
+`
+const HamburgerButton = styled.button`
+  position: absolute;
+  right: 2rem;
+  top: 0.3rem;
+  font-size: 2.1rem;
+  border: none;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+  &:focus {
+    outline: none;
+  }
+`;
 export default Navbar

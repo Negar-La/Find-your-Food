@@ -6,30 +6,32 @@ import Login from "./Login";
 import Logout from "./Logout";
 import Profile from "./Profile";
 import Footer from "./Footer";
-import PostNewAd from "./PostNewAd";
+import Form from "./Form";
 import PostDetails from "./PostDetails";
 import styled from "styled-components";
-import usePersistedState from "./usePersistedState";
-import { useState } from "react";
+import MyPosts from "./MyPosts";
+import UpdateForm from "./UpdateForm";
+import Menu from "./Menu";
+import FAQ from "./FAQ";
 
 const App = () => {
-
-  const [isToggled, setIsToggled] = usePersistedState({})
-  // in order to delete an item from favorite list both in homepage and profile page and remove the red heart.
-
   return (
     <Wrapper>
         <BrowserRouter>
       <GlobalStyles />
         <Navbar/>
             <Routes>
-              <Route path="/" element={<HomePage isToggled={isToggled} setIsToggled={setIsToggled} />} />
+              <Route path="/" element={<HomePage/>} />
               <Route path="/login" element={<Login/>} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="/profile" element={<Profile isToggled={isToggled} setIsToggled={setIsToggled} />} />
-              <Route path="/new" element={<PostNewAd/>} />
+              <Route path="/profile" element={<Profile/>} />
+              <Route path="/myPosts" element={<MyPosts/>} />
+              <Route path="/new" element={<Form/>} />
+              <Route path="/faq" element={<FAQ/>} />
+              <Route path="/updateform/:postId" element={<UpdateForm/>} />
               <Route path="/posts/:postId" element={<PostDetails/>} />
             </Routes>
+            <Menu/>
             <Footer/>
     </BrowserRouter>
     </Wrapper>
