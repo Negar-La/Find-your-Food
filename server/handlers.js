@@ -15,12 +15,12 @@ const addPost = async (req, res) =>{
     const client = new MongoClient(MONGO_URI, options);
     const {lat, lng}= await getLocFromPlCode(req.body.postalCode)
    
-    console.log( req.body)  
+    // console.log( req.body)  
     const post = {
         ...req.body, 
         lat: lat,
         lng: lng,
-        _id: uuidv4()
+        id: uuidv4()
     }
    
   try{
@@ -45,8 +45,6 @@ const addPost = async (req, res) =>{
     const db = client.db("find_your_food");
   
     const posts = await db.collection("posts").find().toArray();
-   
-    // console.log(posts) 
   
     res.status(200).json({status:204, data : posts, message:"Successful requested posts"})
     } catch(err){
@@ -60,14 +58,16 @@ const addPost = async (req, res) =>{
 
   const getSinglePost = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
-    const _id = req.params._id;
-    console.log(_id);
+    // console.log(req.body);
+    const id = req.params.id;
+    // console.log(id);
   
     try{
         await client.connect();
         const db = client.db("find_your_food");
         
-        let singlePost = await db.collection("posts").findOne({_id: _id});
+        let singlePost = await db.collection("posts").findOne({id});
+        // console.log(singlePost);
       
         if (singlePost) {
           return res.status(200).json({status:200, data : singlePost, message:"The requested post data"})
@@ -93,7 +93,7 @@ const addPost = async (req, res) =>{
   
       const db = client.db("find_your_food");
     //in mongodb we use "" to access the keys in database, so we check db to pick "_id" and based on   console.log(req.body) in terminal, we have  req.body.post._id
-      const deleteOne = await db.collection("posts").deleteOne({"_id": req.body.post._id})
+      const deleteOne = await db.collection("posts").deleteOne({"id": req.body.post.id})
       console.log(deleteOne.deletedCount)
       res.status(200).json({ status: 200, message: "post successfully deleted from database", data: deleteOne });
     } catch (err){
@@ -106,10 +106,12 @@ const addPost = async (req, res) =>{
 
   const updatePost = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
+       //in order to solve the problem of duplication _id, you need to specify 'body' in UpdateForm component, so mongodb will set the same _id for each post.
+   //if in UpdateForm component, you use  body: JSON.stringify(updatePost) it gives _id error.
 
-    const {_id} = req.params;
+    const {id} = req.params;
     console.log(req.body) 
-    console.log(_id);
+    console.log(id);
     const newPost = {
      ...req.body
    };
@@ -118,15 +120,20 @@ const addPost = async (req, res) =>{
       await client.connect();
       const db = client.db("find_your_food");
   
-      const findone = await db.collection("posts").findOne({ _id });
-      const query = {"_id":_id};
+      const findone = await db.collection("posts").findOne({ id });
+
+      const query = {"id":id};
       const newValues = { $set: newPost}
       console.log(query);
       console.log(newValues);
       const updatedPost = await db.collection("posts").updateOne(query, newValues);//update the post with specified id
       console.log(updatePost);
+
+      const updatedFavorite = await db.collection("favorites").updateMany(query, newValues); //update all the matched documents in favorites collection!
+      console.log(updatedFavorite);
+     
+
       return res.status(200).json({status: 200, message: "Update Successful", data: updatedPost});
-  
     } catch (err) {
       client.close();
       console.log(err);
@@ -135,16 +142,19 @@ const addPost = async (req, res) =>{
     }
   };
 
-
   const addFavorite = async(req, res) =>{
     const client = new MongoClient(MONGO_URI, options);
-    console.log(req.body) 
+    const {id } = req.body;
+   //in order to solve the problem of duplication _id, you need to specify 'body' in PostDetails component, so mongodb will give each item different _id.
+   //if in PostDetails component, you use body: JSON.stringify({ ...post, } ou will have same _id and duplication _id error.
+    console.log(id)
+    console.log( req.body)  
   try{
       await client.connect();
   
       const db = client.db("find_your_food");
       if (req.body) {
-        const findPost = await db.collection("favorites").findOne({"_id": req.body._id, "userPicture": req.body.userPicture})
+        const findPost = await db.collection("favorites").findOne({"id": req.body.id, "userAddedtoFav": req.body.userAddedtoFav})
         console.log(findPost)
        if (findPost) {
          res.status(200).json({status:200, data:req.body, message:"This post is already in your favorite list"})
@@ -185,7 +195,6 @@ const addPost = async (req, res) =>{
 
   const deleteFavorite = async(req, res) =>{
     const client = new MongoClient(MONGO_URI, options);
-    
     console.log(req.body) 
    
   try{
@@ -193,7 +202,7 @@ const addPost = async (req, res) =>{
   
       const db = client.db("find_your_food");
     //in mongodb we use "" to access the keys in database, so we check db to pick "id" and based on   console.log(req.body) in terminal, we have  req.body.item.id
-      const deleteOne = await db.collection("favorites").deleteOne({"_id": req.body.post._id})
+      const deleteOne = await db.collection("favorites").deleteOne({"id": req.body.post.id, "userAddedtoFav": req.body.post.userAddedtoFav})
       console.log(deleteOne.deletedCount)
       res.status(200).json({ status: 200, message: "post successfully deleted from favorite list", data: deleteOne });
     } catch (err){
@@ -205,4 +214,4 @@ const addPost = async (req, res) =>{
   }
 
 
-module.exports = { addPost, getPosts, getSinglePost, deletePost, updatePost, addFavorite, getFavorites, deleteFavorite};
+module.exports = {addPost, deletePost, updatePost, getPosts, getSinglePost, addFavorite, getFavorites, deleteFavorite};

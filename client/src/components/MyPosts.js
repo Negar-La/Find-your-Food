@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import {AiFillDelete} from "react-icons/ai";
 import {AiFillEdit} from "react-icons/ai";
+import moment from 'moment';
 
 const MyPosts = () => {
 
@@ -51,25 +52,29 @@ const MyPosts = () => {
         
       //function that navigates to the update form componenets
   const editHandler = ((e,post) => {
-    console.log(post._id);
+    console.log(post.id);
     e.preventDefault();
-    navigate(`/updateform/${post._id}`);
+    navigate(`/updateform/${post.id}`);
   })
+
   return (
     <>
      <Title>My posts:</Title>
      <Wrapper>
     {!posts ? <h2>Loading...</h2>
       :
-      posts.map((post)=>{
-        if (post.email === user.email) 
+      posts. slice(). reverse() .map((post)=>{
+        if (post.cookEmail === user.email) 
         // console.log(post);
         return (  
           <>
-            <ItemContainer to={`/posts/${post._id}`} key={post._id} style={{ textDecoration: 'none' }}>
-              <Text> {post.picture ? <Image src={post.picture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
-              <Text><Tag>Name:</Tag> {post.name}</Text>
-              <Text><Tag>Price:</Tag> {post.price}</Text>
+            <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
+              <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
+              <Text><Tag>Name: </Tag> {post.foodName}</Text>
+              <Text><Tag>Price: </Tag> {post.price}$</Text>
+              {post.posted ?     <Posted>Posted {moment(post.posted).fromNow()}</Posted>
+                  : ""
+                  }
               <BtnContainer>
                 <DeleteBtn  onClick={(e) => { deleteHandler(e, post) }}> 
                    <AiFillDelete size={25} style={{color: "var(--darkblue)"}}
@@ -82,14 +87,18 @@ const MyPosts = () => {
                     onMouseOut={({target})=>target.style.color="var(--darkblue)"}/>
                 </DeleteBtn>
               </BtnContainer>
-            
           </ItemContainer>       
           </>
-        
         )
       })
       
+      
     }
+      {posts && posts.filter((post)=>{
+                     if (post.cookEmail === user.email)
+                        return post
+                    }).length < 1 ? (<NoPost>You have no post in your list</NoPost>) : "" 
+                  }
    
   </Wrapper>
     </>
@@ -99,7 +108,6 @@ const MyPosts = () => {
 
 
 const Wrapper = styled.div`
-  border: 1px solid red;
   margin: 20px 50px 50px;
   display: flex;
   align-items: center;
@@ -108,7 +116,6 @@ const Wrapper = styled.div`
 `
 
 const Text = styled.p`
-border: 1px solid green;
 width: 190px;
 margin-bottom: 10px;
 color: black;
@@ -118,10 +125,16 @@ justify-content: center;
 `
 const Tag = styled.span`
 font-weight: bold;
+margin-right: 5px;
 `
+
+const Posted = styled.span`
+  text-align: center;
+  margin-bottom: 7px;
+`
+
 const Title = styled.h1`
 margin: 25px;
-border: 1px solid green;
 font-size: 25px;
 text-align: center;
 `
@@ -131,10 +144,10 @@ const ItemContainer = styled(Link)`
   flex-direction: column;
   justify-content: space-between;
   border-radius: 15px;
-  padding: 20px 10px 10px 10px;
+  padding: 20px 10px 10px 15px;
   margin: 0 0px 30px 20px;
   width: 220px;
-  height: 340px;
+  height: 360px;
   text-decoration: none;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   transition: all .2s ease-in-out;
@@ -169,9 +182,8 @@ const DeleteBtn = styled.div`
   cursor: pointer;
 `
 const NoPost = styled.div`
+border: 1px solid red;
   font-size: 25px;
-  margin-top: 200px;
-  border: 2px solid green;
 `
 
 export default MyPosts

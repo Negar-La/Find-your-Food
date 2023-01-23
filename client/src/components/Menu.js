@@ -21,7 +21,7 @@ const Menu = () => {
       </Link>
       {isAuthenticated &&
       <>
-        <Link to="/profile" onClick={() => setOpenMenu(!openMenu)}>
+        <Link to="/myFavorites" onClick={() => setOpenMenu(!openMenu)}>
             My Favorites
         </Link>
         <Link to="/faq" onClick={() => setOpenMenu(!openMenu)}>

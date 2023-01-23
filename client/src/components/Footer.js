@@ -11,9 +11,9 @@ const Footer = () => {
             {/* <Logo src={SamLogo} /> */}
             <Copyright>© 2023 Food Inc. {""}</Copyright>
             <FlexDiv2>
-            <a href="https://www.facebook.com/"   target='_blank'><BsFacebook /></a>
-            <a href="https://www.twitter.com/"   target='_blank'><BsTwitter/></a>
-            <a href="https://www.instagram.com/"   target='_blank'><AiFillInstagram/></a>
+            <a href="https://www.facebook.com/"   target='_blank'><BsFacebook style={{color: "white"}}/></a>
+            <a href="https://www.twitter.com/"   target='_blank'><BsTwitter  style={{color: "white"}}/></a>
+            <a href="https://www.instagram.com/"   target='_blank'><AiFillInstagram  style={{color: "white"}}/></a>
             </FlexDiv2>
         </FlexDiv>
         <FlexDiv>

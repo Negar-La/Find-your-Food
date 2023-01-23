@@ -12,11 +12,12 @@ express()
     .use(helmet())
     .use(morgan('tiny'))
 
+
     .post("/api/post-add", addPost)
     .get("/api/getPosts", getPosts)
-    .get('/api/get-post/:_id', getSinglePost)
+    .get('/api/get-post/:id', getSinglePost)
     .delete("/api/delete-post", deletePost)
-    .patch('/api/update-post/:_id', updatePost)
+    .patch('/api/update-post/:id', updatePost)
 
     .post("/api/add-favorite", addFavorite)
     .get("/api/get-favorites", getFavorites)

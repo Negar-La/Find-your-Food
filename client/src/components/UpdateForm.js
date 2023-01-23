@@ -39,7 +39,20 @@ const UpdateForm = () => {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(updatePost)
+            body: JSON.stringify({
+              id: updatePost.id,
+              foodType: updatePost.foodType,
+              foodName: updatePost.foodName,
+              price: updatePost.price,
+              ingredients: updatePost.ingredients,
+              phone: updatePost.phone,
+              stNum: updatePost.stNum,
+              stName: updatePost.stName,
+              postalCode: updatePost.postalCode,
+              about: updatePost.about,
+              lat: updatePost.lat,
+              lng: updatePost.lng,
+            })
         })
         .then(res => res.json())
         .then((data) => {
@@ -74,12 +87,7 @@ const UpdateForm = () => {
 
         <FlexTwo>
             <label htmlFor='name'>Title:</label>
-            <input type="text" id='name' value={updatePost.name} required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
-        </FlexTwo>
-        <br></br>
-        <FlexTwo>
-            <label htmlFor='person'>By:</label>
-            <input type="text" id='person' value={updatePost.person}  required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <input type="text" id='foodName' value={updatePost.foodName} required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <FlexTwo>
@@ -92,6 +100,11 @@ const UpdateForm = () => {
             <input type="text" id='ingredients' value={updatePost.ingredients}  required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
+        <FlexTwo>
+            <label htmlFor='phone'>Telephone:</label>
+            <input type="text" id='phone' value={updatePost.phone}  required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+        </FlexTwo>
+        <br></br>
         <Divider>
                   <Title>Location</Title>
                   <Liner />
@@ -99,14 +112,14 @@ const UpdateForm = () => {
                     <P>Province</P>
                     <select name="province" required>
                         <option value="">-Select-</option>
-                        <option value="quebec">Quebec</option>
+                        <option value="quebec" selected="selected">Quebec</option>
                     </select>
                   </SelectOptions>
                   <SelectOptions>
                     <P>City</P>
                     <select name="city" required>
                         <option value="">-Select-</option>
-                        <option value="montreal" >Montreal</option>
+                        <option value="montreal" selected="selected">Montreal</option>
                     </select>
                   </SelectOptions>
                     

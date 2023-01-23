@@ -11,6 +11,7 @@ const PostDetails = () => {
     const { postId } = useParams();
     const [post, setPost] = useState(null)
     const {user, isAuthenticated} = useAuth0();
+    // console.log(user.email);
     const [favoritePost, setFavoritePost] = useState([])
 
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ const PostDetails = () => {
           .then((data) => {
             if (data.status === 200) {
               setPost(data.data);
-              // console.log(data.data);
+              console.log(data.data);
             }    
         })  
             .catch((error) => {
@@ -31,7 +32,7 @@ const PostDetails = () => {
       }, [postId]);
 
       //https://stackoverflow.com/questions/70922600/when-i-click-one-button-its-open-all-buttons-simultaneously
-    const handlefavorite = (e, post) =>{
+    const addfavorite = (e, post) =>{
       e.preventDefault();
       fetch(`/api/add-favorite`, {
       method: "POST",
@@ -40,9 +41,13 @@ const PostDetails = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...post,
-        user: user.name, 
-        userPicture: user.picture,
+        id: post.id,
+        foodName: post.foodName,
+        price: post.price,
+        cook: post.cook,
+        foodPicture: post.foodPicture,
+        userAddedtoFav: user.name, 
+        userPictureAddedtoFav: user.picture,
       }),
     })
       .then((res) => res.json())
@@ -52,7 +57,7 @@ const PostDetails = () => {
         if(data.message === 'This post is already in your favorite list'){
           window.alert("This item is already in your favorite list!")
         }
-        navigate('/profile');
+        navigate('/myFavorites');
       })
       .catch((error) => {
         console.log(error);
@@ -68,11 +73,11 @@ const PostDetails = () => {
         <Flex>
             <Info>
               <Text><Tag>Food Type:</Tag> {post.foodType}</Text>
-              <Text><Tag>Food Name:</Tag> {post.name}</Text>
-              <Text><Tag>By:</Tag> {post.person}</Text>
+              <Text><Tag>Food Name:</Tag> {post.foodName}</Text>
               <Text><Tag>Price:</Tag> {post.price} $</Text>
               <Text><Tag>Ingredients: </Tag>{post.ingredients}</Text>
               <Text><Tag>About this item:</Tag> {post.about ? post.about : "Nothing mentioned"}</Text>
+              <Text><Tag>By: </Tag> {post.cook[0].toUpperCase() + post.cook.substring(1)} (Email: {post.cookEmail})</Text>
               <Text><Tag>Address:</Tag>  {post.stNum} {post.stName} - {post.postalCode}</Text>
               <Text><Tag>Phone:</Tag>  {post.phone} </Text>
               <FlexDiv>
@@ -86,7 +91,7 @@ const PostDetails = () => {
                       {
                         window.alert("Please log in first!")
                       } else {
-                        handlefavorite(e, post);
+                        addfavorite(e, post);
                       }
                         }}> 
                       Add to Favorite <FcLike style={{marginLeft: '5px'}}/> 
@@ -94,7 +99,7 @@ const PostDetails = () => {
               </FlexDiv>
              
             </Info>
-            <ImageContainer> {post.picture ? <Img src={post.picture}/> : (<NoImage>No Image provided</NoImage>) } </ImageContainer>
+            <ImageContainer> {post.foodPicture ? <Img src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </ImageContainer>
   
         </Flex> 
         }

@@ -32,7 +32,7 @@ const Form = () => {
             "Accept": "application/json",
             "Content-Type": "application/json"
           },
-          body: JSON.stringify({...formData, user: user.nickname, email: user.email, picture:pictureUrl, posted: time})
+          body: JSON.stringify({...formData, cook: user.nickname, cookEmail: user.email, foodPicture:pictureUrl, posted: time})
         })
         .then(res=>res.json()).then((data)=>{
             console.log(data);
@@ -64,7 +64,7 @@ const Form = () => {
 
         <FlexTwo>
             <label htmlFor='name'>Title:</label>
-            <input type="text" id='name' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <input type="text" id='foodName' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <br></br>
         <FlexTwo>
@@ -79,7 +79,7 @@ const Form = () => {
         <br></br>
         <FlexTwo>
             <label htmlFor='person'>By:</label>
-            <input type="text" id='person' required onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <p>{user.nickname[0].toUpperCase() + user.nickname.substring(1)} - Email: {user.email}</p>
         </FlexTwo>
         <br></br>
         <FlexTwo>

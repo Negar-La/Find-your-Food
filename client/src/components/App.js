@@ -4,7 +4,7 @@ import HomePage from "./HomePage";
 import Navbar from "./Navbar";
 import Login from "./Login";
 import Logout from "./Logout";
-import Profile from "./Profile";
+import MyFavorites from "./MyFavorites";
 import Footer from "./Footer";
 import Form from "./Form";
 import PostDetails from "./PostDetails";
@@ -24,7 +24,7 @@ const App = () => {
               <Route path="/" element={<HomePage/>} />
               <Route path="/login" element={<Login/>} />
               <Route path="/logout" element={<Logout />} />
-              <Route path="/profile" element={<Profile/>} />
+              <Route path="/myFavorites" element={<MyFavorites/>} />
               <Route path="/myPosts" element={<MyPosts/>} />
               <Route path="/new" element={<Form/>} />
               <Route path="/faq" element={<FAQ/>} />

@@ -8,6 +8,7 @@ import moment from 'moment';
 const HomePage = () => {
 
   const [posts, setPosts] = useState(null);
+  const { user, isAuthenticated } = useAuth0();
 
   //add to favorite and remove from favorite list
 //isToggled is an object including all post.id(s) which are either true (added to favorite list) or false (removed from favorite list).
@@ -16,12 +17,10 @@ const HomePage = () => {
       fetch ("/api/getPosts")
         .then(res=> res.json())
         .then((data)=>{
-          // console.log(data);
+          console.log(data);
           setPosts(data.data);
         })
     }, [])
-    
-
 
   return (
     <>
@@ -29,16 +28,16 @@ const HomePage = () => {
         <Wrapper>
       {!posts ? <h2>Loading...</h2>
         :
-        posts.map((post)=>{
+        posts.slice().reverse().map((post)=>{
           // console.log(post);
           return (  
             <>
-              <ItemContainer to={`/posts/${post._id}`} key={post._id} style={{ textDecoration: 'none' }}>
-                <Text> {post.picture ? <Image src={post.picture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
-                <Text><Tag>Name:</Tag> {post.name}</Text>
-                <Text><Tag>Price:</Tag> {post.price}</Text>
+              <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
+                <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
+                <Text><Tag>Name:</Tag> {post.foodName}</Text>
+                <Text><Tag>Price:</Tag> {post.price}$</Text>
               
-                  {post.posted ?     <span>Posted {moment(post.posted).fromNow()}</span>
+                  {post.posted ?     <Posted>Posted {moment(post.posted).fromNow()}</Posted>
                   : ""
                   }
               
@@ -55,7 +54,6 @@ const HomePage = () => {
 }
 
 const Wrapper = styled.div`
-  border: 1px solid red;
   margin: 20px 50px 50px;
   display: flex;
   align-items: center;
@@ -64,7 +62,8 @@ const Wrapper = styled.div`
 `
 
 const Text = styled.p`
-line-height: 40px;
+width: 190px;
+margin-bottom: 10px;
 color: black;
 font-size: 18px;
 display: flex;
@@ -72,26 +71,31 @@ justify-content: center;
 `
 const Tag = styled.span`
 font-weight: bold;
+margin-right: 5px;
 `
+
+const Posted = styled.span`
+  text-align: center;
+  margin-bottom: 7px;
+`
+
 const Title = styled.h1`
 margin: 25px;
-border: 1px solid green;
 font-size: 25px;
 text-align: center;
 `
 
 const ItemContainer = styled(Link)`
-  border: 1px solid blue;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 15px;
-  padding: 20px 10px 10px 10px;
+  padding: 20px 10px 10px 15px;
   margin: 0 0px 30px 20px;
   width: 220px;
-  height: 340px;
+  height: 360px;
   text-decoration: none;
-  box-shadow: 6px 10px 79px 10px rgba(184,178,184,1);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   transition: all .2s ease-in-out;
   color: var(--text-color);
   :hover {
