@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {AiFillDelete} from "react-icons/ai";
+import LoadingIcon from "./LoadingIcon";
+import Login from "./Login";
 
 const MyFavorites = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -48,15 +50,22 @@ const MyFavorites = () => {
   };
 
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
+  if (!isAuthenticated) {
+    return (<LoadingWrapper>
+             <Title>You need an account to save your <Purple>Favorite Foods</Purple>!</Title>
+             <Login/>
+          </LoadingWrapper>
+           )
   }
 
   return (
       <>
               <Title>My favorite posts:</Title>
               <Wrapper>
-              {!favoritePosts ? <h2>Loading...</h2> 
+              {!favoritePosts ? (<LoadingWrapper>
+                                    <LoadingIcon />
+                                </LoadingWrapper>
+                                ) 
                 :
                   favoritePosts.map((post)=>{
                     if (post.userAddedtoFav === user.email) 
@@ -65,13 +74,13 @@ const MyFavorites = () => {
                           <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
                             <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
                             <Text><Tag>Name: </Tag> {post.foodName}</Text>
-                            <Text><Tag>By: </Tag> {post.cook}$</Text>
+                            <Text><Tag>By: </Tag> {post.cook}</Text>
                     
                             <BtnContainer>
                               <DeleteBtn  onClick={(e) => { deleteFavoriteHandler(e, post) }}> 
-                                <AiFillDelete size={25} style={{color: "var(--darkblue)"}}
+                                <AiFillDelete size={25} style={{color: "#4A2E67"}}
                                   onMouseOver={({target})=>target.style.color="var(--yellow)"}
-                                  onMouseOut={({target})=>target.style.color="var(--darkblue)"}/>
+                                  onMouseOut={({target})=>target.style.color="#4A2E67"}/>
                               </DeleteBtn>
                             </BtnContainer>
                         </ItemContainer> 
@@ -119,6 +128,10 @@ margin: 25px;
 font-size: 25px;
 text-align: center;
 `
+const Purple = styled.span`
+  color: purple;
+  font-weight: bold;
+`
 
 const ItemContainer = styled(Link)`
   display: flex;
@@ -133,6 +146,7 @@ const ItemContainer = styled(Link)`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   transition: all .2s ease-in-out;
   color: var(--text-color);
+  background-color: white;
   :hover {
     cursor: pointer;
     transform: scale(1.1);   
@@ -163,8 +177,17 @@ const DeleteBtn = styled.div`
   cursor: pointer;
 `
 const NoPost = styled.div`
-border: 1px solid red;
   font-size: 25px;
 `
+const LoadingWrapper = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 export default MyFavorites

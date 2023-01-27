@@ -21,15 +21,20 @@ const Navbar = () => {
         <Nav to="/"> Find Your Food 😋</Nav>
      
         {!isAuthenticated && 
+        <Div>
           <Login/>
+          <NavFav to="/myFavorites" >
+               My Favorites
+          </NavFav>
+        </Div>
         }
+
         {isAuthenticated &&    
         <Div>
-            <Text>Hello {user.nickname}</Text>
+            <Text>Hello {user.nickname[0].toUpperCase() + user.nickname.substring(1)}</Text>
             <HamburgerButton onClick={handleClick}>
-                 <GiHamburgerMenu style={{color: 'black'}} />
+                 <GiHamburgerMenu style={{color: 'white'}} />
             </HamburgerButton>
-       
         </Div>
         }
 
@@ -41,17 +46,27 @@ const Navbar = () => {
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 10px 25px;
+  align-items: center;
+  background-color: #795E96;
   padding: 10px;
+  height: 50px;
 `
 
 const Nav = styled(NavLink)`
 font-size: 20px;
 text-decoration: none;
-
+color: white;
 `
+
+const NavFav = styled(NavLink)`
+font-size: 20px;
+text-decoration: none;
+color: white;
+margin-left: 15px;
+`
+
 const Text = styled.p`
-color: black;
+color: white;
 font-size: 20px;
 margin-right: 100px;
 `
@@ -61,7 +76,7 @@ const Div = styled.div`
 const HamburgerButton = styled.button`
   position: absolute;
   right: 3rem;
-  top: 0.8rem;
+  top: 0.5rem;
   font-size: 2.1rem;
   border: none;
   background-color: inherit;

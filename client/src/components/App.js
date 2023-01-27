@@ -13,6 +13,7 @@ import MyPosts from "./MyPosts";
 import UpdateForm from "./UpdateForm";
 import Menu from "./Menu";
 import FAQ from "./FAQ";
+import MyMessages from "./MyMessages";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
               <Route path="/logout" element={<Logout />} />
               <Route path="/myFavorites" element={<MyFavorites/>} />
               <Route path="/myPosts" element={<MyPosts/>} />
+              <Route path="/myMessages" element={<MyMessages/>} />
               <Route path="/new" element={<Form/>} />
               <Route path="/faq" element={<FAQ/>} />
               <Route path="/updateform/:postId" element={<UpdateForm/>} />

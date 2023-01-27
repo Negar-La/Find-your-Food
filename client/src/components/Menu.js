@@ -24,6 +24,9 @@ const Menu = () => {
         <Link to="/myFavorites" onClick={() => setOpenMenu(!openMenu)}>
             My Favorites
         </Link>
+        <Link to="/myMessages" onClick={() => setOpenMenu(!openMenu)}>
+            My Messages
+        </Link>
         <Link to="/faq" onClick={() => setOpenMenu(!openMenu)}>
             FAQ
         </Link>
@@ -42,20 +45,22 @@ const Menu = () => {
 };
 
 const Wrapper = styled.div`
-  background-color: wheat;
+  background-color: #795E96;
   /* if navbar is fixed, changing position from absolute to fixed so when you scroll down it works properly */
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
-  top: 45px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  top: 50px;
   right: 0px;
-  border-radius: 5px;
+
   visibility: ${(props) => (props.open ? "visible" : "hidden")};
 `;
 
 const Link = styled(NavLink)`
-  color: black;
+  color: white;
   height: 50px;
   width: 150px;
   text-decoration: none;
@@ -64,8 +69,8 @@ const Link = styled(NavLink)`
   font-size: 1.2rem;
   font-weight: 600;
   &:hover {
-    background-color: lightyellow;
-
+    background-color: var(--yellow);
+    color: black;
   }
 `;
 

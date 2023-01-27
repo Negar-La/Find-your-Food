@@ -2,27 +2,65 @@ const express = require('express');
 const helmet = require("helmet");
 const morgan = require('morgan');
 
-const {addPost, getPosts, getSinglePost, deletePost, updatePost, addFavorite, getFavorites, deleteFavorite} = require("./handlers")
+const {getMsg, postMsg, addPost, getPosts, getSinglePost, deletePost, updatePost, addFavorite, getFavorites, deleteFavorite} = require("./handlers")
 
 const port = 8000;
 
+// const bp = require('body-parser');
+const app = express();
+const http = require('http');
+const cors = require('cors');
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+
+const io = new Server(server, {
+	cors: {
+		origin: 'http://localhost:3000',
+        methods: ["GET", "POST"],
+	},
+});
+
 express()
 
-    .use(express.json())
-    .use(helmet())
-    .use(morgan('tiny'))
+    app.use(express.json())
+    app.use(helmet())
+    app.use(morgan('tiny'))
+    app.use(cors())
 
 
-    .post("/api/post-add", addPost)
-    .get("/api/getPosts", getPosts)
-    .get('/api/get-post/:id', getSinglePost)
-    .delete("/api/delete-post", deletePost)
-    .patch('/api/update-post/:id', updatePost)
+    app.get("/api/getMessage", getMsg)
+    app.post("/api/postMessage", postMsg)
 
-    .post("/api/add-favorite", addFavorite)
-    .get("/api/get-favorites", getFavorites)
-    .delete("/api/delete-favorite", deleteFavorite)
 
-    .listen(port, () => {
+    app.post("/api/post-add", addPost)
+    app.get("/api/getPosts", getPosts)
+    app.get('/api/get-post/:id', getSinglePost)
+    app.delete("/api/delete-post", deletePost)
+    app.patch('/api/update-post/:id', updatePost)
+
+    app.post("/api/add-favorite", addFavorite)
+    app.get("/api/get-favorites", getFavorites)
+    app.delete("/api/delete-favorite", deleteFavorite)
+
+    
+    io.on("connection", (socket)=>{
+        console.log(`User Connected: ${socket.id}`);
+
+        socket.on("join-room", (data)=>{
+            socket.join(data);
+            console.log(`user with id = ${socket.id} joined room: ${data}`);
+        });
+
+        socket.on("send-message", (data) => {
+            console.log(data);
+            socket.to(data.room).emit("receive-message", data);
+        })
+
+        socket.on("disconnect", ()=>{
+            console.log("user disconnected", socket.id);
+        })
+    })
+
+    server.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
     });

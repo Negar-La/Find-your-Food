@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import UploadWidget from "./UploadWidget";
+import LoadingIcon from "./LoadingIcon";
 
 const UpdateForm = () => {
 
@@ -67,9 +68,13 @@ const UpdateForm = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-        {updatePost &&
-        <>
- <FlexType>
+    {!updatePost ? (<LoadingWrapper>
+                        <LoadingIcon />
+                    </LoadingWrapper>
+                   ) 
+                :
+      <>
+        <FlexType>
                     <p>Food Type</p>
                         <Radio>
                             <input type="radio" checked={updatePost.foodType === "Appetizer" ? true : false} id="Appetizer" name="foodType" required onChange={(e)=>handleChange(e.target.name, e.target.id)} />
@@ -83,7 +88,7 @@ const UpdateForm = () => {
                             <input type="radio" checked={updatePost.foodType === "Dessert" ? true : false} id="Dessert" name="foodType" onChange={(e)=>handleChange(e.target.name, e.target.id)}/>
                             <label htmlFor="Dessert">Dessert</label><br/>
                         </Radio>       
-            </FlexType>
+        </FlexType>
 
         <FlexTwo>
             <label htmlFor='name'>Title:</label>
@@ -122,7 +127,6 @@ const UpdateForm = () => {
                         <option value="montreal" selected="selected">Montreal</option>
                     </select>
                   </SelectOptions>
-                    
                      <br/>  
                         <input type="number"  placeholder="Street number" name="stNum" value={updatePost.stNum}  required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>
                         <input type="text"  placeholder="Street name" name="stName" value={updatePost.stName} required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>        
@@ -139,9 +143,8 @@ const UpdateForm = () => {
         </FlexUpload>
         <button type='submit'>Post</button>
         </>
- 
-        }
-        </StyledForm>
+    }
+    </StyledForm>
   )
 }
 
@@ -241,6 +244,13 @@ const SelectOptions = styled.div`
 const Title=styled.span`
     font-weight: bold;
     font-size: 19px;
+`;
+
+const LoadingWrapper = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 export default UpdateForm

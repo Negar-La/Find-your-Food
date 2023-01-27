@@ -17,6 +17,9 @@
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
+    "react-scroll-to-bottom": "^4.2.0",
+    "react-spinners": "^0.13.8",
+    "socket.io-client": "^4.5.4",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },

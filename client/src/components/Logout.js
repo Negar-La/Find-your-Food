@@ -66,7 +66,7 @@ const Answer = styled.button`
     width: 75px;
     height: 40px;
     margin: 3px;
-    background-color: var(--darkblue);
+    background-color: #4A2E67;
     border-radius: 6px;
     font-family: roboto;
     border: none;

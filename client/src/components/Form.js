@@ -131,7 +131,8 @@ const StyledForm = styled.form`
   margin-top: 30px;
   margin-bottom: 80px;
   font-size: 18px;
-  border: 3px solid black;
+  border: 3px solid purple;
+  border-radius: 10px;
   width: 600px;
   padding: 20px;
   display: flex;
@@ -149,15 +150,20 @@ const StyledForm = styled.form`
 
   button {
     padding: 10px 16px;
+    font-size: 18px;
     border-radius: 5px;
     width: 150px;
+    background-color: #795E96;
+    color: white;
+    border: none;
     transition: background-color 0.3s,
                 opacity 0.3s;
   }
 
     button:hover {
       cursor: pointer;
-      background-color: yellow;
+      background-color: var(--yellow);
+      color: black;
     }
     button:active {
       opacity: 0.5;}

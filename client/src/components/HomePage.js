@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import moment from 'moment';
+import Carousel from "./Carousel";
+import LoadingIcon from "./LoadingIcon";
 
 
 const HomePage = () => {
@@ -17,16 +19,22 @@ const HomePage = () => {
       fetch ("/api/getPosts")
         .then(res=> res.json())
         .then((data)=>{
-          console.log(data);
+          // console.log(data);
           setPosts(data.data);
         })
     }, [])
 
   return (
-    <>
-        <Title> Posts</Title>
+    <All>
+        <Title> All you need is <Purple>Love</Purple> and <Purple>Home Cooked</Purple> food!</Title>
+        <CarouselWrapper>
+						<Carousel />
+				</CarouselWrapper>
         <Wrapper>
-      {!posts ? <h2>Loading...</h2>
+      {!posts ? (<LoadingWrapper>
+                   <LoadingIcon />
+                </LoadingWrapper>
+                )
         :
         posts.slice().reverse().map((post)=>{
           // console.log(post);
@@ -34,7 +42,7 @@ const HomePage = () => {
             <>
               <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
                 <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
-                <Text><Tag>Name:</Tag> {post.foodName}</Text>
+                <Text><Tag>{post.foodName}</Tag> </Text>
                 <Text><Tag>Price:</Tag> {post.price}$</Text>
               
                   {post.posted ?     <Posted>Posted {moment(post.posted).fromNow()}</Posted>
@@ -48,22 +56,44 @@ const HomePage = () => {
         })
       }
     </Wrapper>
-    </>
+    </All>
 
   )
 }
 
+const All = styled.div`
+  background: linear-gradient(-45deg, #f5d5cc, #f9d2e1, #d3eff8, #d3f8ef);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+`
+
 const Wrapper = styled.div`
-  margin: 20px 50px 50px;
+  margin: 340px 50px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 `
+const CarouselWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+`;
 
 const Text = styled.p`
 width: 190px;
-margin-bottom: 10px;
 color: black;
 font-size: 18px;
 display: flex;
@@ -72,6 +102,7 @@ justify-content: center;
 const Tag = styled.span`
 font-weight: bold;
 margin-right: 5px;
+text-align: center;
 `
 
 const Posted = styled.span`
@@ -79,10 +110,15 @@ const Posted = styled.span`
   margin-bottom: 7px;
 `
 
-const Title = styled.h1`
-margin: 25px;
+const Title = styled.h2`
+padding: 25px;
 font-size: 25px;
 text-align: center;
+`
+
+const Purple = styled.span`
+  color: purple;
+  font-weight: bold;
 `
 
 const ItemContainer = styled(Link)`
@@ -98,6 +134,7 @@ const ItemContainer = styled(Link)`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   transition: all .2s ease-in-out;
   color: var(--text-color);
+  background-color: white;
   :hover {
     cursor: pointer;
     transform: scale(1.1);   
@@ -116,5 +153,13 @@ const NoImage = styled.p`
   display: flex;
   align-items: center;
 `
-
+const LoadingWrapper = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 70%;
+  transform: translate(-50%, -50%);
+  @media (max-width: 500px) {
+    left: 50%;
+  }
+`;
 export default HomePage

@@ -5,17 +5,28 @@ import Map from "./Map";
 import {BsFillPinMapFill} from "react-icons/bs";
 import {FcLike} from "react-icons/fc";
 import { useAuth0 } from "@auth0/auth0-react";
+import { BsChatRightDots } from "react-icons/bs";
+import ChatSetup from "./ChatSetup";
+import LoadingIcon from "./LoadingIcon";
+
 
 const PostDetails = () => {
 
     const { postId } = useParams();
     const [post, setPost] = useState(null)
     const {user, isAuthenticated} = useAuth0();
-    // console.log(user.email);
+    // console.log(user);
     const [favoritePost, setFavoritePost] = useState([])
 
     const navigate = useNavigate();
     const [showMap,setShowMap]=useState(false)
+
+    const [isShown, setIsShown] = useState(false);
+
+    const handleClick = (ev) => {
+      setIsShown(current => !current);
+      ;
+    };
 
     useEffect(() => {
         fetch(`/api/get-post/${postId}`)
@@ -46,7 +57,7 @@ const PostDetails = () => {
         price: post.price,
         cook: post.cook,
         foodPicture: post.foodPicture,
-        userAddedtoFav: user.name, 
+        userAddedtoFav: user.email, 
         userPictureAddedtoFav: user.picture,
       }),
     })
@@ -68,7 +79,10 @@ const PostDetails = () => {
 
   return (
         <>
-        {!post ? <h1>Loading...</h1>
+        {!post ? (<LoadingWrapper>
+                   <LoadingIcon />
+                </LoadingWrapper>
+                )
         :
         <Flex>
             <Info>
@@ -81,7 +95,7 @@ const PostDetails = () => {
               <Text><Tag>Address:</Tag>  {post.stNum} {post.stName} - {post.postalCode}</Text>
               <Text><Tag>Phone:</Tag>  {post.phone} </Text>
               <FlexDiv>
-                <MapButton onClick={()=> setShowMap(true)}>View on Map <BsFillPinMapFill style={{marginLeft: '5px', color: 'blue'}} /></MapButton>
+                <MapButton onClick={()=> setShowMap(true)}>View on Map <BsFillPinMapFill style={{marginLeft: '5px', color: '#795E96'}} /></MapButton>
                               {showMap && <Map onCloseFunc={()=>setShowMap(false)} center={[parseFloat(post.lat), parseFloat(post.lng)]} />}
                               
               </FlexDiv>
@@ -89,18 +103,25 @@ const PostDetails = () => {
                 <MapButton    onClick={(e) => {
                       if (!isAuthenticated)
                       {
-                        window.alert("Please log in first!")
+                        window.alert("In order to continue, you will need to log in!")
                       } else {
                         addfavorite(e, post);
                       }
                         }}> 
                       Add to Favorite <FcLike style={{marginLeft: '5px'}}/> 
                   </MapButton>
+          
               </FlexDiv>
-             
             </Info>
             <ImageContainer> {post.foodPicture ? <Img src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </ImageContainer>
-  
+            <ChatWrap>
+              <MsgBtn onClick={handleClick} style={{borderRadius:isShown ? "40px": "3px" }}>
+                <BsChatRightDots style={{fontSize:"25px", marginRight:"8px"}}/>
+                {isShown ? "Close Chat" : "Message Me"}
+              </MsgBtn>
+      {isShown && <ChatSetup cook={post.cook} cookEmail={post.cookEmail} user={user}/>}
+                
+            </ChatWrap>
         </Flex> 
         }
 
@@ -109,7 +130,6 @@ const PostDetails = () => {
 }
 
 const Flex = styled.div`
-border: 1px solid red;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -123,9 +143,11 @@ border: 1px solid red;
 `
 
 const Info = styled.div` 
-border: 1px solid green;
+border: 3px solid purple;
+border-radius: 15px;
 padding: 20px;
 margin-bottom: 30px;
+background-color: white;
 `
 
 const Text = styled.p`
@@ -137,10 +159,10 @@ justify-content: left;
 `
 const Tag = styled.span`
 font-weight: bold;
+margin-right: 5px;
 `
 const ImageContainer = styled.div`
 display: flex;
-border: 1px solid red;
 margin-left: 50px;
 @media (max-width: 600px) {
   margin-left: 0px;
@@ -179,11 +201,44 @@ const MapButton = styled.button`
   }
 `;
 
-const FavoriteBtn = styled.div`
-  border: 1px solid pink;
-  background-color: inherit;
-  width: 15px;
-  cursor: pointer;
+  const ChatWrap = styled.div`
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+@media (max-width: 600px) {
+  margin-left: 0px;
+  margin-top: 30px;
+  }
+  `
+const MsgBtn = styled.button`
+display:flex;
+justify-content: center;
+align-items: center;
+width:120px;
+height:50px;
+cursor:pointer; 
+border-radius: 3px;
+border: none;
+background-color: #795E96;
+color:white;
+outline: none;
+-webkit-transition: all ease .15s;
+  -o-transition: all ease .15s;
+  -moz-transition: all ease .15s;
+  transition: all ease .15s;
+  &:hover{
+  -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
+  -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
+  transform: scale(1.15);
+  }
 `
-
+const LoadingWrapper = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
 export default PostDetails

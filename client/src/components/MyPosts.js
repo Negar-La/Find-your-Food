@@ -5,10 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import {AiFillDelete} from "react-icons/ai";
 import {AiFillEdit} from "react-icons/ai";
 import moment from 'moment';
+import LoadingIcon from "./LoadingIcon";
 
 const MyPosts = () => {
 
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { user} = useAuth0();
     const [posts, setPosts] = useState(null);
     const[postDeleted, setPostDeleted] = useState(false)
 
@@ -61,7 +62,10 @@ const MyPosts = () => {
     <>
      <Title>My posts:</Title>
      <Wrapper>
-    {!posts ? <h2>Loading...</h2>
+    {!posts ? (<LoadingWrapper>
+                   <LoadingIcon />
+                </LoadingWrapper>
+                )
       :
       posts. slice(). reverse() .map((post)=>{
         if (post.cookEmail === user.email) 
@@ -77,14 +81,14 @@ const MyPosts = () => {
                   }
               <BtnContainer>
                 <DeleteBtn  onClick={(e) => { deleteHandler(e, post) }}> 
-                   <AiFillDelete size={25} style={{color: "var(--darkblue)"}}
+                   <AiFillDelete size={25} style={{color: "#4A2E67"}}
                     onMouseOver={({target})=>target.style.color="var(--yellow)"}
-                    onMouseOut={({target})=>target.style.color="var(--darkblue)"}/>
+                    onMouseOut={({target})=>target.style.color="#4A2E67"}/>
                 </DeleteBtn>
                 <DeleteBtn  onClick={(e) => { editHandler(e, post) }}> 
-                   <AiFillEdit size={25} style={{color: "var(--darkblue)"}}
+                   <AiFillEdit size={25} style={{color: "#4A2E67"}}
                     onMouseOver={({target})=>target.style.color="var(--yellow)"}
-                    onMouseOut={({target})=>target.style.color="var(--darkblue)"}/>
+                    onMouseOut={({target})=>target.style.color="#4A2E67"}/>
                 </DeleteBtn>
               </BtnContainer>
           </ItemContainer>       
@@ -152,6 +156,7 @@ const ItemContainer = styled(Link)`
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   transition: all .2s ease-in-out;
   color: var(--text-color);
+  background-color: white;
   :hover {
     cursor: pointer;
     transform: scale(1.1);   
@@ -182,8 +187,13 @@ const DeleteBtn = styled.div`
   cursor: pointer;
 `
 const NoPost = styled.div`
-border: 1px solid red;
   font-size: 25px;
 `
+const LoadingWrapper = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 export default MyPosts

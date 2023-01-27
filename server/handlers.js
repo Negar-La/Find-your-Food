@@ -1,4 +1,5 @@
 "use strict";
+const { query } = require("express");
 const { MongoClient} = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const {getLocFromPlCode} = require("./GeoCoder")
@@ -10,6 +11,55 @@ const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
+
+const getMsg = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options)
+  // const {user} = query;
+  // console.log('user', user);
+
+  await client.connect()
+
+  const db = client.db("find_your_food");
+
+  const messages = await db.collection("messages").find().toArray();
+  let rooms = messages.map(({ messageData })=> messageData.room )   // target room
+          // remove duplicates from the category array
+          let  uniq = [...new Set(rooms)];
+
+  // const filterMessages = messages.filter((msg) => {
+  //   return msg.author === user;
+  // })
+
+  messages
+  ? res.status(200).json({status:200, data: {messages, uniq}, message : "Success"})
+  : res.status(400).json({status:400, message : "No entry to retrieve"})
+
+  client.close();
+};
+
+
+const postMsg = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options)
+  console.log(req.body)
+  const message = {
+    ...req.body, 
+    id: uuidv4()
+}
+
+  await client.connect()
+
+  const db = client.db("find_your_food");
+
+  const getEntry = await db.collection("messages").insertOne(message);
+
+  getEntry
+  ? res.status(200).json({status:200, data:getEntry, message:"Success"})
+  : res.status(400).json({status:400, message:"Message was not added"})
+
+  client.close();
+};
+
+
 
 const addPost = async (req, res) =>{
     const client = new MongoClient(MONGO_URI, options);
@@ -214,4 +264,4 @@ const addPost = async (req, res) =>{
   }
 
 
-module.exports = {addPost, deletePost, updatePost, getPosts, getSinglePost, addFavorite, getFavorites, deleteFavorite};
+module.exports = {getMsg, postMsg, addPost, deletePost, updatePost, getPosts, getSinglePost, addFavorite, getFavorites, deleteFavorite};

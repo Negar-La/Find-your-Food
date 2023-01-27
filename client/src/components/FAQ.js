@@ -27,7 +27,7 @@ const data = {
         },
         {
             title: "What features this platform provides?",
-            content: `If the user is not loged in, he can see all the posts in homepage however, in order to be able to add a post to favorite list or make a new post and edit/delete it, the user needs to be loged in`,
+            content: `If the user is not loged in, he can see all the posts in homepage however, in order to be able to add a post to favorite list or make a new post and edit/delete it or send a message to cook, the user needs to be loged in`,
         },
         {
             title: "How is the coverage of this platform?",
@@ -35,20 +35,16 @@ const data = {
                 " 'Find your Food' is currently operating in Great Montreal. If you are a talented home cook in great Montreal, we'd love for you to join us as a partner cook!",
         },
         {
-            title: "How does it help you?",
-            content: `work.`,
-        },
-        {
-            title: "What's the purpose?",
-            content: " benefits.",
+            title: "Why do people like homemade food?",
+            content: " Home cooked food is healthier than fast food or takeout. The nutritional value of the produce used will be maintained when you cook at home. Usually, the takeout that you order will have a lot of oil, butter and spices which might not be healthy, especially when eaten on a daily basis.",
         },
     ],
 };
 //little styling for title 
 const styles = {
     titleTextColor: '#480987',
-    rowTitleColor: 'darkblue',
-    rowContentTextSize: '18px',
+    rowTitleColor: 'purple',
+    rowContentTextSize: '19px',
     rowContentPaddingBottom: '15px',
     rowContentPaddingLeft: '30px',  
 };
