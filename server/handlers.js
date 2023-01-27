@@ -14,24 +14,25 @@ const options = {
 
 const getMsg = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options)
-  // const {user} = query;
-  // console.log('user', user);
+  const {id} = req.params;
+  console.log('id', id);
 
   await client.connect()
 
   const db = client.db("find_your_food");
 
   const messages = await db.collection("messages").find().toArray();
-  let rooms = messages.map(({ messageData })=> messageData.room )   // target room
-          // remove duplicates from the category array
-          let  uniq = [...new Set(rooms)];
+  const filterMessages = messages.filter((msg) => {
+    return msg.messageData.author === id;
+  })
+  console.log(filterMessages);
 
-  // const filterMessages = messages.filter((msg) => {
-  //   return msg.author === user;
-  // })
+  // let rooms = messages.map(({ messageData })=> messageData.room )   // target room
+  // // remove duplicates from the category array
+  // let  uniq = [...new Set(rooms)];
 
-  messages
-  ? res.status(200).json({status:200, data: {messages, uniq}, message : "Success"})
+  filterMessages
+  ? res.status(200).json({status:200, data: filterMessages, message : "Success"})
   : res.status(400).json({status:400, message : "No entry to retrieve"})
 
   client.close();
@@ -53,7 +54,7 @@ const postMsg = async (req, res) => {
   const getEntry = await db.collection("messages").insertOne(message);
 
   getEntry
-  ? res.status(200).json({status:200, data:getEntry, message:"Success"})
+  ? res.status(200).json({status:200, data:getEntry, message:"Success Msg"})
   : res.status(400).json({status:400, message:"Message was not added"})
 
   client.close();

@@ -71,7 +71,6 @@ const MyPosts = () => {
         if (post.cookEmail === user.email) 
         // console.log(post);
         return (  
-          <>
             <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
               <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
               <Text><Tag>Name: </Tag> {post.foodName}</Text>
@@ -92,7 +91,6 @@ const MyPosts = () => {
                 </DeleteBtn>
               </BtnContainer>
           </ItemContainer>       
-          </>
         )
       })
       

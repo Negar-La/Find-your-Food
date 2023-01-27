@@ -37,21 +37,16 @@ const HomePage = () => {
                 )
         :
         posts.slice().reverse().map((post)=>{
-          // console.log(post);
+          console.log(post);
           return (  
-            <>
               <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
                 <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
                 <Text><Tag>{post.foodName}</Tag> </Text>
                 <Text><Tag>Price:</Tag> {post.price}$</Text>
-              
                   {post.posted ?     <Posted>Posted {moment(post.posted).fromNow()}</Posted>
                   : ""
                   }
-              
             </ItemContainer>       
-            </>
-          
           )
         })
       }

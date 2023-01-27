@@ -28,7 +28,7 @@ express()
     app.use(cors())
 
 
-    app.get("/api/getMessage", getMsg)
+    app.get("/api/getMessage/:id", getMsg)
     app.post("/api/postMessage", postMsg)
 
 

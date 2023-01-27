@@ -70,7 +70,6 @@ const MyFavorites = () => {
                   favoritePosts.map((post)=>{
                     if (post.userAddedtoFav === user.email) 
                       return (
-                        <>
                           <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
                             <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
                             <Text><Tag>Name: </Tag> {post.foodName}</Text>
@@ -84,7 +83,6 @@ const MyFavorites = () => {
                               </DeleteBtn>
                             </BtnContainer>
                         </ItemContainer> 
-                        </>
                       )
                   })
               }

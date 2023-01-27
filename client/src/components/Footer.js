@@ -54,7 +54,6 @@ const Copyright = styled.div`
   margin-bottom: 10px;
 `;
 
-
 const P=styled.button`
   color: white;
   background: none;

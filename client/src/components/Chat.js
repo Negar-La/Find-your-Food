@@ -97,9 +97,10 @@ const Chatwindow = styled.div`
 `
 
 const ChatHeader = styled.div`
+  margin-top: 15px;
   height: 45px;
   border-radius: 6px;
-  background: #263238;
+  background: #795E96;
   position: relative;
   cursor: pointer;
   p {
@@ -115,7 +116,7 @@ const ChatBody = styled.div`
   height: calc(450px - (45px + 70px));
   border: 1px solid #263238;
   background: #fff;
-
+  border-radius: 5px;
   position: relative;
 
 `
@@ -125,6 +126,7 @@ const ChatFooter = styled.div`
   border: 1px solid #263238;
   border-top: none;
   display: flex;
+  border-radius: 5px;
   input {
     height: 100%;
     flex: 85%;
@@ -148,7 +150,7 @@ const ChatFooter = styled.div`
     font-size: 25px;
     color: lightgray;
     &:hover {
-        color: #43a047;
+        color: #795E96;
   }
   }
 `
