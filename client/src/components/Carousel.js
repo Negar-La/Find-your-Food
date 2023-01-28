@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import bleach from '../images/1.jpg';
-import blue from '../images/2.jpg';
-import charizard from '../images/3.jpg';
-import demonslayer from '../images/4.jpg';
-import jujutsu from '../images/5.jpg';
+import bleach from '../assets/images/1.jpg';
+import blue from '../assets/images/2.jpg';
+import charizard from '../assets/images/3.jpg';
+import demonslayer from '../assets/images/4.jpg';
+import jujutsu from '../assets/images/5.jpg';
 import onepunch from '../images/6.jpg';
-import zoro from '../images/7.jpg';
-import goku from '../images/8.jpg';
-import natsu from '../images/9.jpg';
+import zoro from '../assets/images/7.jpg';
+import goku from '../assets/images/8.jpg';
+import natsu from '../assets/images/9.jpg';
 
 const Carousel = () => {
 	return (

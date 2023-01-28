@@ -14,15 +14,6 @@ export default createGlobalStyle`
     --hoveryellow:  #f4d35e;
 
     --purple: #4d194d;
-    /* --turquoise: #0593A2;
-    // USED TO HIGHLIGHT SMALL SPAN
-    --redbutton:  #E3371E;
-    // HIGHTLIGNT COLOR USED IN MAIN BUTTONS
-    --corail: #ff7a48;
-    // FONTS FOR LOGO
-    --logo: 'Besley', serif;
-    // FONT FOR EVERYTHING ELSE
-    --body: 'Arimo', sans-serif; */
     }
 
     body, html {
@@ -46,7 +37,7 @@ export default createGlobalStyle`
         padding: 0;
         border: 0;
         font-size: 100%;
-        font-family: arial, sans-serif;
+        font-family: 'Signika';
         vertical-align: baseline;
         box-sizing: border-box;
     }
@@ -73,7 +64,7 @@ export default createGlobalStyle`
       font-size: 28px;
     }
     div, button, textarea {
-        font-family: roboto;
+        font-family: 'Signika';
 
     }
 `;

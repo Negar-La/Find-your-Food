@@ -7,7 +7,7 @@ import LoadingIcon from "./LoadingIcon";
 import Login from "./Login";
 
 const MyFavorites = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated} = useAuth0();
   // console.log(user);
   const [favoritePosts, setFavoritePosts] = useState(null)
   const[favoriteDeleted, setFavoriteDeleted] = useState(false)

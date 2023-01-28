@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import moment from 'moment';
 import Carousel from "./Carousel";
 import LoadingIcon from "./LoadingIcon";
+import ErrorPage from "./ErrorPage";
 
 
 const HomePage = () => {
 
   const [posts, setPosts] = useState(null);
-  const { user, isAuthenticated } = useAuth0();
+  const [status, setStatus] = useState("loading");
 
   //add to favorite and remove from favorite list
 //isToggled is an object including all post.id(s) which are either true (added to favorite list) or false (removed from favorite list).
@@ -22,8 +22,13 @@ const HomePage = () => {
           // console.log(data);
           setPosts(data.data);
         })
+        .catch ((error)=>{
+          console.log(error);
+          setStatus("error");
+        })
     }, [])
 
+  if (status==='error') {return <ErrorPage /> }
   return (
     <All>
         <Title> All you need is <Purple>Love</Purple> and <Purple>Home Cooked</Purple> food!</Title>

@@ -134,9 +134,8 @@ const ChatFooter = styled.div`
     padding: 0 0.7em;
     font-size: 1em;
     border-right: 1px dotted #607d8b;
-
     outline: none;
-    font-family: "Open Sans", sans-serif;
+    font-family: 'Signika', sans-serif;
   }
   button {
     border: 0;

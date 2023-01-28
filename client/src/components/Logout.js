@@ -68,7 +68,6 @@ const Answer = styled.button`
     margin: 3px;
     background-color: #4A2E67;
     border-radius: 6px;
-    font-family: roboto;
     border: none;
     color: white;
     font-size: 20px;
@@ -80,7 +79,6 @@ const Answer = styled.button`
     padding: 5px;
     border-radius: 14px;
     color: var(--darkblue);
-    font-family: roboto;
     font-weight: 500;
     font-size: 20px;
   }
@@ -92,7 +90,6 @@ const Answer = styled.button`
 const Question = styled.p`
     padding: 10px;
     margin-bottom: 5px;
-    font-family: roboto;
     font-size: 22px;
     line-height: 1.3;
     color: var(--darkblue)

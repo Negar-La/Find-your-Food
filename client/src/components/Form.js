@@ -8,7 +8,7 @@ const Form = () => {
 
     const [formData, setFormData] = useState({});
     const navigate = useNavigate();
-    const { user, isAuthenticated, isLoading } = useAuth0();
+    const { user } = useAuth0();
 
     const [pictureUrl, setPictureUrl] = useState("");
     const time = new Date();

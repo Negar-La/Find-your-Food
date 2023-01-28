@@ -24,6 +24,7 @@ const MyMessages = () => {
 
   return (
     <>
+     <Title>My  Messages:</Title>
       {!messages? (<LoadingWrapper>
                    <LoadingIcon />
                 </LoadingWrapper>
@@ -54,7 +55,11 @@ const Wrapper = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+`
+const Title = styled.h1`
+margin: 25px;
+font-size: 25px;
+text-align: center;
 `
 
 const LoadingWrapper = styled.div`

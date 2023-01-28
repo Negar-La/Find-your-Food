@@ -5,10 +5,11 @@ import styled from "styled-components";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useContext } from "react";
 import { MenuContext } from "./MenuContext";
+import Logo from '../assets/images/food2.svg';
 
 const Navbar = () => {
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated } = useAuth0();
   const { openMenu, setOpenMenu } = useContext(MenuContext);
 
   const handleClick = ()=>{
@@ -18,7 +19,7 @@ const Navbar = () => {
 
   return (
     <Wrapper>
-        <Nav to="/"> Find Your Food 😋</Nav>
+        <Nav to="/">  <Image src={Logo} alt='Logo' /> Find Your Food 😋</Nav>
      
         {!isAuthenticated && 
         <Div>
@@ -53,22 +54,27 @@ const Wrapper = styled.div`
 `
 
 const Nav = styled(NavLink)`
-font-size: 20px;
-text-decoration: none;
-color: white;
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
 `
+const Image = styled.img`
+	margin-bottom: -2px;
+  margin-right: 5px;
+  width: 26px;
+  `
 
 const NavFav = styled(NavLink)`
-font-size: 20px;
-text-decoration: none;
-color: white;
-margin-left: 15px;
+  font-size: 20px;
+  text-decoration: none;
+  color: white;
+  margin-left: 15px;
 `
 
 const Text = styled.p`
-color: white;
-font-size: 20px;
-margin-right: 100px;
+  color: white;
+  font-size: 20px;
+  margin-right: 100px;
 `
 
 const Div = styled.div`
