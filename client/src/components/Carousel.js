@@ -1,44 +1,44 @@
 import styled from 'styled-components';
-import bleach from '../assets/images/1.jpg';
-import blue from '../assets/images/2.jpg';
-import charizard from '../assets/images/3.jpg';
-import demonslayer from '../assets/images/4.jpg';
-import jujutsu from '../assets/images/5.jpg';
-import onepunch from '../images/6.jpg';
-import zoro from '../assets/images/7.jpg';
-import goku from '../assets/images/8.jpg';
-import natsu from '../assets/images/9.jpg';
+import pic1 from '../assets/images/1.jpg';
+import pic2 from '../assets/images/2.jpg';
+import pic3 from '../assets/images/3.jpg';
+import pic4 from '../assets/images/4.jpg';
+import pic5 from '../assets/images/5.jpg';
+import pic6 from '../assets/images/6.jpg';
+import pic7 from '../assets/images/7.jpg';
+import pic8 from '../assets/images/8.jpg';
+import pic9 from '../assets/images/9.jpg';
 
 const Carousel = () => {
 	return (
 		<Container>
 			<CarouselContainer>
 				<Wrapper>
-					<Image src={bleach} alt='bleach' />
+					<Image src={pic1} alt='bleach' />
 				</Wrapper>
 				<Wrapper>
-					<Image src={charizard} alt='charizard' />
+					<Image src={pic2} alt='charizard' />
 				</Wrapper>
 				<Wrapper>
-					<Image src={demonslayer} alt='demon_slayer' />
+					<Image src={pic3} alt='demon_slayer' />
 				</Wrapper>
 				<Wrapper>
-					<Image src={jujutsu} alt='jujutsu' />
+					<Image src={pic4} alt='jujutsu' />
 				</Wrapper>
 				<Wrapper>
-					<Image src={onepunch} alt='one_punch' />
+					<Image src={pic5} alt='one_punch' />
 				</Wrapper>
 				<Wrapper>
-					<Image src={blue} alt='blue_lock' />
+					<Image src={pic6} alt='blue_lock' />
 				</Wrapper>
 				<Wrapper>
-					<Image src={zoro} alt='zoro' />
+					<Image src={pic7} alt='zoro' />
 				</Wrapper>
 				<Wrapper>
-					<Image src={natsu} alt='natsu' />
+					<Image src={pic8} alt='natsu' />
 				</Wrapper>
 				<Wrapper>
-					<Image src={goku} alt='goku' />
+					<Image src={pic9} alt='goku' />
 				</Wrapper>
 			</CarouselContainer>
 		</Container>

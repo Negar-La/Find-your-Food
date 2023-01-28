@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {AiFillDelete} from "react-icons/ai";
-import LoadingIcon from "./LoadingIcon";
+import LoadingIcon from "../LoadingIcon";
 import Login from "./Login";
 
 const MyFavorites = () => {

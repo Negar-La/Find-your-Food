@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import moment from 'moment';
-import Carousel from "./Carousel";
-import LoadingIcon from "./LoadingIcon";
+import Carousel from "../Carousel";
+import LoadingIcon from "../LoadingIcon";
 import ErrorPage from "./ErrorPage";
 
 

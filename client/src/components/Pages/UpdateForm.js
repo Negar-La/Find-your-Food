@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import UploadWidget from "./UploadWidget";
-import LoadingIcon from "./LoadingIcon";
+import UploadWidget from "../UploadWidget";
+import LoadingIcon from "../LoadingIcon";
 
 const UpdateForm = () => {
 

@@ -1,13 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Map from "./Map";
+import Map from "../Map";
 import {BsFillPinMapFill} from "react-icons/bs";
 import {FcLike} from "react-icons/fc";
 import { useAuth0 } from "@auth0/auth0-react";
 import { BsChatRightDots } from "react-icons/bs";
-import ChatSetup from "./ChatSetup";
-import LoadingIcon from "./LoadingIcon";
+import ChatSetup from "../ChatSetup";
+import LoadingIcon from "../LoadingIcon";
 
 
 const PostDetails = () => {

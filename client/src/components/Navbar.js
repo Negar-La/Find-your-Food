@@ -1,4 +1,4 @@
-import Login from "./Login";
+import Login from "./Pages/Login";
 import { useAuth0 } from "@auth0/auth0-react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";

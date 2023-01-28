@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import GlobalStyles from "./GlobalStyles";
-import HomePage from "./HomePage";
+import HomePage from "./Pages/HomePage";
 import Navbar from "./Navbar";
-import Login from "./Login";
-import Logout from "./Logout";
-import MyFavorites from "./MyFavorites";
+import Login from "./Pages/Login";
+import Logout from "./Pages/Logout";
+import MyFavorites from "./Pages/MyFavorites";
 import Footer from "./Footer";
-import Form from "./Form";
-import PostDetails from "./PostDetails";
+import Form from "./Pages/Form";
+import PostDetails from "./Pages/PostDetails";
 import styled from "styled-components";
-import MyPosts from "./MyPosts";
-import UpdateForm from "./UpdateForm";
+import MyPosts from "./Pages/MyPosts";
+import UpdateForm from "./Pages/UpdateForm";
 import Menu from "./Menu";
-import FAQ from "./FAQ";
-import MyMessages from "./MyMessages";
+import FAQ from "./Pages/FAQ";
+import MyMessages from "./Pages/MyMessages";
 
 const App = () => {
   return (

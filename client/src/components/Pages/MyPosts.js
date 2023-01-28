@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {AiFillDelete} from "react-icons/ai";
 import {AiFillEdit} from "react-icons/ai";
 import moment from 'moment';
-import LoadingIcon from "./LoadingIcon";
+import LoadingIcon from "../LoadingIcon";
 
 const MyPosts = () => {
 
