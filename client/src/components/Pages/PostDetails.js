@@ -34,7 +34,7 @@ const PostDetails = () => {
           .then((data) => {
             if (data.status === 200) {
               setPost(data.data);
-              console.log(data.data);
+              // console.log(data.data);
             }    
         })  
             .catch((error) => {
@@ -73,8 +73,6 @@ const PostDetails = () => {
       .catch((error) => {
         console.log(error);
       });
-   
-
   }
 
   return (

@@ -42,7 +42,7 @@ const HomePage = () => {
                 )
         :
         posts.slice().reverse().map((post)=>{
-          console.log(post);
+          // console.log(post);
           return (  
               <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
                 <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>

@@ -8,13 +8,13 @@ const MyMessages = () => {
   const [messages, setMessages] = useState(null);
 
   const { user } = useAuth0();
-  console.log(user);
+  // console.log(user);
 
   useEffect(()=>{
    user && fetch (`/api/getMessage/${user.nickname}`)
       .then(res=> res.json())
       .then((data)=>{
-        console.log(data.data);
+        // console.log(data.data);
         setMessages(data.data);
       })
   }, [])

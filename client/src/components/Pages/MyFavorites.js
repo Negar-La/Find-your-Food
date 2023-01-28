@@ -19,7 +19,7 @@ const MyFavorites = () => {
       .then((data) => {
         if (data.status === 200) {
           setFavoritePosts(data.data);
-          console.log(data.data)
+          // console.log(data.data)
         } 
       });
   }, [favoriteDeleted]);
@@ -39,7 +39,7 @@ const MyFavorites = () => {
       })
       .then((data) => {
         if (data.status === 200) {          
-         console.log(data)   
+        //  console.log(data)   
          setFavoriteDeleted(!favoriteDeleted) 
          window.alert('post was deleted from Favorite list')
         }
