@@ -14,9 +14,8 @@ const HomePage = () => {
 
   //add to favorite and remove from favorite list
 //isToggled is an object including all post.id(s) which are either true (added to favorite list) or false (removed from favorite list).
-
   useEffect(()=>{
-      fetch ("/api/getPosts")
+      fetch (`${process.env.REACT_APP_SERVER_URL}/api/getPosts`)
         .then(res=> res.json())
         .then((data)=>{
           // console.log(data);

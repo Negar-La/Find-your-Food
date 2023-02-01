@@ -5,8 +5,11 @@ import styled from "styled-components";
 import {AiFillDelete} from "react-icons/ai";
 import LoadingIcon from "../LoadingIcon";
 import Login from "./Login";
+import ErrorPage from "./ErrorPage";
 
 const MyFavorites = () => {
+
+  const [status, setStatus] = useState("loading");
   const { user, isAuthenticated} = useAuth0();
   // console.log(user);
   const [favoritePosts, setFavoritePosts] = useState(null)
@@ -21,12 +24,16 @@ const MyFavorites = () => {
           setFavoritePosts(data.data);
           // console.log(data.data)
         } 
-      });
+      })
+      .catch ((error)=>{
+        console.log(error);
+        setStatus("error");
+      })
   }, [favoriteDeleted]);
 
   const deleteFavoriteHandler = (e, post) => {                        
     e.preventDefault();
-    fetch(`/api/delete-favorite`, {         
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/delete-favorite`, {         
       method: "DELETE",
       headers: {
         Accept: "application/json",
@@ -57,6 +64,7 @@ const MyFavorites = () => {
           </LoadingWrapper>
            )
   }
+  if (status==='error') {return <ErrorPage /> }
 
   return (
       <>

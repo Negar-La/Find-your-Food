@@ -26,7 +26,7 @@ const Form = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('hi')
-        fetch("/api/post-add", {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/post-add`, {
           method: "POST",
           headers: {
             "Accept": "application/json",

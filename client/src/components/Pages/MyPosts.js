@@ -6,9 +6,11 @@ import {AiFillDelete} from "react-icons/ai";
 import {AiFillEdit} from "react-icons/ai";
 import moment from 'moment';
 import LoadingIcon from "../LoadingIcon";
+import ErrorPage from "./ErrorPage";
 
 const MyPosts = () => {
 
+    const [status, setStatus] = useState("loading");
     const { user} = useAuth0();
     const [posts, setPosts] = useState(null);
     const[postDeleted, setPostDeleted] = useState(false)
@@ -22,13 +24,17 @@ const MyPosts = () => {
             // console.log(data);
             setPosts(data.data);
           })
+          .catch ((error)=>{
+            console.log(error);
+            setStatus("error");
+          })
       }, [postDeleted])
 
 
 
     const deleteHandler = (e, post) => {
         e.preventDefault();
-        fetch(`/api/delete-post`, {         
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/delete-post`, {         
             method: "DELETE",
             headers: {
               Accept: "application/json",
@@ -58,6 +64,7 @@ const MyPosts = () => {
     navigate(`/updateform/${post.id}`);
   })
 
+  if (status==='error') {return <ErrorPage /> }
   return (
     <>
      <Title>My posts:</Title>

@@ -13,7 +13,7 @@ const UpdateForm = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`/api/get-post/${postId}`)
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/get-post/${postId}`)
           .then((res) => res.json())
           .then((data) => {
             if (data.status === 200) {
@@ -34,7 +34,7 @@ const UpdateForm = () => {
 
       const handleSubmit = (e) => {
         e.preventDefault();
-        fetch(`/api/update-post/${postId}`, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/update-post/${postId}`, {
             method: "PATCH",
             headers: {
                 "Accept": "application/json",

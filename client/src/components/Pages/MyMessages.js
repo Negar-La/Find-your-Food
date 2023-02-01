@@ -2,26 +2,33 @@ import styled from "styled-components";
 import { useEffect, useState } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import LoadingIcon from "../LoadingIcon";
+import ErrorPage from "./ErrorPage";
 
 const MyMessages = () => {
 
+
+  const [status, setStatus] = useState("loading");
   const [messages, setMessages] = useState(null);
 
   const { user } = useAuth0();
   // console.log(user);
 
   useEffect(()=>{
-   user && fetch (`/api/getMessage/${user.nickname}`)
+   user && fetch (`${process.env.REACT_APP_SERVER_URL}/api/getMessage/${user.nickname}`)
       .then(res=> res.json())
       .then((data)=>{
         // console.log(data.data);
         setMessages(data.data);
       })
+      .catch ((error)=>{
+        console.log(error);
+        setStatus("error");
+      })
   }, [])
 
 
 
-
+  if (status==='error') {return <ErrorPage /> }
   return (
     <>
      <Title>My  Messages:</Title>

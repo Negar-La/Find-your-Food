@@ -4,7 +4,7 @@ const morgan = require('morgan');
 
 const {getMsg, postMsg, addPost, getPosts, getSinglePost, deletePost, updatePost, addFavorite, getFavorites, deleteFavorite} = require("./handlers")
 
-const port = 8000;
+const port = process.env.PORT || 8000;
 
 // const bp = require('body-parser');
 const app = express();
@@ -25,7 +25,8 @@ express()
     app.use(express.json())
     app.use(helmet())
     app.use(morgan('tiny'))
-    app.use(cors())
+    .use(express.urlencoded({ extended: false }))
+    app.use(cors({ origin: ['http://localhost:3000', 'https://find-your-food.onrender.com']}))
 
 
     app.get("/api/getMessage/:id", getMsg)

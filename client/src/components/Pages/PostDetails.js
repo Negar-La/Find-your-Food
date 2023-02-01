@@ -45,7 +45,7 @@ const PostDetails = () => {
       //https://stackoverflow.com/questions/70922600/when-i-click-one-button-its-open-all-buttons-simultaneously
     const addfavorite = (e, post) =>{
       e.preventDefault();
-      fetch(`/api/add-favorite`, {
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/add-favorite`, {
       method: "POST",
       headers: {
         Accept: "application/json",

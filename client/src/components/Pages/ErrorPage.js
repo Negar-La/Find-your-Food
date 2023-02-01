@@ -1,13 +1,14 @@
 import styled from "styled-components";
-import {FaBomb} from "react-icons/fa";
+import image from "../../assets/images/error.jpg";
 
  const ErrorPage = () => {
   return (
     <ErrorDiv>
       <ErrorIcon>
-        <FaBomb />
+        <img src={image} />
       </ErrorIcon>
-      <h3>An unknown error has occurred</h3>
+      <h2>Woops!</h2>
+      <h3>Something went wrong :&#40; </h3>
       <p>Please try refreshing the page.</p>
     </ErrorDiv>
   );
@@ -15,7 +16,7 @@ import {FaBomb} from "react-icons/fa";
 
 const ErrorDiv = styled.div`
   position: absolute;
-  top: 50%;
+  top: 44%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
@@ -24,10 +25,12 @@ const ErrorDiv = styled.div`
       margin-top: 20px;
       margin-bottom: 30px;
     }
+    p {
+      font-size: 20px;
+    }
 `;
 
 const ErrorIcon = styled.span`
-
 `;
 
 export default ErrorPage;
