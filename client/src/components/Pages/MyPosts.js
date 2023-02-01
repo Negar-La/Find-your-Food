@@ -18,7 +18,7 @@ const MyPosts = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        fetch ("/api/getPosts")
+        fetch (`${process.env.REACT_APP_SERVER_URL}/api/getPosts`)
           .then(res=> res.json())
           .then((data)=>{
             // console.log(data);
