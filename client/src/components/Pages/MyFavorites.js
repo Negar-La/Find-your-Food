@@ -17,7 +17,7 @@ const MyFavorites = () => {
 
 
   useEffect(() => {
-    fetch(`/api/get-favorites`)
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/get-favorites`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {

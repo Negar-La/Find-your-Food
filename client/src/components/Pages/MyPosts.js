@@ -61,7 +61,7 @@ const MyPosts = () => {
   const editHandler = ((e,post) => {
     console.log(post.id);
     e.preventDefault();
-    navigate(`/updateform/${post.id}`);
+    navigate(`${process.env.REACT_APP_SERVER_URL}/updateform/${post.id}`);
   })
 
   if (status==='error') {return <ErrorPage /> }
