@@ -60,7 +60,27 @@ const postMsg = async (req, res) => {
   client.close();
 };
 
+const deleteMsg = async(req, res) =>{
+  const client = new MongoClient(MONGO_URI, options);
+  
+  console.log(req.body) 
+ 
+try{
+    await client.connect();
 
+    const db = client.db("find_your_food");
+  //in mongodb we use "" to access the keys in database, so we check db to pick "_id" and based on   console.log(req.body) in terminal, we have  req.body.post._id
+    const deleteOne = await db.collection("messages").deleteOne({"id": req.body.msg.id})
+    console.log(deleteOne.deletedCount)
+
+    res.status(200).json({ status: 200, message: "Message successfully deleted from database", data: deleteOne });
+  } catch (err){
+    res.status(400).json({status: 400, message: "Message was not deleted from database"});
+    console.log(err.stack);
+  } finally {
+    client.close();
+  }
+}
 
 const addPost = async (req, res) =>{
     const client = new MongoClient(MONGO_URI, options);
@@ -88,51 +108,6 @@ const addPost = async (req, res) =>{
       client.close();
     }
   }
-
-  const getPosts = async (req, res) => {
-    const client = new MongoClient(MONGO_URI, options);
-    try{
-        await client.connect();
-    const db = client.db("find_your_food");
-  
-    const posts = await db.collection("posts").find().toArray();
-  
-    res.status(200).json({status:204, data : posts, message:"Successful requested posts"})
-    } catch(err){
-        res.status(400).json({status:404, message:"No post found"})
-        console.log(err.stack);
-    }
-    finally {
-        client.close();
-    }
-  };
-
-  const getSinglePost = async (req, res) => {
-    const client = new MongoClient(MONGO_URI, options);
-    // console.log(req.body);
-    const id = req.params.id;
-    // console.log(id);
-  
-    try{
-        await client.connect();
-        const db = client.db("find_your_food");
-        
-        let singlePost = await db.collection("posts").findOne({id});
-        // console.log(singlePost);
-      
-        if (singlePost) {
-          return res.status(200).json({status:200, data : singlePost, message:"The requested post data"})
-        } else {
-          return res.status(404).json({status:404, message:"No post was found based on this id"})
-        }
-    } catch(err){
-        console.log(err.stack);
-    }
-    finally {
-        client.close();
-    }
-  };
-
 
   const deletePost = async(req, res) =>{
     const client = new MongoClient(MONGO_URI, options);
@@ -195,6 +170,52 @@ const addPost = async (req, res) =>{
     }
   };
 
+
+  const getPosts = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    try{
+        await client.connect();
+    const db = client.db("find_your_food");
+  
+    const posts = await db.collection("posts").find().toArray();
+  
+    res.status(200).json({status:204, data : posts, message:"Successful requested posts"})
+    } catch(err){
+        res.status(400).json({status:404, message:"No post found"})
+        console.log(err.stack);
+    }
+    finally {
+        client.close();
+    }
+  };
+
+  const getSinglePost = async (req, res) => {
+    const client = new MongoClient(MONGO_URI, options);
+    // console.log(req.body);
+    const id = req.params.id;
+    // console.log(id);
+  
+    try{
+        await client.connect();
+        const db = client.db("find_your_food");
+        
+        let singlePost = await db.collection("posts").findOne({id});
+        // console.log(singlePost);
+      
+        if (singlePost) {
+          return res.status(200).json({status:200, data : singlePost, message:"The requested post data"})
+        } else {
+          return res.status(404).json({status:404, message:"No post was found based on this id"})
+        }
+    } catch(err){
+        console.log(err.stack);
+    }
+    finally {
+        client.close();
+    }
+  };
+
+
   const addFavorite = async(req, res) =>{
     const client = new MongoClient(MONGO_URI, options);
     const {id } = req.body;
@@ -216,7 +237,6 @@ const addPost = async (req, res) =>{
     
         res.status(200).json({ status: 200, message: "post successfully added to favorite list", data: req.body});
        }
-   
       }
     
     } catch (err){
@@ -267,4 +287,4 @@ const addPost = async (req, res) =>{
   }
 
 
-module.exports = {getMsg, postMsg, addPost, deletePost, updatePost, getPosts, getSinglePost, addFavorite, getFavorites, deleteFavorite};
+module.exports = {getMsg, postMsg, deleteMsg, addPost, deletePost, updatePost, getPosts, getSinglePost, addFavorite, getFavorites, deleteFavorite};

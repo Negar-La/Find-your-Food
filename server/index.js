@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require("helmet");
 const morgan = require('morgan');
 
-const {getMsg, postMsg, addPost, getPosts, getSinglePost, deletePost, updatePost, addFavorite, getFavorites, deleteFavorite} = require("./handlers")
+const {getMsg, postMsg, deleteMsg, addPost, getPosts, getSinglePost, deletePost, updatePost, addFavorite, getFavorites, deleteFavorite} = require("./handlers")
 
 const port = process.env.PORT || 8000;
 
@@ -31,7 +31,7 @@ express()
 
     app.get("/api/getMessage/:id", getMsg)
     app.post("/api/postMessage", postMsg)
-
+    app.delete("/api/deleteMessage", deleteMsg)
 
     app.post("/api/post-add", addPost)
     app.get("/api/getPosts", getPosts)
