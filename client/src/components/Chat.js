@@ -24,7 +24,7 @@ const Chat = ({socket, room, username, cook, cookEmail}) => {
             await socket.emit("send-message", messageData)
             setMessageList((list) => [...list, messageData]);  
             setCurrentMessage("");
-            fetch(`/api/postMessage`, { 
+            fetch(`${process.env.REACT_APP_SERVER_URL}/api/postMessage`, { 
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
