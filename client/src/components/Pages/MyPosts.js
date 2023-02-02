@@ -59,7 +59,7 @@ const MyPosts = () => {
         
       //function that navigates to the update form componenets
   const editHandler = ((e,post) => {
-    console.log(post.id);
+    // console.log(post.id);
     e.preventDefault();
     navigate(`/updateform/${post.id}`);
   })

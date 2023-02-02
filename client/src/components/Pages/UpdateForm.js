@@ -8,7 +8,7 @@ const UpdateForm = () => {
 
     const [pictureUrl, setPictureUrl] = useState("");
     const {postId} = useParams();
-    console.log(postId);
+    // console.log(postId);
     const [updatePost, setUpdatePost] = useState(null);
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const UpdateForm = () => {
           .then((data) => {
             if (data.status === 200) {
                 setUpdatePost(data.data);
-              console.log(data.data);
+              // console.log(data.data);
             }    
         })  
             .catch((error) => {
@@ -33,7 +33,7 @@ const UpdateForm = () => {
       }
 
       const handleSubmit = (e) => {
-        console.log('hi');
+        // console.log('hi');
         e.preventDefault();
         fetch(`${process.env.REACT_APP_SERVER_URL}/api/update-post/${postId}`, {
             method: "PATCH",
