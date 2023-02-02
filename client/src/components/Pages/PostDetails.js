@@ -29,7 +29,7 @@ const PostDetails = () => {
     };
 
     useEffect(() => {
-        fetch(`/api/get-post/${postId}`)
+        fetch(`${process.env.REACT_APP_SERVER_URL}/api/get-post/${postId}`)
           .then((res) => res.json())
           .then((data) => {
             if (data.status === 200) {
