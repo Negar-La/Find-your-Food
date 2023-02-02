@@ -94,7 +94,7 @@ const PostDetails = () => {
               <Text><Tag>Phone:</Tag>  {post.phone} </Text>
               <FlexDiv>
                 <MapButton onClick={()=> setShowMap(true)}>View on Map <BsFillPinMapFill style={{marginLeft: '5px', color: '#795E96'}} /></MapButton>
-                              {showMap && <Map onCloseFunc={()=>setShowMap(false)} center={[parseFloat(post.lat), parseFloat(post.lng)]} />}
+                              {showMap && <Map onCloseFunc={()=>setShowMap(false)} center={[parseFloat(post.lat), parseFloat(post.lng)]}/>}
                               
               </FlexDiv>
               <FlexDiv>
