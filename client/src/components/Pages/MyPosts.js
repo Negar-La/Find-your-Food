@@ -103,7 +103,7 @@ const MyPosts = () => {
       
       
     }
-      {posts && posts.filter((post)=>{
+      {posts && user && posts.filter((post)=>{
                      if (post.cookEmail === user.email)
                         return post
                     }).length < 1 ? (<NoPost>You have no post in your list</NoPost>) : "" 
