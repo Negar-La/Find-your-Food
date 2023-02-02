@@ -12,13 +12,15 @@ const HomePage = () => {
   const [posts, setPosts] = useState(null);
   const [status, setStatus] = useState("loading");
 
+  const URL = process.env.NODE_ENV !== 'development' ? process.env.REACT_APP_SERVER_URL : "";
+console.log(process.env);
   //add to favorite and remove from favorite list
 //isToggled is an object including all post.id(s) which are either true (added to favorite list) or false (removed from favorite list).
   useEffect(()=>{
-      fetch (`${process.env.REACT_APP_SERVER_URL}/api/getPosts`)
+      fetch (`${URL}/api/getPosts`)
         .then(res=> res.json())
         .then((data)=>{
-          // console.log(data);
+          console.log(data.data);
           setPosts(data.data);
         })
         .catch ((error)=>{
