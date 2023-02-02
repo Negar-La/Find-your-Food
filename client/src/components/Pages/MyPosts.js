@@ -74,7 +74,7 @@ const MyPosts = () => {
                 </LoadingWrapper>
                 )
       :
-      posts. slice(). reverse() .map((post)=>{
+     user && posts. slice(). reverse() .map((post)=>{
         if (post.cookEmail === user.email) 
         // console.log(post);
         return (  
