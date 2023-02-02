@@ -40,7 +40,7 @@ express()
     app.patch('/api/update-post/:id', updatePost)
 
     app.post("/api/add-favorite", addFavorite)
-    app.get("/api/get-favorites", getFavorites)
+    app.get("/api/get-favorites/:id", getFavorites)
     app.delete("/api/delete-favorite", deleteFavorite)
 
     

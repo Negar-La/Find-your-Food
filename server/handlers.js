@@ -32,7 +32,7 @@ const getMsg = async (req, res) => {
   // let  uniq = [...new Set(rooms)];
 
   filterMessages
-  ? res.status(200).json({status:200, data: filterMessages, message : "Success"})
+  ? res.status(200).json({status:200, data: filterMessages, message : "All your messages"})
   : res.status(400).json({status:400, message : "No entry to retrieve"})
 
   client.close();
@@ -250,14 +250,21 @@ const addPost = async (req, res) =>{
 
   const getFavorites = async (req, res) => {
     const client = new MongoClient(MONGO_URI, options);
+    const {id} = req.params;
+    console.log('id', id);
+
   try{
       await client.connect();
   
       const db = client.db("find_your_food");
   
       const allFavorites = await db.collection("favorites").find().toArray()
+      const filteredFavorites = allFavorites.filter((fav)=>{
+        return fav.userAddedtoFav === id;
+      })
+      console.log(filteredFavorites);
   
-      res.status(200).json({ status: 200, message: "All favorite Posts", data: allFavorites});
+      res.status(200).json({ status: 200, message: "All your favorite Posts", data: filteredFavorites});
     } catch (err){
       res.status(400).json({status: 400, message: "post not added"});
       console.log(err.stack);

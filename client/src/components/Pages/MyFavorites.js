@@ -18,12 +18,12 @@ const MyFavorites = () => {
 
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/get-favorites`)
+    user && fetch(`${process.env.REACT_APP_SERVER_URL}/api/get-favorites/${user.email}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.status === 200) {
           setFavoritePosts(data.data);
-          // console.log(data.data)
+          console.log(data.data)
         } 
       })
       .catch ((error)=>{
@@ -78,7 +78,6 @@ const MyFavorites = () => {
                                 ) 
                 :
                   favoritePosts.map((post)=>{
-                    if (post.userAddedtoFav === user.email) 
                       return (
                           <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
                             <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
@@ -101,7 +100,6 @@ const MyFavorites = () => {
                         return post
                     }).length < 1 ? (<NoPost>You have no post in your favorite list</NoPost>) : "" 
                 }
-
               </Wrapper>
            
       </>
