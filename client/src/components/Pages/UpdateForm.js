@@ -33,6 +33,7 @@ const UpdateForm = () => {
       }
 
       const handleSubmit = (e) => {
+        console.log('hi');
         e.preventDefault();
         fetch(`${process.env.REACT_APP_SERVER_URL}/api/update-post/${postId}`, {
             method: "PATCH",
