@@ -145,7 +145,9 @@ const addPost = async (req, res) =>{
       const db = client.db("find_your_food");
     //in mongodb we use "" to access the keys in database, so we check db to pick "_id" and based on   console.log(req.body) in terminal, we have  req.body.post._id
       const deleteOne = await db.collection("posts").deleteOne({"id": req.body.post.id})
+      const deleteFav = await db.collection("favorites").deleteMany({"id": req.body.post.id});
       console.log(deleteOne.deletedCount)
+      console.log(deleteFav.deletedCount)
       res.status(200).json({ status: 200, message: "post successfully deleted from database", data: deleteOne });
     } catch (err){
       res.status(400).json({status: 400, message: "post was not deleted from database"});

@@ -5,6 +5,7 @@ import moment from 'moment';
 import Carousel from "../Carousel";
 import LoadingIcon from "../LoadingIcon";
 import ErrorPage from "./ErrorPage";
+import Pagination from "../Pagination";
 
 
 const HomePage = () => {
@@ -26,7 +27,31 @@ const HomePage = () => {
         })
     }, [])
 
+    const [currentPage, setCurrentPage] = useState(1)
+    // see Product grid, this is slicing array of products depending on value of x and y. which is manipulated below
+    const [x, setX] = useState(0)
+    const [y, setY] = useState(12)
+
+    // change page function. i
+    const changePages = (pageNum) => {
+      if (pageNum === 1) { // if page is 1 , set initial slice values
+          setX(0)
+          setY(12)
+      }
+      else {
+        // else set them accordingly
+        setX((12 * (pageNum - 1)) )
+        setY(12 * pageNum + 1)
+      }
+    }
+    // everytime page changes, perform changePages function
+    useEffect(() => {
+      changePages(currentPage)
+    }, [currentPage])
+
+
   if (status==='error') {return <ErrorPage /> }
+
   return (
     <All>
         <Title> All you need is <Purple>Love</Purple> and <Purple>Home Cooked</Purple> food!</Title>
@@ -34,26 +59,39 @@ const HomePage = () => {
 						<Carousel />
 				</CarouselWrapper>
         <Wrapper>
-      {!posts ? (<LoadingWrapper>
-                   <LoadingIcon />
-                </LoadingWrapper>
+          <ProductGrid>
+            {!posts ? (<LoadingWrapper>
+                        <LoadingIcon />
+                      </LoadingWrapper>
+                      )
+              :
+              posts.reverse().slice(x,y).map((post)=>{
+                // console.log(post);
+                return (  
+                    <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
+                        <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
+                        <Text><Tag>{post.foodName}</Tag> </Text>
+                        <Text><Tag>Price:</Tag> {post.price}$</Text>
+                          {post.posted ?     <Posted>Posted {moment(post.posted).fromNow()}</Posted>
+                          : ""
+                          }
+                    </ItemContainer>       
                 )
-        :
-        posts.slice().reverse().map((post)=>{
-          // console.log(post);
-          return (  
-              <ItemContainer to={`/posts/${post.id}`} key={post.id} style={{ textDecoration: 'none' }}>
-                <Text> {post.foodPicture ? <Image src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </Text>
-                <Text><Tag>{post.foodName}</Tag> </Text>
-                <Text><Tag>Price:</Tag> {post.price}$</Text>
-                  {post.posted ?     <Posted>Posted {moment(post.posted).fromNow()}</Posted>
-                  : ""
-                  }
-            </ItemContainer>       
-          )
-        })
-      }
-    </Wrapper>
+              })
+            }
+          </ProductGrid>
+        </Wrapper>
+            {posts && 
+                <Container>
+                    <Pagination 
+                      currentPage={currentPage}
+                      posts={posts}
+                      setCurrentPage={setCurrentPage}
+                      limit={12}
+                      onPageChange={(page) => setCurrentPage(page) }
+                    />
+                </Container>
+            }
     </All>
 
   )
@@ -83,6 +121,25 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 `
+
+const ProductGrid = styled.div`
+  display: grid;
+  grid-template-columns: 250px 250px 250px 250px;
+  @media (max-width: 500px) {
+    grid-template-columns: 250px;
+  }
+  @media (min-width: 500.02px) and (max-width: 800px) {
+    grid-template-columns: 250px 250px;
+  }
+  @media (min-width: 800.02px) and (max-width: 1100px) {
+    grid-template-columns: 250px 250px 250px;
+  }
+` 
+const Container = styled.div `
+  display: flex;
+  justify-content: center;
+`
+
 const CarouselWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -160,4 +217,6 @@ const LoadingWrapper = styled.div`
     left: 50%;
   }
 `;
+
+
 export default HomePage
