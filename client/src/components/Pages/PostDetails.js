@@ -63,7 +63,7 @@ const PostDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        // console.log(data)
         setFavoritePost([...favoritePost, data.data])
         if(data.message === 'This post is already in your favorite list'){
           window.alert("This item is already in your favorite list!")

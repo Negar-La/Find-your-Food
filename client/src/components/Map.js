@@ -6,11 +6,11 @@ import { useJsApiLoader,
   
   
   const Map = ({onCloseFunc, center}) => {
-    console.log(center) //[45.477215, -73.662711]
+    // console.log(center) //[45.477215, -73.662711]
 //convert array to object with custom keys:
 const [lat, lng] = center;
 const object = { lat, lng};
-    console.log(object);
+    // console.log(object);
 
     //used to make sure the google map is loaded
     const { isLoaded } = useJsApiLoader({
