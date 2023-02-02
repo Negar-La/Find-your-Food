@@ -6,6 +6,7 @@ import {AiFillDelete} from "react-icons/ai";
 import LoadingIcon from "../LoadingIcon";
 import Login from "./Login";
 import ErrorPage from "./ErrorPage";
+import image from "../../assets/images/Please_log_in_image.png"
 
 const MyFavorites = () => {
 
@@ -59,6 +60,7 @@ const MyFavorites = () => {
 
   if (!isAuthenticated) {
     return (<LoadingWrapper>
+             <ImageLogin src={image} />
              <Title>You need an account to save your <Purple>Favorite Foods</Purple>!</Title>
              <Login/>
           </LoadingWrapper>
@@ -129,6 +131,11 @@ const Tag = styled.span`
 font-weight: bold;
 margin-right: 5px;
 `
+
+const ImageLogin = styled.img`
+  height: 250px;
+`
+
 const Title = styled.h1`
 margin: 25px;
 font-size: 25px;
