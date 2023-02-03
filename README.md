@@ -16,26 +16,26 @@ Click [Here](https://find-your-food.onrender.com) to view the deployed website a
 
 
 #### Screenshot of Home page
-![Screenshot of home page!](./client/public/src/assets/images/find1.jpg "Home page")
+![Screenshot of home page!](./client/src/assets/images/find1.jpg "Home page")
 
 #### Screenshot of Post a new Add
-![Screenshot of Post a new Add!](./client/public/src/assets/images/find2.jpg "Post a new Add")
+![Screenshot of Post a new Add!](./client/src/assets/images/find2.jpg "Post a new Add")
 
 
 #### Screenshot of View Post Details
-![View Post Details](./client/public/src/assets/images/find3.jpg "View Post Details")
+![View Post Details](./client/src/assets/images/find3.jpg "View Post Details")
 
 
 #### Screenshot of Showing on Google Map
-![Screenshot of Showing on Google Map!](./client/public/src/assets/images/find4.jpg "Showing on Google Map")
+![Screenshot of Showing on Google Map!](./client/src/assets/images/find4.jpg "Showing on Google Map")
 
 
 #### Screenshot of My Favorite Posts
-![Screenshot of My Favorite Posts!](./client/public/src/assets/images/find5.jpg "My Favorite Posts")
+![Screenshot of My Favorite Posts!](./client/src/assets/images/find5.jpg "My Favorite Posts")
 
 
 #### Screenshot of Live Chat
-![Screenshot of Live Chat!](./client/public/src/assets/images/find6.jpg "Live Chat")
+![Screenshot of Live Chat!](./client/src/assets/images/find6.jpg "Live Chat")
 
 #### Screenshot of Menu
-![Screenshot of Menu!](./client/public/src/assets/images/find7.jpg "Menu")
+![Screenshot of Menu!](./client/src/assets/images/find7.jpg "Menu")
