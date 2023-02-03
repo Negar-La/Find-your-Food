@@ -1,7 +1,7 @@
 <h1 align="center">😋🍲 Welcome to Find your Food! 🍲😋</h1>
 
 <p>📌 <strong> A Full-stack MERN App </strong></p>
-<p>📌 Makes uses of <strong>HTML </strong>, <strong>CSS </strong>, <strong> ES6 JavasScript</strong>, and <strong> React</strong> on the FE, <strong> NodeJS</strong>, <strong> ExpressJS </strong>, and <strong> MongoDB </strong> on the BE. </p>
+<p>📌 Makes uses of <strong>HTML </strong>, <strong>CSS </strong>, <strong> ES6 JavaScript</strong>, and <strong> React</strong> on the FE, <strong> NodeJS</strong>, <strong> ExpressJS </strong>, and <strong> MongoDB </strong> on the BE. </p>
 <p>📌 The APIs:  <a href="https://developers.google.com/maps"> <strong>Google Map API </strong> </a>, <a href="https://auth0.com/docs/quickstart/spa/react/interactive"> <strong>Auth0</strong> </a>, <a href="https://cloudinary.com/documentation">  <strong>Cloudinary</strong></a>, and <a href="https://socket.io/"> <strong>Socket.io</strong> </a> </p>
 <p>📌 In this platform, you can surf meals and get connected with the cook. </p>
 <p>📌 User can add a post to favorite list or make a new post and edit/delete it or send a message to cook. </p>
