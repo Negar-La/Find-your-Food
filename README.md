@@ -12,7 +12,7 @@
 
 
 
-<p align="center"> Click [Here](https://find-your-food.onrender.com) to view the deployed website at render.com </p>
+<p align="center"> Click <a href="https://find-your-food.onrender.com"><strong> Here</strong> </a> to view the deployed website at render.com </p>
 
 
 #### Screenshot of Home page
