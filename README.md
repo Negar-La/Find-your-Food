@@ -6,8 +6,8 @@
 <p>📌 In this platform, you can surf meals and get connected with the cook. </p>
 <p>📌 User can add a post to favorite list or make a new post and edit/delete it or send a message to cook. </p>
 <p>📌 <a href="https://socket.io/"> Socket.io </a> provides a live chat system. </p>
-<p>📌 <a href="https://developers.google.com/maps"> Google Map API </a> provides location on the map and based on origin address, the duration and distance is calculated. </p>
-<p>📌 <a href="https://cloudinary.com/documentation"> Cloudinary </a> is used to store the pictures used accross the website as well as a widget for the user to upload picture of his food. </p>
+<p>📌 <a href="https://developers.google.com/maps"> Google Map API </a> provides location and based on origin address, the duration and distance is calculated. </p>
+<p>📌 <a href="https://cloudinary.com/documentation"> Cloudinary </a> is used to store the pictures used accross the website as well as a widget to upload picture of the food. </p>
 <p>📌 <a href="https://auth0.com/docs/quickstart/spa/react/interactive"> Auth0 </a> is use to have a secure and fast log in. </p>
 
 
