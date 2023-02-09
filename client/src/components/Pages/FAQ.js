@@ -76,6 +76,7 @@ const Wrapper = styled.div`
    margin:40px 100px;
    box-shadow:rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     border-radius: 20px;
+    text-align: justify;
     padding:25px;
     background:white;
     @media (max-width: 750px) {
