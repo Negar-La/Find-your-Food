@@ -59,14 +59,14 @@ const Nav = styled(NavLink)`
   color: white;
   margin-top: -5px;
   @media (max-width: 750px) {
-    font-size: 15px;
+    font-size: 14px;
 }
 `
 const Image = styled.img`
 	margin-bottom: -2px;
   width: 26px;
   @media (max-width: 750px) {
-    width: 23px;
+    width: 21px;
 }
   `
 
@@ -76,7 +76,7 @@ const NavFav = styled(NavLink)`
   color: white;
   margin-left: 15px;
   @media (max-width: 750px) {
-    font-size: 16px;
+    font-size: 14px;
     margin-left: 0px;
 }
 `

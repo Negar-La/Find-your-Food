@@ -165,7 +165,7 @@ const Flex = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 15px;
+    margin: 5px;
     margin-top: 50px;
   }
 `
@@ -267,7 +267,7 @@ const PostImage = styled.img`
   @media (max-width: 750px) {
   margin: 0px;
   height: 400px;
-  max-width: 350px;
+  max-width: 340px;
   }
 `;
 
@@ -333,6 +333,7 @@ cursor:pointer;
 border-radius: 3px;
 border: none;
 background-color: #795E96;
+margin-bottom: 10px;
 color: white;
 outline: none;
 -webkit-transition: all ease .15s;
