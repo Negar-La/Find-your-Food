@@ -78,6 +78,9 @@ const Wrapper = styled.div`
     border-radius: 20px;
     padding:25px;
     background:white;
+    @media (max-width: 750px) {
+        margin:40px 20px;
+}
 
 &:hover:enabled {
     cursor: pointer;

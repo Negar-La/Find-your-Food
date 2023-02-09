@@ -84,20 +84,43 @@ const PostDetails = () => {
         :
         <Flex>
             <Info>
-              <Text><Tag>Food Type:</Tag> {post.foodType}</Text>
-              <Text><Tag>Food Name:</Tag> {post.foodName}</Text>
-              <Text><Tag>Price:</Tag> {post.price} $</Text>
-              <Text><Tag>Ingredients: </Tag>{post.ingredients}</Text>
-              <Text><Tag>About this item:</Tag> {post.about ? post.about : "Nothing mentioned"}</Text>
-              <Text><Tag>By: </Tag> {post.cook[0].toUpperCase() + post.cook.substring(1)} (Email: {post.cookEmail})</Text>
-              <Text><Tag>Address:</Tag>  {post.stNum} {post.stName} - {post.postalCode}</Text>
-              <Text><Tag>Phone:</Tag>  {post.phone} </Text>
               <FlexDiv>
-                <MapButton onClick={()=> setShowMap(true)}>View on Map <BsFillPinMapFill style={{marginLeft: '5px', color: '#795E96'}} /></MapButton>
-                              {showMap && <Map onCloseFunc={()=>setShowMap(false)} center={[parseFloat(post.lat), parseFloat(post.lng)]}/>}
-                              
+                  <Title>Food Type:</Title>
+                  <Detail> {post.foodType}</Detail>
               </FlexDiv>
               <FlexDiv>
+                  <Title>Food Name:</Title>
+                  <Detail>  {post.foodName}</Detail>
+              </FlexDiv>
+              <FlexDiv>
+                  <Title>Price:</Title>
+                  <Detail> {post.price} $</Detail>
+              </FlexDiv>
+              <FlexDiv>
+                  <Title>Ingredients:</Title>
+                  <Detail> {post.ingredients}</Detail>
+              </FlexDiv>
+              <AboutDiv>
+                  <AboutTitle>
+                          About  {post.foodName}:
+                  </AboutTitle>
+                  <AboutDetail> {post.about ? post.about : "Nothing mentioned"}</AboutDetail>
+              </AboutDiv>
+              <AboutDiv>
+                  <AboutTitle> Contact Information </AboutTitle>
+                  <AboutDetail> {post.cook[0].toUpperCase() + post.cook.substring(1)} (Email: {post.cookEmail})</AboutDetail>
+                  <AboutTitle style={{marginTop: '10px'}}> Address: </AboutTitle>
+                  <AboutDetail>  {post.stNum} {post.stName} - {post.postalCode}</AboutDetail>
+                  <AboutTitle style={{marginTop: '10px'}}> Phone: </AboutTitle>
+                  <AboutDetail>  {post.phone} </AboutDetail>
+              </AboutDiv>
+
+
+              <FlexButtons>
+                <MapButton onClick={()=> setShowMap(true)}>View on Map <BsFillPinMapFill style={{marginLeft: '5px', color: '#795E96'}} />
+                </MapButton>
+                              {showMap && <Map onCloseFunc={()=>setShowMap(false)} center={[parseFloat(post.lat), parseFloat(post.lng)]}/>}
+                              
                 <MapButton    onClick={(e) => {
                       if (!isAuthenticated)
                       {
@@ -107,13 +130,17 @@ const PostDetails = () => {
                       }
                         }}> 
                       Add to Favorite <FcLike style={{marginLeft: '5px'}}/> 
-                  </MapButton>
-          
-              </FlexDiv>
+                </MapButton>
+              </FlexButtons>
             </Info>
-            <ImageContainer> {post.foodPicture ? <Img src={post.foodPicture}/> : (<NoImage>No Image provided</NoImage>) } </ImageContainer>
+
+            <DivButton> {post.foodPicture ?
+                  <PostImage src={post.foodPicture} /> : 
+                  (<NoImage>No Image provided</NoImage>)
+                         }
+            </DivButton>
             <ChatWrap>
-              <MsgBtn onClick={handleClick} style={{borderRadius:isShown ? "40px": "3px" }}>
+              <MsgBtn onClick={handleClick} style={{borderRadius:isShown ? "40px": "40px" }}>
                 <BsChatRightDots style={{fontSize:"25px", marginRight:"8px"}}/>
                 {isShown ? "Close Chat" : "Message Me"}
               </MsgBtn>
@@ -127,65 +154,153 @@ const PostDetails = () => {
   )
 }
 
+
 const Flex = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 50px 50px 100px 50px;
   flex-wrap: wrap;
-  @media (max-width: 600px) {
+  @media (max-width: 750px) {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin: 15px;
+    margin-top: 50px;
   }
 `
+
+const FlexDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 750px) {
+
+  }
+`;
+
+const Title = styled.h4`
+  font-size: 21px;
+  margin-top: 10px;
+  border-radius: 30px;
+  background-color: #795E96;
+  padding: 10px;
+  text-align: center;
+  width: 40%;
+  border: 2px solid white;
+  color: var(--yellow);
+  @media (max-width: 750px) {
+    font-size: 19px;
+    width: 50%;
+  }
+`;
+
+const Detail = styled.p`
+  font-size: 21px;
+  margin-top: 10px;
+  margin-left: 10px;
+  border-radius: 30px;
+  background-color: #795E96;
+  padding: 8px;
+  text-align: center;
+  width: 40%;
+  color: white;
+  border: 2px solid white;
+  @media (max-width: 750px) {
+    font-size: 19px;
+    width: 50%;
+  }
+`;
+
+const AboutDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 20px;
+  border-radius: 30px;
+  background-color: #795E96;
+  padding: 20px;
+  padding-left: 25px;
+  border: 2px solid white;
+  max-width: 650px;
+`;
+
+const AboutTitle = styled.h4`
+  font-size: 21px;
+  text-align: left;
+  color: var(--yellow);
+  margin-bottom: 10px;
+  @media (max-width: 750px) {
+    font-size: 19px;
+  }
+`;
+
+const AboutDetail = styled.p`
+  font-size: 21px;
+  text-align: justify;
+  line-height: 1.6rem;
+  color: white;
+  @media (max-width: 750px) {
+    font-size: 19px;
+  }
+`;
 
 const Info = styled.div` 
 border: 3px solid purple;
 border-radius: 15px;
-padding: 20px;
+padding: 30px;
 margin-bottom: 30px;
 background-color: white;
-`
-
-const Text = styled.p`
-line-height: 40px;
-color: black;
-font-size: 18px;
-display: flex;
-justify-content: left;
-`
-const Tag = styled.span`
-font-weight: bold;
-margin-right: 5px;
-`
-const ImageContainer = styled.div`
-display: flex;
-margin-left: 50px;
-@media (max-width: 600px) {
-  margin-left: 0px;
+min-width: 700px;
+@media (max-width: 750px) {
+  padding: 20px;
+  min-width: 0px;
   }
 `
 
-const Img = styled.img`
+const PostImage = styled.img`
+  height: 600px;
+  max-width: 600px;
+  object-fit: cover;
+  margin-left: 20px;
+  border-radius: 10px;
+  @media (max-width: 750px) {
+  margin: 0px;
   height: 400px;
-  border-radius: 20px;
-`
+  max-width: 350px;
+  }
+`;
+
+const DivButton = styled.div`
+  display: flex;
+  justify-content: center;
+  border: 2px solid white;
+  margin: 20px;
+  @media (max-width: 750px) {
+  margin: 0px;
+  }
+`;
+
 const NoImage = styled.p`
 font-size: 18px;
 `
-const FlexDiv = styled.div`
-   display: flex;
-   justify-content: center;
-`
+const FlexButtons = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
+`;
 const MapButton = styled.button`
   border: none;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 20px;
   font-size: 18px;
   border-radius: 15px;
   padding: 10px 5px;
   width: 200px;
+  margin-left: 50px;
+  margin-right: 50px;
   background-color: var(--background);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   cursor: pointer;
@@ -200,13 +315,11 @@ const MapButton = styled.button`
 `;
 
   const ChatWrap = styled.div`
-  margin-left: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-@media (max-width: 600px) {
-  margin-left: 0px;
+@media (max-width: 750px) {
   margin-top: 30px;
   }
   `
@@ -214,22 +327,19 @@ const MsgBtn = styled.button`
 display:flex;
 justify-content: center;
 align-items: center;
-width:120px;
+width:170px;
 height:50px;
 cursor:pointer; 
 border-radius: 3px;
 border: none;
 background-color: #795E96;
-color:white;
+color: white;
 outline: none;
 -webkit-transition: all ease .15s;
   -o-transition: all ease .15s;
   -moz-transition: all ease .15s;
   transition: all ease .15s;
   &:hover{
-  -webkit-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
-  box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.2);
   transform: scale(1.15);
   }
 `

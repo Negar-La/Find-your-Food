@@ -11,7 +11,7 @@ import pic9 from '../assets/images/9.jpg';
 
 const Carousel = () => {
 	return (
-		<Container>
+			<Container>
 			<CarouselContainer>
 				<Wrapper>
 					<Image src={pic1} alt='bleach' />
@@ -47,17 +47,22 @@ const Carousel = () => {
 
 export default Carousel;
 
+
 const Container = styled.div`
-	position: relative;
-	width: 320px;
-	margin: 0em auto;
-	perspective: 1000px;
+  position: relative;
+  width: 320px;
+  margin: 0em auto;
+  perspective: 1000px;
+	@media (max-width: 750px) {
+  }
 `;
 const CarouselContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	transform-style: preserve-3d;
 	animation: rotate360 35s infinite forwards linear;
+	@media (max-width: 750px) {
+  }
 `;
 const Wrapper = styled.div`
     border: 3px solid white;
@@ -100,8 +105,8 @@ const Wrapper = styled.div`
 	}
 `;
 const Image = styled.img`
-	margin: auto;
-	width: 100%;
+  margin: auto;
+  width: 100%;
   height: 100%;
   border-radius: 10px;
   opacity: 1;

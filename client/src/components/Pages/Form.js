@@ -79,7 +79,7 @@ const Form = () => {
         <br></br>
         <FlexTwo>
             <label htmlFor='person'>By:</label>
-            <p>{user.nickname[0].toUpperCase() + user.nickname.substring(1)} - Email: {user.email}</p>
+            <p style={{marginRight: "55px"}} >{user.nickname[0].toUpperCase() + user.nickname.substring(1)} - Email: {user.email}</p>
         </FlexTwo>
         <br></br>
         <FlexTwo>
@@ -92,28 +92,28 @@ const Form = () => {
                   <Liner />
                   <SelectOptions>
                     <P>Province</P>
-                    <select name="province" required>
+                    <select style={{border: '2px solid #795E96'}} name="province" required>
                         <option value="">-Select-</option>
                         <option value="quebec">Quebec</option>
                     </select>
                   </SelectOptions>
                   <SelectOptions>
                     <P>City</P>
-                    <select name="city" required>
+                    <select style={{border: '2px solid #795E96'}} name="city" required>
                         <option value="">-Select-</option>
                         <option value="montreal">Montreal</option>
                     </select>
                   </SelectOptions>
                     
                      <br/>  
-                        <input type="number"  placeholder="Street number" name="stNum" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>
-                        <input type="text"  placeholder="Street name" name="stName" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>        
-                        <input type="text" pattern= "[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" placeholder="Postal code" name="postalCode" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/>
+                        <InputLocation style={{border: '2px solid #795E96'}}  type="number"  placeholder="Street number" name="stNum" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>
+                        <InputLocation style={{border: '2px solid #795E96'}} type="text"  placeholder="Street name" name="stName" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>        
+                        <InputLocation style={{border: '2px solid #795E96'}} type="text" pattern= "[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" placeholder="Postal code" name="postalCode" required onChange={(e)=> handleChange(e.target.name, e.target.value)}/>
         </Divider>
         <br></br>
         <FlexTwo>
             <label htmlFor='about'>About this meal:</label>
-             <textarea required rows="5" cols="33" id="about" placeholder="Enter all details about this food" onChange={(e)=> handleChange(e.target.id, e.target.value)}></textarea>
+             <Textarea  required rows="5" cols="43" id="about" placeholder="Enter all details about this food" onChange={(e)=> handleChange(e.target.id, e.target.value)}></Textarea>
         </FlexTwo>
         <FlexUpload>
           <label>Add photo:</label>
@@ -186,7 +186,18 @@ const Radio = styled.div`
 const FlexTwo = styled.div`
   display: flex;
   justify-content: space-between;
+  input {
+    border-radius: 10px;
+    padding-left: 10px;
+    border: 2px solid #795E96;
+  }
 `
+const Textarea = styled.textarea`
+  border: 2px solid #795E96;
+  border-radius: 10px;
+  padding: 10px;
+`
+
 
 const FlexUpload = styled.div`
   display: flex;
@@ -200,9 +211,10 @@ const Liner = styled.div`
 `;
 
 const Divider = styled.div`
-    box-shadow: 2px 1px 70px 1px rgba(184,178,184,1);
+    box-shadow: 2px 1px 10px 1px rgba(121,94,150,1);
     padding: 10px 20px;
     min-width: 300px;
+    border-radius: 10px;
 `;
 
 const P=styled.p`
@@ -223,10 +235,16 @@ const SelectOptions = styled.div`
     border-radius: 13px;
   }
 `
+const InputLocation = styled.input`
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-top: 5px;
+`
 
 const Title=styled.span`
     font-weight: bold;
     font-size: 19px;
 `;
+
 
 export default Form

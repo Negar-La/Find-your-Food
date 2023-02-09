@@ -32,7 +32,7 @@ const Navbar = () => {
 
         {isAuthenticated &&    
         <Div>
-            <Text>Hello {user.nickname[0].toUpperCase() + user.nickname.substring(1)}</Text>
+            <Text>Hi {user.nickname[0].toUpperCase() + user.nickname.substring(1)}</Text>
             <HamburgerButton onClick={handleClick}>
                  <GiHamburgerMenu style={{color: 'white'}} />
             </HamburgerButton>
@@ -57,11 +57,17 @@ const Nav = styled(NavLink)`
   font-size: 20px;
   text-decoration: none;
   color: white;
+  margin-top: -5px;
+  @media (max-width: 750px) {
+    font-size: 17px;
+}
 `
 const Image = styled.img`
 	margin-bottom: -2px;
-  margin-right: 5px;
   width: 26px;
+  @media (max-width: 750px) {
+    width: 23px;
+}
   `
 
 const NavFav = styled(NavLink)`
@@ -69,12 +75,19 @@ const NavFav = styled(NavLink)`
   text-decoration: none;
   color: white;
   margin-left: 15px;
+  @media (max-width: 750px) {
+    font-size: 17px;
+    margin-left: 0px;
+}
 `
 
 const Text = styled.p`
   color: white;
   font-size: 20px;
   margin-right: 100px;
+  @media (max-width: 750px) {
+    font-size: 17px;
+}
 `
 
 const Div = styled.div`
