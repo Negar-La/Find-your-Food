@@ -79,7 +79,7 @@ const Form = () => {
         <br></br>
         <FlexTwo>
             <label htmlFor='person'>By:</label>
-            <p style={{marginRight: "55px"}} >{user.nickname[0].toUpperCase() + user.nickname.substring(1)} - Email: {user.email}</p>
+            <By>{user.nickname[0].toUpperCase() + user.nickname.substring(1)} - Email: {user.email}</By>
         </FlexTwo>
         <br></br>
         <FlexTwo>
@@ -133,19 +133,26 @@ const StyledForm = styled.form`
   font-size: 18px;
   border: 3px solid purple;
   border-radius: 10px;
-  width: 600px;
+  max-width: 600px;
   padding: 20px;
   display: flex;
   flex-direction: column;
+ 
   label {
     font-weight: bold;
     margin-right: 20px;
+    @media (max-width: 750px) {
+      margin-right: 10px;
+}
   }
   input {
     border: 1px solid gray;
     height: 25px;
-    width: 250px;
+    width: 270px;
     display: inline-block;
+    @media (max-width: 750px) {
+      width: 220px;
+}
   }
 
   button {
@@ -192,6 +199,14 @@ const FlexTwo = styled.div`
     border: 2px solid #795E96;
   }
 `
+
+const By = styled.p`
+  @media (max-width: 750px) {
+    margin-right: 15px;
+}
+`
+
+
 const Textarea = styled.textarea`
   border: 2px solid #795E96;
   border-radius: 10px;
