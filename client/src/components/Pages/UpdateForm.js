@@ -116,27 +116,27 @@ const UpdateForm = () => {
                   <Liner />
                   <SelectOptions>
                     <P>Province</P>
-                    <select name="province" required>
+                    <select style={{border: '2px solid #795E96'}} name="province" required>
                         <option value="">-Select-</option>
                         <option value="quebec" selected="selected">Quebec</option>
                     </select>
                   </SelectOptions>
                   <SelectOptions>
                     <P>City</P>
-                    <select name="city" required>
+                    <select style={{border: '2px solid #795E96'}} name="city" required>
                         <option value="">-Select-</option>
                         <option value="montreal" selected="selected">Montreal</option>
                     </select>
                   </SelectOptions>
                      <br/>  
-                        <input type="number"  placeholder="Street number" name="stNum" value={updatePost.stNum}  required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>
-                        <input type="text"  placeholder="Street name" name="stName" value={updatePost.stName} required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>        
-                        <input type="text" pattern= "[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" placeholder="Postal code" name="postalCode" value={updatePost.postalCode} required onChange={(e)=> handleChange(e.target.name, e.target.value)}/>
+                        <InputLocation style={{border: '2px solid #795E96'}}  type="number"  placeholder="Street number" name="stNum" value={updatePost.stNum}  required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>
+                        <InputLocation style={{border: '2px solid #795E96'}}  type="text"  placeholder="Street name" name="stName" value={updatePost.stName} required onChange={(e)=> handleChange(e.target.name, e.target.value)}/><br/>        
+                        <InputLocation style={{border: '2px solid #795E96'}}  type="text" pattern= "[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" placeholder="Postal code" name="postalCode" value={updatePost.postalCode} required onChange={(e)=> handleChange(e.target.name, e.target.value)}/>
         </Divider>
         <br></br>
         <FlexTwo>
             <label htmlFor='about'>About this meal:</label>
-            <input type="text" id='about' value={updatePost.about} onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
+            <Textarea type="text" rows="5" cols="43" id='about' value={updatePost.about} onChange={(e)=> handleChange(e.target.id, e.target.value)}  />
         </FlexTwo>
         <FlexUpload>
           <label>Add photo:</label>
@@ -155,36 +155,48 @@ const StyledForm = styled.form`
   margin-top: 30px;
   margin-bottom: 80px;
   font-size: 18px;
-  border: 3px solid black;
-  width: 600px;
+  border: 3px solid purple;
+  border-radius: 10px;
+  max-width: 600px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   label {
     font-weight: bold;
     margin-right: 20px;
+    @media (max-width: 750px) {
+      margin-right: 10px;
+}
   }
   input {
     border: 1px solid gray;
     height: 25px;
     width: 250px;
     display: inline-block;
+    @media (max-width: 750px) {
+      width: 220px;
+}
   }
-
   button {
     padding: 10px 16px;
+    font-size: 18px;
     border-radius: 5px;
     width: 150px;
+    background-color: #795E96;
+    color: white;
+    border: none;
     transition: background-color 0.3s,
                 opacity 0.3s;
   }
 
     button:hover {
       cursor: pointer;
-      background-color: yellow;
+      background-color: var(--yellow);
+      color: black;
     }
     button:active {
-      opacity: 0.5;}
+      opacity: 0.5;
+    }
 `
 
 const FlexType = styled.div`
@@ -204,6 +216,17 @@ const Radio = styled.div`
 const FlexTwo = styled.div`
   display: flex;
   justify-content: space-between;
+  input {
+    border-radius: 10px;
+    padding-left: 10px;
+    border: 2px solid #795E96;
+  }
+`
+
+const Textarea = styled.textarea`
+  border: 2px solid #795E96;
+  border-radius: 10px;
+  padding: 10px;
 `
 
 const FlexUpload = styled.div`
@@ -218,9 +241,10 @@ const Liner = styled.div`
 `;
 
 const Divider = styled.div`
-    box-shadow: 2px 1px 70px 1px rgba(184,178,184,1);
+    box-shadow: 2px 1px 10px 1px rgba(121,94,150,1);
     padding: 10px 20px;
     min-width: 300px;
+    border-radius: 10px;
 `;
 
 const P=styled.p`
@@ -240,6 +264,11 @@ const SelectOptions = styled.div`
     height: 30px;
     border-radius: 13px;
   }
+`
+const InputLocation = styled.input`
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-top: 5px;
 `
 
 const Title=styled.span`

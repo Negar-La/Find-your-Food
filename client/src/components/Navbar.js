@@ -84,7 +84,7 @@ const NavFav = styled(NavLink)`
 const Text = styled.p`
   color: white;
   font-size: 20px;
-  margin-right: 100px;
+  margin-right: 80px;
   @media (max-width: 750px) {
     font-size: 17px;
 }
@@ -94,8 +94,8 @@ const Div = styled.div`
 `
 const HamburgerButton = styled.button`
   position: absolute;
-  right: 3rem;
-  top: 0.5rem;
+  right: 2rem;
+  top: 0.6rem;
   font-size: 2.1rem;
   border: none;
   background-color: inherit;

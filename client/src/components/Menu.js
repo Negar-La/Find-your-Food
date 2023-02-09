@@ -53,7 +53,7 @@ const Wrapper = styled.div`
   align-items: center;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  top: 50px;
+  top: 48px;
   right: 0px;
 
   visibility: ${(props) => (props.open ? "visible" : "hidden")};

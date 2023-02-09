@@ -173,7 +173,8 @@ const StyledForm = styled.form`
       color: black;
     }
     button:active {
-      opacity: 0.5;}
+      opacity: 0.5;
+    }
 `
 
 const FlexType = styled.div`
