@@ -70,10 +70,10 @@ const object = { lat, lng};
                   <Input type='text' placeholder='Where are you?' ref={originRef} />
               </Autocomplete>
             </div>
-            <div>
+            <DivButtons>
               <Btn1  onClick={calculateRoute}> Calculate Route </Btn1>
               <Btn  onClick={clearRoute}>Clear <AiOutlineClear style={{marginLeft: '5px', marginBottom: '-2px'}}/> </Btn>
-            </div>
+            </DivButtons>
             <FlexRow>
               <Title1>Distance: <span>{distance}</span></Title1>
               <Title>Duration: <span>{duration}</span></Title>
@@ -131,6 +131,11 @@ const object = { lat, lng};
 const FlexRow = styled.div`
   display: flex;
   text-align: end;
+  @media (max-width: 750px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 `
 
   const Input = styled.input`
@@ -143,6 +148,14 @@ const FlexRow = styled.div`
     background-color: var(--background);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 10px;
   `
+  const DivButtons = styled.div`
+     @media (max-width: 750px) {
+      display: flex;
+    flex-direction: column;
+  }
+  `
+
+
   const Btn1 = styled.button`
   border: none;
   font-size: 16px;
@@ -153,6 +166,9 @@ const FlexRow = styled.div`
   width: 150px;
   background-color: var(--background);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  @media (max-width: 750px) {
+    margin-right: 0px;
+  }
   cursor: pointer;
   transition: background-color 0.3s,
               opacity 0.3s;
@@ -191,6 +207,9 @@ const Title1 = styled.div`
   margin-right: 45px;
   span {
     font-weight: 400;
+  }
+  @media (max-width: 750px) {
+    margin-right: 0px;
   }
 `
 const Title = styled.div`
