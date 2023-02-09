@@ -132,6 +132,9 @@ margin-right: 5px;
 
 const ImageLogin = styled.img`
   height: 250px;
+  @media (max-width: 750px) {
+    height: 200px;
+  }
 `
 
 const Title = styled.h1`
