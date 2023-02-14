@@ -15,6 +15,9 @@
 <p align="center"> Click <a href="https://find-your-food.onrender.com"><strong> Here</strong> </a> to view the deployed website at render.com </p>
 
 
+#### On Mobile device
+![Screenshot of pages on mobile devices!](./client/src/assets/images/mobile.jpg "On Mobile device")
+
 #### Screenshot of Home page
 ![Screenshot of home page!](./client/src/assets/images/find1.jpg "Home page")
 
