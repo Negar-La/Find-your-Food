@@ -19,11 +19,11 @@
 ![Screenshot of home page!](./client/src/assets/images/find1.jpg "Home page")
 
 #### Screenshot of Post a new Add
-![Screenshot of Post a new Add!](./client/src/assets/images/find2.jpg "Post a new Add")
+![Screenshot of Post a new Add!](./client/src/assets/images/food02.jpg "Post a new Add")
 
 
 #### Screenshot of View Post Details
-![View Post Details](./client/src/assets/images/find3.jpg "View Post Details")
+![View Post Details](./client/src/assets/images/food01.jpg "View Post Details")
 
 
 #### Screenshot of Showing on Google Map
