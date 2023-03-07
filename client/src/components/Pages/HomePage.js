@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import moment from 'moment';
-import Carousel from "../Carousel";
+import Slider from "../Slider";
 import LoadingIcon from "../LoadingIcon";
 import ErrorPage from "./ErrorPage";
 import Pagination from "../Pagination";
@@ -56,7 +56,7 @@ const HomePage = () => {
     <All>
         <Title> All you need is <Purple>Love</Purple> and <Purple>Home Cooked</Purple> food!</Title>
         <CarouselWrapper>
-						<Carousel />
+						<Slider />
 				</CarouselWrapper>
         <Wrapper>
           <ProductGrid>
@@ -98,7 +98,7 @@ const HomePage = () => {
 }
 
 const All = styled.div`
-  background: linear-gradient(-45deg, #f5d5cc, #f9d2e1, #d3eff8, #d3f8ef);
+    background: linear-gradient(-45deg, #f5d5cc, #f9d2e1, #d3eff8, #d3f8ef);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
 @keyframes gradient {
@@ -115,7 +115,7 @@ const All = styled.div`
 `
 
 const Wrapper = styled.div`
-  margin: 340px 50px 0px;
+  margin: 150px 50px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,10 +141,8 @@ const Container = styled.div `
 `
 
 const CarouselWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+  margin: 0 auto;
+  max-width: 950px;
 `;
 
 const Text = styled.p`
