@@ -19,7 +19,7 @@
 ![Screenshot of pages on mobile devices!](./client/src/assets/images/mobile.jpg "On Mobile device")
 
 #### Screenshot of Home page
-![Screenshot of home page!](./client/src/assets/images/find1.jpg "Home page")
+![Screenshot of home page!](./client/src/assets/images/slider.jpg "Home page")
 
 #### Screenshot of Post a new Add
 ![Screenshot of Post a new Add!](./client/src/assets/images/food02.jpg "Post a new Add")
@@ -41,4 +41,4 @@
 ![Screenshot of Live Chat!](./client/src/assets/images/find6.jpg "Live Chat")
 
 #### Screenshot of Menu
-![Screenshot of Menu!](./client/src/assets/images/find7.jpg "Menu")
+![Screenshot of Menu!](./client/src/assets/images/slider2.jpg "Menu")

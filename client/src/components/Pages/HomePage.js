@@ -115,7 +115,7 @@ const All = styled.div`
 `
 
 const Wrapper = styled.div`
-  margin: 150px 50px 0px;
+  margin: 50px 50px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
