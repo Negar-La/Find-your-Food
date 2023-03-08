@@ -10,6 +10,8 @@ import pic6 from '../assets/images/6.jpg';
 import pic7 from '../assets/images/7.jpg';
 import pic8 from '../assets/images/8.jpg';
 import pic9 from '../assets/images/9.jpg';
+import pic10 from '../assets/images/10.jpg';
+import pic11 from '../assets/images/11.jpg';
 
 const Slider = () => {
 
@@ -44,15 +46,17 @@ const Slider = () => {
 				  rewind={true}
 				  rewindWithAnimation={true}
 		> 
-			<Div><Img  src={pic1} alt='bleach' /></Div>
-			<Div><Img  src={pic2} alt='bleach' /></Div>
-			<Div><Img  src={pic3} alt='bleach' /></Div>
-			<Div><Img  src={pic4} alt='bleach' /></Div>
-			<Div><Img  src={pic5} alt='bleach' /></Div>
-			<Div><Img  src={pic6} alt='bleach' /></Div>
-			<Div><Img  src={pic7} alt='bleach' /></Div>
-			<Div><Img src={pic8} alt='bleach' /></Div>
-			<Div><Img src={pic9} alt='bleach' /></Div>
+			<Div><Img  src={pic1} alt='food-picture' /></Div>
+			<Div><Img  src={pic2} alt='food-picture' /></Div>
+			<Div><Img  src={pic3} alt='food-picture' /></Div>
+			<Div><Img  src={pic4} alt='food-picture' /></Div>
+			<Div><Img  src={pic5} alt='food-picture' /></Div>
+			<Div><Img  src={pic6} alt='food-picture' /></Div>
+			<Div><Img  src={pic7} alt='food-picture' /></Div>
+			<Div><Img src={pic8} alt='food-picture' /></Div>
+			<Div><Img src={pic9} alt='food-picture' /></Div>
+			<Div><Img src={pic10} alt='food-picture' /></Div>
+			<Div><Img src={pic11} alt='food-picture' /></Div>
 	    </Carousel>
 	);
 };
