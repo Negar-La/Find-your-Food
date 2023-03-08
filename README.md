@@ -19,7 +19,7 @@
 ![Screenshot of pages on mobile devices!](./client/src/assets/images/mobile-food.jpg "On Mobile device")
 
 #### Screenshot of Home page
-![Screenshot of home page!](./client/src/assets/images/slider.jpg "Home page")
+![Screenshot of home page!](./client/src/assets/images/find1.jpg "Home page")
 
 #### Screenshot of Post a new Add
 ![Screenshot of Post a new Add!](./client/src/assets/images/food02.jpg "Post a new Add")
