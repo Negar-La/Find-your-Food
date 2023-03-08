@@ -16,7 +16,7 @@
 
 
 #### On Mobile device
-![Screenshot of pages on mobile devices!](./client/src/assets/images/mobile.jpg "On Mobile device")
+![Screenshot of pages on mobile devices!](./client/src/assets/images/mobile-food.jpg "On Mobile device")
 
 #### Screenshot of Home page
 ![Screenshot of home page!](./client/src/assets/images/slider.jpg "Home page")
