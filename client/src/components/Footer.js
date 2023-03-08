@@ -10,7 +10,6 @@ const Footer = () => {
   return (
     <FootWrap>
         <FlexDiv>
-            {/* <Logo src={SamLogo} /> */}
             <Copyright>© 2023 Food Inc. {""}</Copyright>
             <FlexDiv2>
             <a href="https://www.facebook.com/"   target='_blank'><BsFacebook style={{color: "white"}}/></a>
@@ -31,9 +30,6 @@ const Footer = () => {
                     navigate("/faq");
                     }}>FAQ</Option>
         </FlexDiv>
-
-      
-      
     </FootWrap>
   );
 };
@@ -52,14 +48,20 @@ const FootWrap = styled.div`
 
 const Copyright = styled.div`
   margin-bottom: 10px;
+  @media screen and (max-width: 500px) {
+        margin: auto;
+    }
 `;
 
-const P=styled.button`
+const P = styled.button`
   color: white;
   background: none;
   border: none;
   text-align: center;
   font-weight: bold;
+  @media screen and (max-width: 500px) {
+        display: none;
+    }
 `
 const Option = styled.button`
   color: whitesmoke;
@@ -77,13 +79,17 @@ const FlexDiv=styled.div`
     display: flex;
     flex-direction: column;
     margin: 10px;
+    @media screen and (max-width: 500px) {
+      flex-direction: row;
+    }
 `;
 const FlexDiv2=styled.div`
     display: flex;
     margin-right: 10px;
     justify-content: space-between;
+    @media screen and (max-width: 500px) {
+        display: none;
+    }
 `;
-
-
 
 export default Footer;
