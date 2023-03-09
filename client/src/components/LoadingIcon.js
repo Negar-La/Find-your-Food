@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import PacmanLoader from "react-spinners/PacmanLoader";
+import loadingImg from "../assets/images/loader.gif";
 
 const LoadingIcon = () => {
   return (
     <Loading>
-      <PacmanLoader color="#795E96" />
+      <img src={loadingImg} />
     </Loading>
   )
 }
