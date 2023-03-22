@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import loadingImg from "../assets/images/loader.gif";
+import PacmanLoader from "react-spinners/PacmanLoader";
 
 const LoadingIcon = () => {
   return (
     <Loading>
-      <img src={loadingImg} />
+      <PacmanLoader color="#795E96" />
     </Loading>
   )
 }
@@ -15,6 +15,7 @@ const Loading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
 `;
 
 export default LoadingIcon
