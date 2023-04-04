@@ -13,6 +13,7 @@ const Form = () => {
     const [pictureUrl, setPictureUrl] = useState("");
     const time = new Date();
     // console.log(time);
+    const [uploaded, setUpdloaded] = useState(false);
 
     const handleChange = (key, value) => {
         setFormData({
@@ -25,7 +26,8 @@ const Form = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('hi')
+        // console.log('hi')
+        setUpdloaded(true); //used to disable button after first click
         fetch(`${process.env.REACT_APP_SERVER_URL}/api/post-add`, {
           method: "POST",
           headers: {
@@ -35,8 +37,8 @@ const Form = () => {
           body: JSON.stringify({...formData, cook: user.nickname, cookEmail: user.email, foodPicture:pictureUrl, posted: time})
         })
         .then(res=>res.json()).then((data)=>{
-            console.log(data);
-            console.log("formData", formData)
+            // console.log(data);
+            // console.log("formData", formData)
             navigate('/');
         })
         .catch ((error)=>{
@@ -119,7 +121,9 @@ const Form = () => {
           <label>Add photo:</label>
           <UploadWidget setPictureUrl={setPictureUrl} pictureUrl={pictureUrl}/>
         </FlexUpload>
-        <button type='submit'>Post</button>
+        <button type='submit'  
+        disabled={uploaded ? true : false} style={{cursor: uploaded ? 'not-allowed' : 'pointer'}}
+        >{uploaded ? 'Posting...' : 'Post'}</button>
         </StyledForm>
   )
 }
@@ -164,11 +168,10 @@ const StyledForm = styled.form`
     color: white;
     border: none;
     transition: background-color 0.3s,
-                opacity 0.3s;
+                opacity 0.3s;       
   }
 
     button:hover {
-      cursor: pointer;
       background-color: var(--yellow);
       color: black;
     }

@@ -23,7 +23,7 @@ const MyFavorites = () => {
       .then((data) => {
         if (data.status === 200) {
           setFavoritePosts(data.data);
-          console.log(data.data)
+          // console.log(data.data)
         } 
       })
       .catch ((error)=>{
