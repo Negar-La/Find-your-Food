@@ -226,6 +226,8 @@ const ModalWrapper = styled.div`
   label {
     font-size: 1.2rem;
     font-weight: 500;
+    max-width: 500px;
+    line-height: 1.5rem;
     margin: 15px 0;
     &:after {
       color: var(--darkblue);
