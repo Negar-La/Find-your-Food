@@ -32,13 +32,11 @@ const getMsg = async (req, res) => {
   // let  uniq = [...new Set(rooms)];
 
   filterMessages
-    ? res
-        .status(200)
-        .json({
-          status: 200,
-          data: filterMessages,
-          message: "All your messages",
-        })
+    ? res.status(200).json({
+        status: 200,
+        data: filterMessages,
+        message: "All your messages",
+      })
     : res.status(400).json({ status: 400, message: "No entry to retrieve" });
 
   client.close();
@@ -82,13 +80,11 @@ const deleteMsg = async (req, res) => {
       .deleteOne({ id: req.body.msg.id });
     console.log(deleteOne.deletedCount);
 
-    res
-      .status(200)
-      .json({
-        status: 200,
-        message: "Message successfully deleted from database",
-        data: deleteOne,
-      });
+    res.status(200).json({
+      status: 200,
+      message: "Message successfully deleted from database",
+      data: deleteOne,
+    });
   } catch (err) {
     res
       .status(400)
@@ -138,21 +134,29 @@ const deletePost = async (req, res) => {
 
     const db = client.db("find_your_food");
     //in mongodb we use "" to access the keys in database, so we check db to pick "_id" and based on   console.log(req.body) in terminal, we have  req.body.post._id
-    const deleteOne = await db
-      .collection("posts")
-      .deleteOne({ id: req.body.post.id });
+
+    const postId = req.body.post.id; // Assuming the post ID is under req.body.post.id
+    console.log(postId);
+    // Delete the post from the "posts" collection
+    const deleteOne = await db.collection("posts").deleteOne({ id: postId });
+
+    // Delete the post from the "favorites" collection based on the post ID
     const deleteFav = await db
       .collection("favorites")
-      .deleteMany({ id: req.body.post.id });
-    console.log(deleteOne.deletedCount);
-    console.log(deleteFav.deletedCount);
-    res
-      .status(200)
-      .json({
-        status: 200,
-        message: "post successfully deleted from database",
-        data: deleteOne,
-      });
+      .deleteMany({ id: postId });
+    console.log(
+      deleteOne.deletedCount,
+      "post(s) deleted from 'posts' collection"
+    );
+    console.log(
+      deleteFav.deletedCount,
+      "post(s) deleted from 'favorites' collection"
+    );
+    res.status(200).json({
+      status: 200,
+      message: "post successfully deleted from database",
+      data: { deletedPost: deleteOne, deletedFavorites: deleteFav },
+    });
   } catch (err) {
     res
       .status(400)
@@ -208,14 +212,12 @@ const updatePost = async (req, res) => {
   } catch (err) {
     client.close();
     console.log(err);
-    return res
-      .status(500)
-      .json({
-        status: 500,
-        message: "Error",
-        bodyReceived: req.body,
-        paramsReceived: req.params,
-      });
+    return res.status(500).json({
+      status: 500,
+      message: "Error",
+      bodyReceived: req.body,
+      paramsReceived: req.params,
+    });
   }
 };
 
@@ -227,13 +229,11 @@ const getPosts = async (req, res) => {
 
     const posts = await db.collection("posts").find().toArray();
 
-    res
-      .status(200)
-      .json({
-        status: 204,
-        data: posts,
-        message: "Successful requested posts",
-      });
+    res.status(200).json({
+      status: 204,
+      data: posts,
+      message: "Successful requested posts",
+    });
   } catch (err) {
     res.status(400).json({ status: 404, message: "No post found" });
     console.log(err.stack);
@@ -256,13 +256,11 @@ const getSinglePost = async (req, res) => {
     // console.log(singlePost);
 
     if (singlePost) {
-      return res
-        .status(200)
-        .json({
-          status: 200,
-          data: singlePost,
-          message: "The requested post data",
-        });
+      return res.status(200).json({
+        status: 200,
+        data: singlePost,
+        message: "The requested post data",
+      });
     } else {
       return res
         .status(404)
@@ -292,25 +290,21 @@ const addFavorite = async (req, res) => {
         .findOne({ id: req.body.id, userAddedtoFav: req.body.userAddedtoFav });
       console.log(findPost);
       if (findPost) {
-        res
-          .status(200)
-          .json({
-            status: 200,
-            data: req.body,
-            message: "This post is already in your favorite list",
-          });
+        res.status(200).json({
+          status: 200,
+          data: req.body,
+          message: "This post is already in your favorite list",
+        });
       } else {
         const userFavorite = await db
           .collection("favorites")
           .insertOne(req.body);
 
-        res
-          .status(200)
-          .json({
-            status: 200,
-            message: "post successfully added to favorite list",
-            data: req.body,
-          });
+        res.status(200).json({
+          status: 200,
+          message: "post successfully added to favorite list",
+          data: req.body,
+        });
       }
     }
   } catch (err) {
@@ -326,7 +320,7 @@ const addFavorite = async (req, res) => {
 const getFavorites = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   const { id } = req.params;
-  console.log("id", id);
+  // console.log("id", id);
 
   try {
     await client.connect();
@@ -337,15 +331,13 @@ const getFavorites = async (req, res) => {
     const filteredFavorites = allFavorites.filter((fav) => {
       return fav.userAddedtoFav === id;
     });
-    console.log(filteredFavorites);
+    // console.log(filteredFavorites);
 
-    res
-      .status(200)
-      .json({
-        status: 200,
-        message: "All your favorite Posts",
-        data: filteredFavorites,
-      });
+    res.status(200).json({
+      status: 200,
+      message: "All your favorite Posts",
+      data: filteredFavorites,
+    });
   } catch (err) {
     res.status(400).json({ status: 400, message: "post not added" });
     console.log(err.stack);
@@ -356,27 +348,23 @@ const getFavorites = async (req, res) => {
 
 const deleteFavorite = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
-  console.log(req.body);
+  console.log("Request body:", req.body);
 
   try {
     await client.connect();
 
     const db = client.db("find_your_food");
     //in mongodb we use "" to access the keys in database, so we check db to pick "id" and based on   console.log(req.body) in terminal, we have  req.body.item.id
-    const deleteOne = await db
-      .collection("favorites")
-      .deleteOne({
-        id: req.body.post.id,
-        userAddedtoFav: req.body.post.userAddedtoFav,
-      });
+    const deleteOne = await db.collection("favorites").deleteOne({
+      id: req.body.post.id,
+      userAddedtoFav: req.body.post.userAddedtoFav,
+    });
     console.log(deleteOne.deletedCount);
-    res
-      .status(200)
-      .json({
-        status: 200,
-        message: "post successfully deleted from favorite list",
-        data: deleteOne,
-      });
+    res.status(200).json({
+      status: 200,
+      message: "post successfully deleted from favorite list",
+      data: deleteOne,
+    });
   } catch (err) {
     res.status(400).json({ status: 400, message: "post was not deleted" });
     console.log(err.stack);
