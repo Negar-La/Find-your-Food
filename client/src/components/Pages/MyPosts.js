@@ -7,8 +7,7 @@ import { AiFillEdit } from "react-icons/ai";
 import moment from "moment";
 import LoadingIcon from "../LoadingIcon";
 import ErrorPage from "./ErrorPage";
-import Modal from "react-modal";
-import { CgDanger } from "react-icons/cg";
+import ConfirmationModal from "../ConfirmationModal";
 
 const MyPosts = () => {
   const [status, setStatus] = useState("loading");
@@ -35,6 +34,12 @@ const MyPosts = () => {
 
   const deleteHandler = (e, post) => {
     e.preventDefault();
+    setSelectedItem(post);
+    setModalIsOpen(true);
+  };
+
+  const confirmDeleteHandler = (e, post) => {
+    e.preventDefault();
     // console.log("clicked");
     fetch(`${process.env.REACT_APP_SERVER_URL}/api/delete-post`, {
       method: "DELETE",
@@ -51,18 +56,13 @@ const MyPosts = () => {
         if (data.status === 200) {
           // console.log(data);
           setPostDeleted(!postDeleted);
+          setSelectedItem(post);
           setModalIsOpen(false);
-          //  window.alert("Successfully deleted")
         }
       })
       .catch((error) => {
         return error;
       });
-  };
-
-  const cancelHandler = (e) => {
-    e.preventDefault();
-    setModalIsOpen(false);
   };
 
   //function that navigates to the update form componenets
@@ -71,22 +71,6 @@ const MyPosts = () => {
     e.preventDefault();
     navigate(`/updateform/${post.id}`);
   };
-
-  const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      padding: "0",
-      backgroundColor: "var(--background)",
-      borderRadius: "0.8rem",
-      border: "none",
-    },
-  };
-  Modal.setAppElement();
 
   if (status === "error") {
     return <ErrorPage />;
@@ -135,10 +119,7 @@ const MyPosts = () => {
                     <BtnContainer>
                       <DeleteBtn
                         onClick={(e) => {
-                          e.preventDefault();
-                          setModalIsOpen(true);
-                          setSelectedItem(post);
-                          // console.log(post);
+                          deleteHandler(e, post);
                         }}
                       >
                         <AiFillDelete
@@ -169,43 +150,19 @@ const MyPosts = () => {
                         />
                       </DeleteBtn>
                     </BtnContainer>
-                    {modalIsOpen && (
-                      <Modal
-                        ariaHideApp={false}
-                        isOpen={modalIsOpen}
-                        style={customStyles}
-                      >
-                        <ModalWrapper>
-                          <CgDanger
-                            size={65}
-                            style={{ color: "var(--darkblue)" }}
-                          />
-                          <label>
-                            {" "}
-                            Are you sure you want to delete{" "}
-                            <span style={{ color: "red" }}>
-                              {selectedItem.foodName}
-                            </span>{" "}
-                            from your posts?
-                          </label>
-                          <div>
-                            <button
-                              onClick={(e) => deleteHandler(e, selectedItem)}
-                            >
-                              Yes, delete it!
-                            </button>
-                            <button
-                              onClick={(e) => cancelHandler(e, selectedItem)}
-                            >
-                              No, cancel!
-                            </button>
-                          </div>
-                        </ModalWrapper>
-                      </Modal>
-                    )}
                   </ItemContainer>
                 );
             })
+        )}
+
+        {/* Render the confirmation modal */}
+        {selectedItem && (
+          <ConfirmationModal
+            modalIsOpen={modalIsOpen}
+            closeModal={() => setModalIsOpen(false)}
+            confirmAction={(e) => confirmDeleteHandler(e, selectedItem)}
+            itemName={selectedItem.foodName} // Pass the item name to the modal
+          />
         )}
 
         {posts &&
