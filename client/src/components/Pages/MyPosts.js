@@ -180,7 +180,14 @@ const MyPosts = () => {
                             size={65}
                             style={{ color: "var(--darkblue)" }}
                           />
-                          <label> Are you sure you want to delete <span style={{color: 'red'}}>{selectedItem.foodName}</span>  from your posts?</label>
+                          <label>
+                            {" "}
+                            Are you sure you want to delete{" "}
+                            <span style={{ color: "red" }}>
+                              {selectedItem.foodName}
+                            </span>{" "}
+                            from your posts?
+                          </label>
                           <div>
                             <button
                               onClick={(e) => deleteHandler(e, selectedItem)}
