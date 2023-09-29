@@ -64,7 +64,6 @@ const MyFavorites = () => {
           setSelectedItem(post); // Set the selected item when the delete action is triggered
           // Close the modal after deletion
           setModalIsOpen(false);
-          // window.alert('post was deleted from Favorite list')
         }
       })
       .catch((error) => {

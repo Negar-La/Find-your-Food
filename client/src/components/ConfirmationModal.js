@@ -9,6 +9,10 @@ const ConfirmationModal = ({
   itemName,
 }) => {
   const customStyles = {
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black overlay
+      zIndex: 1000, // Adjust the z-index to appear above other elements
+    },
     content: {
       top: "50%",
       left: "50%",
@@ -16,15 +20,21 @@ const ConfirmationModal = ({
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      padding: "0",
-      backgroundColor: "var(--background)",
-      borderRadius: "0.8rem",
+      padding: "20px",
+      backgroundColor: "white",
+      borderRadius: "8px",
       border: "none",
+      boxShadow: "0 2px 10px rgba(0, 0, 0, 0.2)", // Add a box shadow
     },
   };
 
   return (
-    <Modal ariaHideApp={false} isOpen={modalIsOpen} style={customStyles}>
+    <Modal
+      ariaHideApp={false}
+      isOpen={modalIsOpen}
+      style={customStyles}
+      onRequestClose={closeModal}
+    >
       <ModalWrapper>
         <CgDanger size={65} style={{ color: "var(--darkblue)" }} />
         <label>
@@ -45,9 +55,8 @@ const ModalWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
   text-align: center;
-  border: none;
+
   label {
     font-size: 1.2rem;
     font-weight: 500;
@@ -58,6 +67,7 @@ const ModalWrapper = styled.div`
       color: var(--darkblue);
     }
   }
+
   button {
     width: 150px;
     height: 40px;
@@ -83,7 +93,6 @@ const ModalWrapper = styled.div`
   }
 
   @media screen and (max-width: 600px) {
-    padding: 10px;
     label {
       font-size: 1.1rem;
       font-weight: 500;
