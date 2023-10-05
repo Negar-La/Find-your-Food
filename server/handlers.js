@@ -15,54 +15,75 @@ const options = {
 const getMsg = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   const { id } = req.params;
-  console.log("id", id);
+  console.log("Received user id:", id);
 
-  await client.connect();
+  try {
+    await client.connect();
+    const db = client.db("find_your_food");
+    const conversations = await db.collection("conversations").find().toArray();
 
-  const db = client.db("find_your_food");
+    const filteredMessages = conversations.reduce((acc, conversation) => {
+      const messagesForUser = conversation.messages.filter(
+        (msg) => msg.author === id || msg.cook === id || msg.cookEmail === id
+      );
+      if (messagesForUser.length > 0) {
+        acc.push({
+          conversationId: conversation.conversationId,
+          messages: messagesForUser,
+        });
+      }
+      return acc;
+    }, []);
 
-  const messages = await db.collection("messages").find().toArray();
-  const filterMessages = messages.filter((msg) => {
-    return msg.messageData.author === id;
-  });
-  console.log(filterMessages);
-
-  // let rooms = messages.map(({ messageData })=> messageData.room )   // target room
-  // // remove duplicates from the category array
-  // let  uniq = [...new Set(rooms)];
-
-  filterMessages
-    ? res.status(200).json({
+    if (filteredMessages.length > 0) {
+      res.status(200).json({
         status: 200,
-        data: filterMessages,
+        data: filteredMessages,
         message: "All your messages",
-      })
-    : res.status(400).json({ status: 400, message: "No entry to retrieve" });
-
-  client.close();
+      });
+    } else {
+      res.status(400).json({ status: 400, message: "No messages found" });
+    }
+  } catch (err) {
+    res.status(400).json({ status: 400, message: "Failed to get messages" });
+    console.log(err.stack);
+  } finally {
+    client.close();
+  }
 };
 
 const postMsg = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   console.log(req.body);
-  const message = {
-    ...req.body,
-    id: uuidv4(),
-  };
+  const { conversationId, messageData } = req.body;
 
-  await client.connect();
+  try {
+    await client.connect();
+    const db = client.db("find_your_food");
+    const conversation = await db
+      .collection("conversations")
+      .findOne({ conversationId });
 
-  const db = client.db("find_your_food");
+    if (!conversation) {
+      // If the conversation doesn't exist, create a new one
+      await db.collection("conversations").insertOne({
+        conversationId,
+        messages: [messageData],
+      });
+    } else {
+      // If the conversation exists, push the new message
+      await db
+        .collection("conversations")
+        .updateOne({ conversationId }, { $push: { messages: messageData } });
+    }
 
-  const getEntry = await db.collection("messages").insertOne(message);
-
-  getEntry
-    ? res
-        .status(200)
-        .json({ status: 200, data: getEntry, message: "Success Msg" })
-    : res.status(400).json({ status: 400, message: "Message was not added" });
-
-  client.close();
+    res.status(200).json({ status: 200, message: "Success Msg" });
+  } catch (err) {
+    res.status(400).json({ status: 400, message: "Message was not added" });
+    console.log(err.stack);
+  } finally {
+    client.close();
+  }
 };
 
 const deleteMsg = async (req, res) => {
