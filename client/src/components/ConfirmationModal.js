@@ -39,7 +39,7 @@ const ConfirmationModal = ({
         <CgDanger size={65} style={{ color: "var(--darkblue)" }} />
         <label>
           Are you sure you want to delete{" "}
-          <span style={{ color: "red" }}>{itemName}</span> from your favorites?
+          <span style={{ color: "red" }}>{itemName}</span> from your list?
         </label>
         <div>
           <button onClick={confirmAction}>Yes, delete it!</button>

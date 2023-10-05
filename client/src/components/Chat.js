@@ -2,105 +2,130 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import "./Chat.css";
 import ScrollToBottom from "react-scroll-to-bottom";
+const { v4: uuidv4 } = require("uuid");
 
-const Chat = ({socket, room, username, cook, cookEmail}) => {
+const Chat = ({ socket, room, username, cook, cookEmail, conversationId }) => {
+  const [currentMessage, setCurrentMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
 
-    const [currentMessage, setCurrentMessage] = useState("");
-    const [messageList, setMessageList] = useState([]);
+  const [msgList, setMsgList] = useState("");
 
-    const [msgList, setMsgList] = useState('');
+  const messageTimeForMessagesPage = new Date(Date.now()).toLocaleString(
+    "en-US",
+    {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }
+  );
 
-    const sendMessage = async () => {
-        if (currentMessage !== "") {
-            const messageData = {
-                author: username,
-                room: room,
-                cook: cook,
-                cookEmail: cookEmail,
-                message: currentMessage,
-                time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
-            };
+  const now = new Date();
+  const messageTimeForChat = `${now
+    .getHours()
+    .toString()
+    .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
 
-            await socket.emit("send-message", messageData)
-            setMessageList((list) => [...list, messageData]);  
-            setCurrentMessage("");
-            fetch(`${process.env.REACT_APP_SERVER_URL}/api/postMessage`, { 
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Accept: "application/json",
-                },
-                body: JSON.stringify({
-                    messageData
-                })
-              })
-              .then(res=> res.json())
-              .then(data => {
-                setMsgList(data)
-                console.log(data)
-              })
-        }
-    };
+  const sendMessage = async () => {
+    if (currentMessage !== "") {
+      const messageData = {
+        author: username,
+        room: room,
+        cook: cook,
+        cookEmail: cookEmail,
+        message: currentMessage,
+        timeForMessagesPage: messageTimeForMessagesPage,
+        timeForChat: messageTimeForChat,
+        conversationId: conversationId, // Use the conversationId from the prop
+      };
 
-    useEffect(()=>{
-        socket.on("receive-message", (data) => {
-            // console.log(data);
-            setMessageList((list) => [...list, data]);  
-        })
-    }, [socket]);
+      await socket.emit("send-message", messageData);
+      setMessageList((list) => [...list, messageData]);
+      setCurrentMessage("");
+      fetch(`${process.env.REACT_APP_SERVER_URL}/api/postMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          conversationId: conversationId, // Include conversationId in the body
+          messageData,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setMsgList(data);
+          console.log(data);
+        });
+    }
+  };
+
+  useEffect(() => {
+    socket.on("receive-message", (data) => {
+      // console.log(data);
+      setMessageList((list) => [...list, data]);
+    });
+  }, [socket]);
 
   return (
     <Chatwindow>
-        <ChatHeader>
-            <p>Live Chat</p>
-        </ChatHeader>
-        <ChatBody>
-            <ScrollToBottom className="message-container">
-                {messageList.map((messageContent)=>{
-                    return <div  className="message"
-                                id={username === messageContent.author ? "you" : "other"}>
-                                <div>
-                                    <div className="message-content">
-                                        <p>{messageContent.message}</p>
-                                    </div>
-                                    <MessageMeta>
-                                        <p>{messageContent.time}</p>
-                                        <Author>{messageContent.author}</Author>
-                                    </MessageMeta>
-                                </div>
-                        </div>
-                })}
-            </ScrollToBottom>
-        </ChatBody>
-        <ChatFooter>
-            <input 
-                type="text" 
-                value={currentMessage}
-                placeholder="Hey..."
-                onChange={(e)=>{
-                    setCurrentMessage(e.target.value)
-                }}
-                onKeyDown={(e)=>{
-                    e.key === "Enter" && sendMessage();
-                }}
-                />
-            <button onClick={sendMessage} >&#9658;</button>
-        </ChatFooter>
+      <ChatHeader>
+        <p>Live Chat</p>
+      </ChatHeader>
+      <ChatBody>
+        <ScrollToBottom className="message-container">
+          {messageList.map((messageContent) => {
+            return (
+              <div
+                className="message"
+                id={username === messageContent.author ? "you" : "other"}
+              >
+                <div>
+                  <div className="message-content">
+                    <p>{messageContent.message}</p>
+                  </div>
+                  <MessageMeta>
+                    <p>{messageContent.timeForChat}</p>
 
+                    <Author>{messageContent.author}</Author>
+                  </MessageMeta>
+                </div>
+              </div>
+            );
+          })}
+        </ScrollToBottom>
+      </ChatBody>
+      <ChatFooter>
+        <input
+          type="text"
+          value={currentMessage}
+          placeholder="Hey..."
+          onChange={(e) => {
+            setCurrentMessage(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            e.key === "Enter" && sendMessage();
+          }}
+        />
+        <button onClick={sendMessage}>&#9658;</button>
+      </ChatFooter>
     </Chatwindow>
-  )
-}
+  );
+};
 
 const Chatwindow = styled.div`
   width: 300px;
   height: 420px;
-`
+`;
 
 const ChatHeader = styled.div`
   margin-top: 15px;
   height: 45px;
   border-radius: 6px;
-  background: #795E96;
+  background: #795e96;
   position: relative;
   cursor: pointer;
   p {
@@ -110,16 +135,14 @@ const ChatHeader = styled.div`
     font-weight: 700;
     line-height: 45px;
   }
-
-`
+`;
 const ChatBody = styled.div`
   height: calc(450px - (45px + 70px));
   border: 1px solid #263238;
   background: #fff;
   border-radius: 5px;
   position: relative;
-
-`
+`;
 
 const ChatFooter = styled.div`
   height: 40px;
@@ -135,7 +158,7 @@ const ChatFooter = styled.div`
     font-size: 1em;
     border-right: 1px dotted #607d8b;
     outline: none;
-    font-family: 'Signika', sans-serif;
+    font-family: "Signika", sans-serif;
   }
   button {
     border: 0;
@@ -149,10 +172,10 @@ const ChatFooter = styled.div`
     font-size: 25px;
     color: lightgray;
     &:hover {
-        color: #795E96;
+      color: #795e96;
+    }
   }
-  }
-`
+`;
 
 const MessageMeta = styled.div`
   display: flex;
@@ -160,10 +183,10 @@ const MessageMeta = styled.div`
   p {
     margin-right: 8px;
   }
-`
+`;
 const Author = styled.p`
   margin-left: 10px;
   font-weight: bold;
-`
+`;
 
-export default Chat
+export default Chat;
