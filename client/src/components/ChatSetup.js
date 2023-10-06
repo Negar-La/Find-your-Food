@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const socket = io.connect("http://localhost:8000");
 
-const ChatSetup = ({ cook, cookEmail, user }) => {
+const ChatSetup = ({ cook, cookEmail, user, room1 }) => {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
@@ -16,16 +16,28 @@ const ChatSetup = ({ cook, cookEmail, user }) => {
   // console.log(user);
 
   const joinRoom = () => {
-    if (
-      username === user.name ||
-      username === user.nickname ||
-      username === cook
-    ) {
+    // Check if username and room are provided
+    if (!username || !room) {
+      alert("Please enter a valid name and food.");
+      return;
+    }
+    // Ensure the room (food name) matches the provided name
+    if (room !== room1) {
+      console.log(`room is ${room} and room1 is ${room1}`);
+      alert("Invalid food name. Please enter a valid food name.");
+      return;
+    }
+
+    if (username === user.name || username === user.nickname) {
+      // Check if the food name is empty
+
       const newConversationId = uuidv4(); // Generate a unique ID for the conversation
+      console.log("Generated new conversation ID:", newConversationId);
       socket.emit("join-room", { room, conversationId: newConversationId }); // Pass the conversationId to the server
-      console.log("newConversationId", newConversationId);
       setConversationId(newConversationId); // Update conversationId in state
       setShowChat(true);
+    } else {
+      alert("Invalid username. Please enter a valid name.");
     }
   };
 

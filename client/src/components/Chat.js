@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import "./Chat.css";
 import ScrollToBottom from "react-scroll-to-bottom";
-const { v4: uuidv4 } = require("uuid");
 
-const Chat = ({ socket, room, username, cook, cookEmail, conversationId }) => {
+const Chat = ({ socket, room, username, cook, cookEmail }) => {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
   const [msgList, setMsgList] = useState("");
+  const [conversationId, setConversationId] = useState(null);
 
   const messageTimeForMessagesPage = new Date(Date.now()).toLocaleString(
     "en-US",
@@ -38,7 +38,7 @@ const Chat = ({ socket, room, username, cook, cookEmail, conversationId }) => {
         message: currentMessage,
         timeForMessagesPage: messageTimeForMessagesPage,
         timeForChat: messageTimeForChat,
-        conversationId: conversationId, // Use the conversationId from the prop
+        conversationId,
       };
 
       await socket.emit("send-message", messageData);
@@ -65,11 +65,19 @@ const Chat = ({ socket, room, username, cook, cookEmail, conversationId }) => {
 
   useEffect(() => {
     socket.on("receive-message", (data) => {
-      // console.log(data);
       setMessageList((list) => [...list, data]);
     });
-  }, [socket]);
 
+    // Listen for the conversation ID from the server
+    socket.on("conversation-id", ({ conversationId }) => {
+      setConversationId(conversationId);
+    });
+
+    return () => {
+      socket.off("receive-message");
+      socket.off("conversation-id");
+    };
+  }, [socket]);
   return (
     <Chatwindow>
       <ChatHeader>
@@ -77,9 +85,10 @@ const Chat = ({ socket, room, username, cook, cookEmail, conversationId }) => {
       </ChatHeader>
       <ChatBody>
         <ScrollToBottom className="message-container">
-          {messageList.map((messageContent) => {
+          {messageList.map((messageContent, index) => {
             return (
               <div
+                key={index}
                 className="message"
                 id={username === messageContent.author ? "you" : "other"}
               >
