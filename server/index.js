@@ -60,28 +60,30 @@ app.delete("/api/delete-favorite", deleteFavorite);
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
-  socket.on("join-room", (data) => {
-    socket.join(data);
-    console.log(`user with id = ${socket.id} joined room: ${data}`);
+  // socket.on("join-room", (data) => {
+  //   socket.join(data);
+  //   console.log(`user with id = ${socket.id} joined room: ${data}`);
+  // });
+
+  socket.on("join-room", ({ room, conversationId }) => {
+    socket.join(room);
+    console.log(
+      `User joined room ${room} with conversation ID: ${conversationId}`
+    );
+    // Send the conversation ID back to the client
+    socket.emit("conversation-id", { conversationId });
   });
 
-  //   socket.on("join-room", ({ room, conversationId }) => {
-  //     socket.join(room);
-  //     console.log(
-  //       `User joined room ${room} with conversation ID: ${conversationId}`
-  //     );
+  // socket.on("send-message", (data) => {
+  //   console.log(data);
+  //   socket.to(data.room).emit("receive-message", data);
+  // });
 
-  //     // Store the conversation ID associated with the room
-  //     // You can use a data structure to store this mapping.
-  //     // For simplicity, let's use a JavaScript object.
-  //     roomInfo[room] = {
-  //       conversationId,
-  //     };
-  //   });
-
-  socket.on("send-message", (data) => {
-    console.log(data);
-    socket.to(data.room).emit("receive-message", data);
+  socket.on("send-message", (messageData) => {
+    const { room } = messageData;
+    socket.to(room).emit("receive-message", messageData); // Broadcast the message to everyone in the room
+    // Save the messageData to the database using the conversationId
+    // ...
   });
 
   socket.on("disconnect", () => {
