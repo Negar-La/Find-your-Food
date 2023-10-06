@@ -38,7 +38,6 @@ const Chat = ({ socket, room, username, cook, cookEmail }) => {
         message: currentMessage,
         timeForMessagesPage: messageTimeForMessagesPage,
         timeForChat: messageTimeForChat,
-        conversationId,
       };
 
       await socket.emit("send-message", messageData);
@@ -51,7 +50,7 @@ const Chat = ({ socket, room, username, cook, cookEmail }) => {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          conversationId: conversationId, // Include conversationId in the body
+          conversationId: room, // Include conversationId in the body
           messageData,
         }),
       })

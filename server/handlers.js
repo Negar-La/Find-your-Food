@@ -68,13 +68,18 @@ const postMsg = async (req, res) => {
       // If the conversation doesn't exist, create a new one
       await db.collection("conversations").insertOne({
         conversationId,
+        participants: [messageData.author], // Add the message author as a participant
         messages: [messageData],
       });
     } else {
       // If the conversation exists, push the new message
-      await db
-        .collection("conversations")
-        .updateOne({ conversationId }, { $push: { messages: messageData } });
+      await db.collection("conversations").updateOne(
+        { conversationId },
+        {
+          $addToSet: { participants: messageData.author },
+          $push: { messages: messageData },
+        }
+      );
     }
 
     res.status(200).json({ status: 200, message: "Success Msg" });

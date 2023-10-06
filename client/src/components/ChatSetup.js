@@ -10,7 +10,7 @@ const ChatSetup = ({ cook, cookEmail, user, room1 }) => {
   const [username, setUsername] = useState("");
   const [room, setRoom] = useState("");
   const [showChat, setShowChat] = useState(false);
-  const [conversationId, setConversationId] = useState(""); // State to manage conversationId
+
   // console.log(showChat);
   // console.log(cook);
   // console.log(user);
@@ -22,8 +22,8 @@ const ChatSetup = ({ cook, cookEmail, user, room1 }) => {
       return;
     }
     // Ensure the room (food name) matches the provided name
-    if (room !== room1) {
-      console.log(`room is ${room} and room1 is ${room1}`);
+    if (room.toLowerCase() !== room1.toLowerCase()) {
+      // console.log(`room is ${room} and room1 is ${room1}`);
       alert("Invalid food name. Please enter a valid food name.");
       return;
     }
@@ -31,10 +31,8 @@ const ChatSetup = ({ cook, cookEmail, user, room1 }) => {
     if (username === user.name || username === user.nickname) {
       // Check if the food name is empty
 
-      const newConversationId = uuidv4(); // Generate a unique ID for the conversation
-      console.log("Generated new conversation ID:", newConversationId);
-      socket.emit("join-room", { room, conversationId: newConversationId }); // Pass the conversationId to the server
-      setConversationId(newConversationId); // Update conversationId in state
+      socket.emit("join-room", { room, username });
+      console.log("join-room", { room, username });
       setShowChat(true);
     } else {
       alert("Invalid username. Please enter a valid name.");
@@ -67,7 +65,6 @@ const ChatSetup = ({ cook, cookEmail, user, room1 }) => {
           socket={socket}
           room={room}
           cook={cook}
-          conversationId={conversationId}
           cookEmail={cookEmail}
           username={username}
         />
