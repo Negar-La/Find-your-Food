@@ -12,6 +12,33 @@ const options = {
   useUnifiedTopology: true,
 };
 
+// const updateDocuments = async () => {
+//   const client = new MongoClient(MONGO_URI, options);
+
+//   try {
+//     await client.connect();
+//     const db = client.db("find_your_food");
+//     const collection = db.collection("posts");
+
+//     // Update all documents to add province and city
+//     const result = await collection.updateMany(
+//       {},
+//       {
+//         $set: {
+//           province: "Quebec", // Example province value
+//           city: "Montreal", // Example city value
+//         },
+//       }
+//     );
+
+//     console.log(`${result.modifiedCount} documents updated.`);
+//   } finally {
+//     await client.close();
+//   }
+// };
+
+// updateDocuments().catch(console.error);
+
 const getConversations = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   const { id } = req.params;
@@ -126,7 +153,7 @@ const addPost = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   const { lat, lng } = await getLocFromPlCode(req.body.postalCode);
 
-  // console.log( req.body)
+  console.log(req.body);
   const post = {
     ...req.body,
     lat: lat,

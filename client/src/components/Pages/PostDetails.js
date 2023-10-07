@@ -71,6 +71,11 @@ const PostDetails = () => {
         console.log(error);
       });
   };
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
   console.log(post);
   return (
     <>
@@ -114,7 +119,8 @@ const PostDetails = () => {
               <AboutTitle style={{ marginTop: "10px" }}> Address: </AboutTitle>
               <AboutDetail>
                 {" "}
-                {post.stNum} {post.stName} - {post.postalCode}
+                {post.stNum} {post.stName}, {capitalizeFirstLetter(post.city)},{" "}
+                {capitalizeFirstLetter(post.province)} - {post.postalCode}
               </AboutDetail>
               <AboutTitle style={{ marginTop: "10px" }}> Phone: </AboutTitle>
               <AboutDetail> {post.phone} </AboutDetail>
