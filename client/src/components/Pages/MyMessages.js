@@ -157,16 +157,6 @@ const MessageWrapper = styled.div`
   background-color: #f9f9f9;
 `;
 
-const Wrapper = styled.button`
-  border: 3px solid purple;
-  background-color: inherit;
-  border-radius: 15px;
-  margin: 20px auto 25px;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
 const Title = styled.h1`
   margin: 25px;
   font-size: 25px;
