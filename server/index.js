@@ -3,9 +3,9 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 
 const {
-  getMsg,
+  getConversations,
   postMsg,
-  deleteMsg,
+  deleteConversation,
   addPost,
   getPosts,
   getSinglePost,
@@ -43,9 +43,9 @@ app.use(
   })
 );
 
-app.get("/api/getMessage/:id", getMsg);
+app.get("/api/getConversations/:id", getConversations);
 app.post("/api/postMessage", postMsg);
-app.delete("/api/deleteMessage", deleteMsg);
+app.delete("/api/deleteConversation", deleteConversation);
 
 app.post("/api/post-add", addPost);
 app.get("/api/getPosts", getPosts);

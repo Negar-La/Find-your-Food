@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoadingIcon from "../LoadingIcon";
 import ErrorPage from "./ErrorPage";
@@ -7,56 +7,42 @@ import { AiFillDelete } from "react-icons/ai";
 
 const MyMessages = () => {
   const [status, setStatus] = useState("loading");
-  const [messages, setMessages] = useState(null);
+  const [conversations, setConversations] = useState(null);
   const [msgDeleted, setMsgDeleted] = useState(false);
 
   const { user } = useAuth0();
-  // console.log(user);
 
   useEffect(() => {
     if (user) {
+      console.log("Fetching conversations for user:", user.nickname);
       fetch(
-        `${process.env.REACT_APP_SERVER_URL}/api/getMessage/${user.nickname}`
+        `${process.env.REACT_APP_SERVER_URL}/api/getConversations/${user.nickname}`
       )
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.data);
-          // Group messages by conversation based on room (or any other unique identifier)
-          const groupedMessages = groupMessagesByConversation(data.data);
-          setMessages(groupedMessages);
+          if (data.status === 200 && data.data.length > 0) {
+            setConversations(data.data);
+          } else {
+            setStatus("no-conversations");
+          }
         })
         .catch((error) => {
-          console.log(error);
+          console.log("Error fetching conversations:", error);
           setStatus("error");
         });
     }
   }, [msgDeleted, user]);
 
-  const groupMessagesByConversation = (messages) => {
-    const groupedMessages = {};
-
-    messages.forEach((msg) => {
-      const room = msg.messageData.room;
-
-      if (!groupedMessages[room]) {
-        groupedMessages[room] = [];
-      }
-
-      groupedMessages[room].push(msg);
-    });
-
-    return groupedMessages;
-  };
-
-  const deleteMessageHandler = (e, msg) => {
+  const deleteMessageHandler = (e, conversationId) => {
+    console.log(conversationId);
     e.preventDefault();
-    fetch(`${process.env.REACT_APP_SERVER_URL}/api/deleteMessage`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/api/deleteConversation`, {
       method: "DELETE",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ msg }),
+      body: JSON.stringify({ conversationId }),
     })
       .then((data) => {
         return data.json();
@@ -65,7 +51,7 @@ const MyMessages = () => {
         if (data.status === 200) {
           console.log(data);
           setMsgDeleted(!msgDeleted);
-          window.alert("Message was deleted from your list");
+          window.alert("Conversation was deleted from your list");
         }
       })
       .catch((error) => {
@@ -75,58 +61,76 @@ const MyMessages = () => {
 
   if (status === "error") {
     return <ErrorPage />;
-  }
-  return (
-    <>
-      <Title>My Messages:</Title>
-      {!messages ? (
-        <LoadingWrapper>
-          <LoadingIcon />
-        </LoadingWrapper>
-      ) : Object.keys(messages).length === 0 ? (
-        <NoPost>You have no Messages</NoPost>
-      ) : (
-        Object.entries(messages).map(([room, roomMessages]) => (
-          <ConversationWrapper key={room}>
-            <ConversationTitle> Conversation about {room}</ConversationTitle>
-            {roomMessages.map((msg) => (
-              <MessageWrapper key={msg.id}>
-                <Text>
-                  <Tag>
-                    {msg.messageData.cook === user.nickname ? "From:" : "To:"}
-                  </Tag>{" "}
-                  {msg.messageData.cook === user.nickname
-                    ? msg.messageData.author
-                    : msg.messageData.cook}
-                </Text>
-                <Text>
-                  <Tag>Message:</Tag> {msg.messageData.message}
-                </Text>
-                <Text>
-                  <Tag>At:</Tag> {msg.messageData.timeForMessagesPage}
-                </Text>
+  } else if (status === "no-conversations") {
+    return <NoPost>You have no Conversations</NoPost>;
+  } else
+    return (
+      <>
+        <Title>My Conversations:</Title>
+        {!conversations ? (
+          <LoadingWrapper>
+            <LoadingIcon />
+          </LoadingWrapper>
+        ) : (
+          conversations.map((conversation) => (
+            <ConversationWrapper key={conversation._id}>
+              <ConversationTitle>
+                Conversation about:{conversation.conversationId}{" "}
+              </ConversationTitle>
+              <ConversationTitle>
+                Between:{" "}
+                {conversation.participants.map((participant, index) => (
+                  <React.Fragment key={participant}>
+                    {index > 0 &&
+                      index === conversation.participants.length - 1 &&
+                      " and "}
+                    {index > 0 &&
+                      index < conversation.participants.length - 1 &&
+                      ", "}
+                    {participant === user.nickname ? "You" : participant}
+                  </React.Fragment>
+                ))}
+              </ConversationTitle>
 
-                <BtnContainer>
-                  <DeleteBtn onClick={(e) => deleteMessageHandler(e, msg)}>
-                    <AiFillDelete
-                      size={25}
-                      style={{ color: "#4A2E67" }}
-                      onMouseOver={({ target }) =>
-                        (target.style.color = "var(--yellow)")
-                      }
-                      onMouseOut={({ target }) =>
-                        (target.style.color = "#4A2E67")
-                      }
-                    />
-                  </DeleteBtn>
-                </BtnContainer>
-              </MessageWrapper>
-            ))}
-          </ConversationWrapper>
-        ))
-      )}
-    </>
-  );
+              {conversation.messages.map((message, index) => (
+                <MessageWrapper key={index}>
+                  <Text>
+                    <Tag>
+                      {message.author === user.nickname
+                        ? "You:"
+                        : message.author + ":"}
+                    </Tag>{" "}
+                    {message.message}
+                  </Text>
+                  <Text>
+                    <Tag>Sent at:</Tag> {message.timeForMessagesPage}
+                  </Text>
+                </MessageWrapper>
+              ))}
+
+              <BtnContainer>
+                <DeleteBtn
+                  onClick={(e) =>
+                    deleteMessageHandler(e, conversation.conversationId)
+                  }
+                >
+                  <AiFillDelete
+                    size={25}
+                    style={{ color: "#4A2E67" }}
+                    onMouseOver={({ target }) =>
+                      (target.style.color = "var(--yellow)")
+                    }
+                    onMouseOut={({ target }) =>
+                      (target.style.color = "#4A2E67")
+                    }
+                  />
+                </DeleteBtn>
+              </BtnContainer>
+            </ConversationWrapper>
+          ))
+        )}
+      </>
+    );
 };
 
 const ConversationWrapper = styled.div`
