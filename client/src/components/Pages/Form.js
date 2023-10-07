@@ -49,6 +49,8 @@ const Form = () => {
       },
       body: JSON.stringify({
         ...formData,
+        province: formData.province,
+        city: formData.city,
         cook: user.nickname,
         cookEmail: user.email,
         foodPicture: pictureUrl,
@@ -58,7 +60,7 @@ const Form = () => {
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
-        // console.log("formData", formData)
+        console.log("formData", formData);
         navigate("/");
       })
       .catch((error) => {
@@ -160,7 +162,10 @@ const Form = () => {
           <select
             style={{ border: "2px solid #795E96" }}
             name="province"
-            onChange={handleProvinceChange}
+            onChange={(e) => {
+              handleProvinceChange(e);
+              handleChange(e.target.name, e.target.value);
+            }}
             required
           >
             <option value="">-Select-</option>
@@ -171,7 +176,12 @@ const Form = () => {
 
         <SelectOptions>
           <P>City</P>
-          <select style={{ border: "2px solid #795E96" }} name="city" required>
+          <select
+            style={{ border: "2px solid #795E96" }}
+            name="city"
+            required
+            onChange={(e) => handleChange(e.target.name, e.target.value)}
+          >
             <option value="">-Select-</option>
             {cities.map((city, index) => (
               <option key={index} value={city.toLowerCase().replace(" ", "_")}>
