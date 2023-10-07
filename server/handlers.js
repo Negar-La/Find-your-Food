@@ -12,7 +12,7 @@ const options = {
   useUnifiedTopology: true,
 };
 
-const getMsg = async (req, res) => {
+const getConversations = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
   const { id } = req.params;
   console.log("Received user id:", id);
@@ -21,31 +21,27 @@ const getMsg = async (req, res) => {
     await client.connect();
     const db = client.db("find_your_food");
     const conversations = await db.collection("conversations").find().toArray();
+    console.log(conversations);
 
-    const filteredMessages = conversations.reduce((acc, conversation) => {
-      const messagesForUser = conversation.messages.filter(
-        (msg) => msg.author === id || msg.cook === id || msg.cookEmail === id
-      );
-      if (messagesForUser.length > 0) {
-        acc.push({
-          conversationId: conversation.conversationId,
-          messages: messagesForUser,
-        });
-      }
-      return acc;
-    }, []);
+    const filteredConversations = conversations.filter((conversation) => {
+      return conversation.participants.includes(id);
+    });
 
-    if (filteredMessages.length > 0) {
+    console.log("Filtered conversations for user:", filteredConversations);
+
+    if (filteredConversations.length > 0) {
       res.status(200).json({
         status: 200,
-        data: filteredMessages,
-        message: "All your messages",
+        data: filteredConversations,
+        message: "All your Conversations",
       });
     } else {
-      res.status(400).json({ status: 400, message: "No messages found" });
+      res.status(400).json({ status: 400, message: "No Conversation found" });
     }
   } catch (err) {
-    res.status(400).json({ status: 400, message: "Failed to get messages" });
+    res
+      .status(400)
+      .json({ status: 400, message: "Failed to get Conversations" });
     console.log(err.stack);
   } finally {
     client.close();
@@ -91,31 +87,36 @@ const postMsg = async (req, res) => {
   }
 };
 
-const deleteMsg = async (req, res) => {
+const deleteConversation = async (req, res) => {
   const client = new MongoClient(MONGO_URI, options);
 
-  console.log(req.body);
-
+  const { conversationId } = req.body; // Assuming conversationId is sent in the request body
+  console.log("conversationId ", conversationId);
   try {
     await client.connect();
 
     const db = client.db("find_your_food");
-    //in mongodb we use "" to access the keys in database, so we check db to pick "_id" and based on   console.log(req.body) in terminal, we have  req.body.post._id
-    const deleteOne = await db
-      .collection("messages")
-      .deleteOne({ id: req.body.msg.id });
-    console.log(deleteOne.deletedCount);
 
-    res.status(200).json({
-      status: 200,
-      message: "Message successfully deleted from database",
-      data: deleteOne,
-    });
+    // Delete the conversation based on its _id (assuming conversationId is the _id)
+    const deleteResult = await db
+      .collection("conversations")
+      .deleteOne({ conversationId });
+
+    if (deleteResult.deletedCount === 1) {
+      res.status(200).json({
+        status: 200,
+        message: "Conversation successfully deleted from the database",
+        data: deleteResult,
+      });
+    } else {
+      res.status(404).json({
+        status: 404,
+        message: "Conversation not found or not deleted",
+      });
+    }
   } catch (err) {
-    res
-      .status(400)
-      .json({ status: 400, message: "Message was not deleted from database" });
-    console.log(err.stack);
+    res.status(500).json({ status: 500, message: "Internal server error" });
+    console.error(err.stack);
   } finally {
     client.close();
   }
@@ -400,9 +401,9 @@ const deleteFavorite = async (req, res) => {
 };
 
 module.exports = {
-  getMsg,
+  getConversations,
   postMsg,
-  deleteMsg,
+  deleteConversation,
   addPost,
   deletePost,
   updatePost,
