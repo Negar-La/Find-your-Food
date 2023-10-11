@@ -91,7 +91,7 @@ const postMsg = async (req, res) => {
       // If the conversation doesn't exist, create a new one
       await db.collection("conversations").insertOne({
         conversationId,
-        participants: [messageData.author], // Add the message author as a participant
+        participants: [messageData.author, messageData.cook], // Add the message author as a participant and add both participants
         messages: [messageData],
       });
     } else {
@@ -99,7 +99,9 @@ const postMsg = async (req, res) => {
       await db.collection("conversations").updateOne(
         { conversationId },
         {
-          $addToSet: { participants: messageData.author },
+          $addToSet: {
+            participants: { $each: [messageData.author, messageData.cook] },
+          },
           $push: { messages: messageData },
         }
       );

@@ -22,6 +22,7 @@ const MyMessages = () => {
         .then((data) => {
           if (data.status === 200 && data.data.length > 0) {
             setConversations(data.data);
+            console.log(data.data);
           } else {
             setStatus("no-conversations");
           }
@@ -81,13 +82,13 @@ const MyMessages = () => {
                 Between:{" "}
                 {conversation.participants.map((participant, index) => (
                   <React.Fragment key={participant}>
-                    {index > 0 &&
-                      index === conversation.participants.length - 1 &&
-                      " and "}
-                    {index > 0 &&
-                      index < conversation.participants.length - 1 &&
-                      ", "}
+                    {conversation.participants.length === 2 &&
+                    index === conversation.participants.length - 1
+                      ? " and "
+                      : ""}
                     {participant === user.nickname ? "You" : participant}
+                    {conversation.participants.length === 1 &&
+                      " and " + conversation.messages[0].cook}
                   </React.Fragment>
                 ))}
               </ConversationTitle>
