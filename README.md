@@ -10,35 +10,36 @@
 <p>📌 <a href="https://cloudinary.com/documentation"> Cloudinary </a> stores the pictures used accross the website as well as a widget to upload picture of the food. </p>
 <p>📌 <a href="https://auth0.com/docs/quickstart/spa/react/interactive"> Auth0 </a> provides a secure and fast log in. </p>
 
-
-
 <p align="center"> Click <a href="https://find-your-food.onrender.com"><strong> Here</strong> </a> to view the deployed website at render.com </p>
 
-
 #### On Mobile device
+
 ![Screenshot of pages on mobile devices!](./client/src/assets/images/mobile-food.jpg "On Mobile device")
 
 #### Screenshot of Home page
-![Screenshot of home page!](./client/src/assets/images/find1.jpg "Home page")
+
+![Screenshot of home page!](./client/src/assets/images/find1.png "Home page")
 
 #### Screenshot of Post a new Add
+
 ![Screenshot of Post a new Add!](./client/src/assets/images/food02.jpg "Post a new Add")
 
-
 #### Screenshot of View Post Details
+
 ![View Post Details](./client/src/assets/images/food01.jpg "View Post Details")
 
-
 #### Screenshot of Showing on Google Map
+
 ![Screenshot of Showing on Google Map!](./client/src/assets/images/find4.jpg "Showing on Google Map")
 
-
 #### Screenshot of My Favorite Posts
+
 ![Screenshot of My Favorite Posts!](./client/src/assets/images/find5.jpg "My Favorite Posts")
 
-
 #### Screenshot of Live Chat
+
 ![Screenshot of Live Chat!](./client/src/assets/images/find6.jpg "Live Chat")
 
 #### Screenshot of Menu
+
 ![Screenshot of Menu!](./client/src/assets/images/slider2.jpg "Menu")
