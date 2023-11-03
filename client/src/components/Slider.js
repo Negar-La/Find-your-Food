@@ -17,7 +17,7 @@ const Slider = () => {
           `${process.env.REACT_APP_SERVER_URL}/api/getPosts`
         );
         const postData = await response.json();
-        console.log("postData:", postData);
+        // console.log("postData:", postData);
 
         // Extract image URLs from post data and create postImageURLs array
         const imageURLs = postData.data.map((post) => post.foodPicture);
