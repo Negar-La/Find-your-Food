@@ -76,7 +76,7 @@ const PostDetails = () => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  console.log(post);
+  //console.log(post);
   return (
     <>
       {!post ? (

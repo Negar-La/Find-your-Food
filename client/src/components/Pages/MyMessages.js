@@ -14,7 +14,7 @@ const MyMessages = () => {
 
   useEffect(() => {
     if (user) {
-      console.log("Fetching conversations for user:", user.nickname);
+      //  console.log("Fetching conversations for user:", user.nickname);
       fetch(
         `${process.env.REACT_APP_SERVER_URL}/api/getConversations/${user.nickname}`
       )
