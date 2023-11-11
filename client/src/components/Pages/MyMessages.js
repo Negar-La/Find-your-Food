@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoadingIcon from "../LoadingIcon";
 import ErrorPage from "./ErrorPage";
 import { AiFillDelete } from "react-icons/ai";
+import ScrollToTop from "../ScrollToTop";
 
 const MyMessages = () => {
   const [status, setStatus] = useState("loading");
@@ -129,6 +130,7 @@ const MyMessages = () => {
                   </DeleteBtn>
                 </BtnContainer>
               </InnerContainer>
+              <ScrollToTop />
             </ConversationWrapper>
           ))
         )}

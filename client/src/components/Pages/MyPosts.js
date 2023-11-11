@@ -8,6 +8,7 @@ import moment from "moment";
 import LoadingIcon from "../LoadingIcon";
 import ErrorPage from "./ErrorPage";
 import ConfirmationModal from "../ConfirmationModal";
+import ScrollToTop from "../ScrollToTop";
 
 const MyPosts = () => {
   const [status, setStatus] = useState("loading");
@@ -174,6 +175,7 @@ const MyPosts = () => {
         ) : (
           ""
         )}
+        <ScrollToTop />
       </Wrapper>
     </>
   );
