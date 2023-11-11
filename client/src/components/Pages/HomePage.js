@@ -6,6 +6,7 @@ import Slider from "../Slider";
 import LoadingIcon from "../LoadingIcon";
 import ErrorPage from "./ErrorPage";
 import Pagination from "../Pagination";
+import ScrollToTop from "../ScrollToTop";
 
 const HomePage = () => {
   const [posts, setPosts] = useState(null);
@@ -120,6 +121,7 @@ const HomePage = () => {
           />
         </Container>
       )}
+      <ScrollToTop />
     </All>
   );
 };

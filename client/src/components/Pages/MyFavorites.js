@@ -8,6 +8,7 @@ import Login from "./Login";
 import ErrorPage from "./ErrorPage";
 import image from "../../assets/images/Please_log_in_image.png";
 import ConfirmationModal from "../ConfirmationModal";
+import ScrollToTop from "../ScrollToTop";
 
 const MyFavorites = () => {
   const [status, setStatus] = useState("loading");
@@ -158,6 +159,7 @@ const MyFavorites = () => {
         ) : (
           ""
         )}
+        <ScrollToTop />
       </Wrapper>
     </>
   );
