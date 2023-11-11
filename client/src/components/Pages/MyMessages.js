@@ -75,58 +75,60 @@ const MyMessages = () => {
         ) : (
           conversations.map((conversation) => (
             <ConversationWrapper key={conversation._id}>
-              <ConversationTitle>
-                Conversation about:{conversation.conversationId}{" "}
-              </ConversationTitle>
-              <ConversationTitle>
-                Between:{" "}
-                {conversation.participants.map((participant, index) => (
-                  <React.Fragment key={participant}>
-                    {conversation.participants.length === 2 &&
-                    index === conversation.participants.length - 1
-                      ? " and "
-                      : ""}
-                    {participant === user.nickname ? "You" : participant}
-                    {conversation.participants.length === 1 &&
-                      " and " + conversation.messages[0].cook}
-                  </React.Fragment>
+              <InnerContainer>
+                <ConversationTitle>
+                  Conversation about:{conversation.conversationId}{" "}
+                </ConversationTitle>
+                <ConversationTitle>
+                  Between:{" "}
+                  {conversation.participants.map((participant, index) => (
+                    <React.Fragment key={participant}>
+                      {conversation.participants.length === 2 &&
+                      index === conversation.participants.length - 1
+                        ? " and "
+                        : ""}
+                      {participant === user.nickname ? "You" : participant}
+                      {conversation.participants.length === 1 &&
+                        " and " + conversation.messages[0].cook}
+                    </React.Fragment>
+                  ))}
+                </ConversationTitle>
+
+                {conversation.messages.map((message, index) => (
+                  <MessageWrapper key={index}>
+                    <Text>
+                      <Tag>
+                        {message.author === user.nickname
+                          ? "You:"
+                          : message.author + ":"}
+                      </Tag>{" "}
+                      {message.message}
+                    </Text>
+                    <Text>
+                      <Tag>Sent at:</Tag> {message.timeForMessagesPage}
+                    </Text>
+                  </MessageWrapper>
                 ))}
-              </ConversationTitle>
 
-              {conversation.messages.map((message, index) => (
-                <MessageWrapper key={index}>
-                  <Text>
-                    <Tag>
-                      {message.author === user.nickname
-                        ? "You:"
-                        : message.author + ":"}
-                    </Tag>{" "}
-                    {message.message}
-                  </Text>
-                  <Text>
-                    <Tag>Sent at:</Tag> {message.timeForMessagesPage}
-                  </Text>
-                </MessageWrapper>
-              ))}
-
-              <BtnContainer>
-                <DeleteBtn
-                  onClick={(e) =>
-                    deleteMessageHandler(e, conversation.conversationId)
-                  }
-                >
-                  <AiFillDelete
-                    size={25}
-                    style={{ color: "#4A2E67" }}
-                    onMouseOver={({ target }) =>
-                      (target.style.color = "var(--yellow)")
+                <BtnContainer>
+                  <DeleteBtn
+                    onClick={(e) =>
+                      deleteMessageHandler(e, conversation.conversationId)
                     }
-                    onMouseOut={({ target }) =>
-                      (target.style.color = "#4A2E67")
-                    }
-                  />
-                </DeleteBtn>
-              </BtnContainer>
+                  >
+                    <AiFillDelete
+                      size={25}
+                      style={{ color: "#4A2E67" }}
+                      onMouseOver={({ target }) =>
+                        (target.style.color = "var(--yellow)")
+                      }
+                      onMouseOut={({ target }) =>
+                        (target.style.color = "#4A2E67")
+                      }
+                    />
+                  </DeleteBtn>
+                </BtnContainer>
+              </InnerContainer>
             </ConversationWrapper>
           ))
         )}
@@ -135,10 +137,16 @@ const MyMessages = () => {
 };
 
 const ConversationWrapper = styled.div`
-  border: 3px solid purple;
-  background-color: inherit;
   border-radius: 15px;
-  margin: 20px auto 25px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const InnerContainer = styled.div`
+  border: 4px solid purple;
+  border-radius: 15px;
   padding: 15px;
   display: flex;
   flex-direction: column;
